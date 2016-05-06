@@ -5,6 +5,7 @@
   <title>Sea_Erratum</title>
   <release>1</release>
   <issued date="2012-01-27 16:08:06"/>
+  <updated date="2012-01-27 16:08:06"/>
   <description>Sea_Erratum</description>
   <pkglist>
     <collection short="">
@@ -27,6 +28,7 @@
   <title>Bird_Erratum</title>
   <release>1</release>
   <issued date="2013-01-27 16:08:08"/>
+  <updated date="2013-02-27 17:00:00"/>
   <description>ParthaBird_Erratum</description>
   <pkglist>
     <collection short="">
@@ -49,6 +51,7 @@
   <title>Bear_ErratumPARTHA</title>
   <release>1</release>
   <issued date="2013-01-27 16:08:05"/>
+  <updated date="2013-01-27 16:08:05 UTC"/>
   <description>Bear_Erratum</description>
   <pkglist>
     <collection short="">
@@ -65,6 +68,7 @@
   <title>Gorilla_Erratum</title>
   <release>1</release>
   <issued date="2013-01-27 16:08:09"/>
+  <updated date="2014-07-20 06:00:01 UTC"/>
   <description>Gorilla_Erratum</description>
   <pkglist>
     <collection short="">
