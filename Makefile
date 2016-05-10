@@ -1,3 +1,5 @@
+ALL = docker-fixtures rpm-fixtures
+
 help:
 	@echo "Please use \`make <target>' where <target> is one of:"
 	@echo "  help            to show this message"
@@ -7,14 +9,14 @@ help:
 	@echo "  rpm-fixtures    to create RPM fixture data"
 
 clean:
-	rm -rf ./*-fixtures
+	rm -rf $(ALL)
 
-all: docker-fixtures rpm-fixtures
+all: $(ALL)
 
 docker-fixtures:
-	docker/gen-fixtures.sh docker-fixtures
+	docker/gen-fixtures.sh $@
 
 rpm-fixtures:
-	rpm/gen-fixtures.sh rpm-fixtures rpm/assets
+	rpm/gen-fixtures.sh $@ rpm/assets
 
 .PHONY: help clean all
