@@ -1,35 +1,36 @@
-ALL = docker-fixtures \
-    rpm-fixtures \
-    rpm-fixtures-invalid-updateinfo \
-    rpm-fixtures-updated-updateinfo
-
 help:
 	@echo "Please use \`make <target>' where <target> is one of:"
 	@echo "  help            to show this message"
 	@echo "  clean           to remove fixture data"
-	@echo "  all             to execute all following targets"
-	@echo "  docker-fixtures to create Docker fixture data"
-	@echo "  rpm-fixtures    to create RPM fixture data"
-	@echo "  rpm-fixtures-invalid-updateinfo"
+	@echo "  fixtures        to create all fixture data"
+	@echo "  fixtures/docker to create Docker fixture data"
+	@echo "  fixtures/rpm    to create RPM fixture data"
+	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
-	@echo "  rpm-fixtures-updated-updateinfo"
+	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
 
 clean:
-	rm -rf $(ALL)
+	rm -rf fixtures/*
 
-all: $(ALL)
+all: fixtures
+	$(warning The `all` target is deprecated. Use `fixtures` instead.)
 
-docker-fixtures:
+fixtures: fixtures/docker \
+    fixtures/rpm \
+    fixtures/rpm-invalid-updateinfo \
+    fixtures/rpm-updated-updateinfo
+
+fixtures/docker:
 	docker/gen-fixtures.sh $@
 
-rpm-fixtures:
+fixtures/rpm:
 	rpm/gen-fixtures.sh $@ rpm/assets
 
-rpm-fixtures-invalid-updateinfo:
+fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
 
-rpm-fixtures-updated-updateinfo:
+fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
 .PHONY: help clean all
