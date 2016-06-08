@@ -9,6 +9,7 @@ help:
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
 	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
+	@echo "  fixtures/python to create Python fixture data"
 
 clean:
 	rm -rf fixtures/*
@@ -19,7 +20,8 @@ all: fixtures
 fixtures: fixtures/docker \
     fixtures/rpm \
     fixtures/rpm-invalid-updateinfo \
-    fixtures/rpm-updated-updateinfo
+    fixtures/rpm-updated-updateinfo \
+    fixtures/python
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
@@ -32,5 +34,8 @@ fixtures/rpm-invalid-updateinfo:
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+
+fixtures/python:
+	python/gen-fixtures.sh $@ python/assets
 
 .PHONY: help clean all
