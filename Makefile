@@ -5,6 +5,8 @@ help:
 	@echo "  fixtures        to create all fixture data"
 	@echo "  fixtures/docker to create Docker fixture data"
 	@echo "  fixtures/rpm    to create RPM fixture data"
+	@echo "  fixtures/rpm-erratum"
+	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
 	@echo "  fixtures/rpm-updated-updateinfo"
@@ -26,6 +28,9 @@ fixtures/docker:
 
 fixtures/rpm:
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-erratum:
+	rpm/gen-erratum.sh $@ rpm/assets
 
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
