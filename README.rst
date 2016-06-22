@@ -55,7 +55,7 @@ are omitted.
 
 .. _Pulp #2020: https://pulp.plan.io/issues/2020
 .. _Pulp RPM Errata:
-    https://pulp-rpm.readthedocs.io/en/latest/tech-reference/yum-plugins.html#errata
+    https://docs.pulpproject.org/plugins/pulp_rpm/tech-reference/yum-plugins.html#errata
 .. _Pulp Smash: http://pulp-smash.readthedocs.io
 .. _pulp_smash.constants:
-    http://pulp-smash.readthedocs.io/en/latest/api/pulp_smash.constants.html
+    https://pulp-smash.readthedocs.io/en/latest/api/pulp_smash.constants.html
