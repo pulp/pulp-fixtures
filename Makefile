@@ -20,6 +20,7 @@ all: fixtures
 
 fixtures: fixtures/docker \
     fixtures/rpm \
+    fixtures/rpm-erratum \
     fixtures/rpm-invalid-updateinfo \
     fixtures/rpm-updated-updateinfo
 
