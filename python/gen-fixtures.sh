@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# Copy static files of Python repository into fixtures directory
+# Copy static Python files into a destination directory.
 #
 set -euo pipefail
 
