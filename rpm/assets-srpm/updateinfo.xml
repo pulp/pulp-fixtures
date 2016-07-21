@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<updates>
+<update from="errata@redhat.com" status="stable" type="security" version="1">
+  <id>RHEA-2012:0022</id>
+  <title>Sea_Erratum</title>
+  <release>1</release>
+  <issued date="2016-01-27 16:08:06"/>
+  <updated date="2016-01-27 16:08:06"/>
+  <description>test_Erratum_1</description>
+  <pkglist>
+    <collection short="">
+      <name>1</name>
+      <package arch="SRPMS" name="test-srpm01" release="1" src="http://www.fedoraproject.org" version="1.0">
+        <filename>test-srpm01-1.0-1.src.rpm</filename>
+      </package>
+    </collection>
+  </pkglist>
+</update>
+
+<update from="errata@redhat.com" status="stable" type="security" version="1">
+  <id>RHEA-2012:0023</id>
+  <title>Bird_Erratum</title>
+  <release>1</release>
+  <issued date="2016-01-27 16:08:08"/>
+  <updated date="2016-02-27 17:00:00"/>
+  <description>test_Erratum_2</description>
+  <pkglist>
+    <collection short="">
+      <name>1</name>
+      <package arch="SRPMS" name="test-srpm02" release="1" src="http://www.fedoraproject.org" version="1.0">
+        <filename>test-srpm02-1.0-1.src.rpm</filename>
+      </package>
+      <package arch="SRPMS" name="test-srpm03" release="2" src="http://www.fedoraproject.org" version="1.0">
+        <filename>test-srpm03-1.0-1.src.rpm</filename>
+      </package>
+    </collection>
+  </pkglist>
+</update>
+</updates>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps PUBLIC "-//Red Hat, Inc.//DTD Comps info//EN" "comps.dtd">
+<comps>
+  <group>
+   <id>test-01</id>
+   <default>true</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>test-01</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">test-srpm01</packagereq>
+    </packagelist>
+  </group>
+  <group>
+   <id>test-02</id>
+   <default>true</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>test-02</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">test-srpm02</packagereq>
+      <packagereq type="mandatory">test-srpm03</packagereq>
+    </packagelist>
+  </group>
+  <category>
+   <id>all</id>
+   <display_order>99</display_order>
+   <name>all</name>
+   <description></description>
+    <grouplist>
+     <groupid>test-01</groupid>
+     <groupid>test-02</groupid>
+    </grouplist>
+  </category>
+  <langpacks>
+    <match install="test-srpm01-%s" name="test-srpm01-en"/>
+    <match install="test-srpm02-%s" name="test-srpm02-docs"/>
+  </langpacks>
+</comps>

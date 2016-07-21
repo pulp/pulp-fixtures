@@ -5,14 +5,22 @@ help:
 	@echo "  clean           to remove fixture data"
 	@echo "  fixtures        to create all fixture data"
 	@echo "  fixtures/docker to create Docker fixture data"
+	@echo "  fixtures/drpm-unsigned"
+	@echo "                  to create DRPM fixtures with unsigned packages"
 	@echo "  fixtures/python to create Python fixture data"
 	@echo "  fixtures/rpm    to create RPM fixture data"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
+	@echo "  fixtures/rpm-unsigned"
+	@echo "                  to create RPM fixture data with unsigned packages"
 	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
+	@echo "  fixtures/srpm"
+	@echo "                  to create SRPM fixture data"
+	@echo "  fixtures/srpm-unsigned"
+	@echo "                  to create SRPM fixture data with unsigned packages"
 
 clean:
 	rm -rf fixtures/*
@@ -25,20 +33,39 @@ all: fixtures
 	$(warning The `all` target is deprecated. Use `fixtures` instead.)
 
 fixtures: fixtures/docker \
-    fixtures/python \
-    fixtures/rpm \
-    fixtures/rpm-erratum \
-    fixtures/rpm-invalid-updateinfo \
-    fixtures/rpm-updated-updateinfo
+	fixtures/drpm-unsigned \
+	fixtures/python \
+	fixtures/rpm \
+	fixtures/rpm-erratum \
+	fixtures/rpm-unsigned \
+	fixtures/rpm-invalid-updateinfo \
+	fixtures/rpm-updated-updateinfo \
+	fixtures/srpm \
+	fixtures/srpm-unsigned
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
+
+fixtures/drpm-unsigned:
+	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm test-alpha
+	rpm/del-fixtures-sign.sh $@
 
 fixtures/python:
 	python/gen-fixtures.sh $@ python/assets
 
 fixtures/rpm:
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-unsigned:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	rpm/del-fixtures-sign.sh $@
+
+fixtures/srpm:
+	rpm/gen-fixtures.sh $@ rpm/assets-srpm
+
+fixtures/srpm-unsigned:
+	rpm/gen-fixtures.sh $@ rpm/assets-srpm
+	rpm/del-fixtures-sign.sh $@
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
