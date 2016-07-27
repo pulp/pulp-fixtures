@@ -20,11 +20,14 @@ For exact usage instructions, clone this repository and run ``make help``.
 Dependencies
 ------------
 
-The fixture generation scripts do little more than call out to system utilities
-and mangle the results. It's the user's responsibility to ensure the necessary
-utilities are available and usable. Dependencies are listed below, according to
-make target. Common system utilities like ``fmt``, ``patch`` and ``realpath``
-are omitted.
+The make targets and fixture generation scripts do little more than call out to
+system utilities and mangle the results. It's the user's responsibility to
+ensure the necessary utilities are available and usable. Dependencies are listed
+below, according to make target. Common system utilities like ``fmt``, ``patch``
+and ``realpath`` are omitted.
+
+``lint``
+    The ``shellcheck`` executable must be available.
 
 ``fixtures/docker``
     The ``docker`` utility must be available.
