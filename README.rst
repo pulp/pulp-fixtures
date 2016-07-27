@@ -40,6 +40,9 @@ and ``realpath`` are omitted.
 ``fixtures/drpm-unsigned``
     The ``createrepo``, ``makedeltarpm`` and ``rpmsign`` utilities must be available.
 
+``fixtures/python``
+    No exotic dependencies are needed.
+
 ``fixtures/rpm``
     The ``createrepo`` and ``modifyrepo`` utilities must be available.
 
