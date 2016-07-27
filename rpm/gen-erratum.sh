@@ -53,7 +53,8 @@ EOF
 #
 # e.g. assets/walrus-5.21-1.noarch.rpm → 0
 get_rpm_epoch() {
-    local filename="$(basename "${1}")"
+    local filename
+    filename="$(basename "${1}")"
     # If an epoch is listed, return it. Otherwise, assume an epoch of 0.
     case "${filename}" in
         *'!'*)
@@ -69,8 +70,9 @@ get_rpm_epoch() {
 #
 # e.g. assets/walrus-5.21-1.noarch.rpm → walrus
 get_rpm_name() {
-    local filename="$(basename "${1}")"
-    IFS=$'\n' local parts=($(echo "${filename}" | tr - "\n"))
+    local filename parts
+    filename="$(basename "${1}")"
+    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
     echo "${parts[0]#*\!}"  # strip epoch
 }
 
@@ -78,8 +80,9 @@ get_rpm_name() {
 #
 # e.g. assets/walrus-5.21-1.noarch.rpm → 5.21
 get_rpm_version() {
-    local filename="$(basename "${1}")"
-    IFS=$'\n' local parts=($(echo "${filename}" | tr - "\n"))
+    local filename parts
+    filename="$(basename "${1}")"
+    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
     echo "${parts[1]}"
 }
 
@@ -87,8 +90,9 @@ get_rpm_version() {
 #
 # e.g. assets/walrus-5.21-1.noarch.rpm → 1
 get_rpm_release() {
-    local filename="$(basename "${1}")"
-    IFS=$'\n' local parts=($(echo "${filename}" | tr - "\n"))
+    local filename parts
+    filename="$(basename "${1}")"
+    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
     echo "${parts[2]%%.*}"
 }
 
@@ -96,8 +100,9 @@ get_rpm_release() {
 #
 # e.g. assets/walrus-5.21-1.noarch.rpm → noarch
 get_rpm_arch() {
-    local filename="$(basename "${1}")"
-    IFS=$'\n' local parts=($(echo "${filename}" | tr . "\n"))
+    local filename parts
+    filename="$(basename "${1}")"
+    IFS=$'\n' parts=($(echo "${filename}" | tr . "\n"))
     echo "${parts[-2]}"
 }
 
@@ -130,11 +135,11 @@ elif [ "$#" -gt 2 ]; then
     exit 1
 else
     output_dir="$(realpath --canonicalize-missing "${1}")"
-    assets_dir="$(realpath "${2}")"
+    assets_dir="$(realpath --canonicalize-existing "${2}")"
 fi
 
 # Find and sort all RPMs.
-rpms="${assets_dir}"/*.rpm
+rpms=( "${assets_dir}"/*.rpm )
 IFS=$'\n' rpms=($(sort <<<"${rpms[*]}"))
 
 # Pick RPMs. Do not select two versions of the same RPM.
@@ -150,7 +155,7 @@ for rpm in "${rpms[@]:1}"; do
     picks+=("${rpm}")
 done
 if [ "${#picks[@]}" -lt "$num_needed" ]; then
-    echo >&2 "Need $num_needed unique RPMs, but found ${#picks[@]}: ${picks[@]}"
+    echo 1>&2 "Need ${num_needed} unique RPMs, but found ${#picks[@]}: ${picks[*]}"
     exit 1
 fi
 
