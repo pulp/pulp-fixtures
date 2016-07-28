@@ -43,9 +43,6 @@ and ``realpath`` are omitted.
 ``fixtures/rpm``
     The ``createrepo`` and ``modifyrepo`` utilities must be available.
 
-``fixtures/rpm-unsigned``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
-
 ``fixtures/rpm-erratum``
     The ``md5sum`` and ``sha256sum`` executables must be available. Note:
 
@@ -59,14 +56,17 @@ and ``realpath`` are omitted.
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm``.
 
+``fixtures/rpm-unsigned``
+    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
+
+``fixtures/rpm-updated-updateinfo``
+    See ``fixtures/rpm``.
+
 ``fixtures/srpm``
     The ``createrepo`` and ``modifyrepo`` utilities must be available.
 
 ``fixtures/srpm-unsigned``
     The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
-
-``fixtures/rpm-updated-updateinfo``
-    See ``fixtures/rpm``.
 
 .. _Pulp #2020: https://pulp.plan.io/issues/2020
 .. _Pulp RPM Errata:

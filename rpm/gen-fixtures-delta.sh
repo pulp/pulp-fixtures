@@ -15,7 +15,6 @@ usage: gen-fixtures-delta.sh <output_dir> <assets_dir> <dpkg_name>
 
 Create <output_dir>. Use packages in <assets_dir> to generate DRPM fixture data
 for package <dpkg_name> and place the results into <output_dir>.
-A suggested name for <output_dir> is "zoo".
 
 EOF
 cat <<EOF
@@ -116,7 +115,7 @@ done
 readonly num_needed=2
 rpms_len=${#found_rpms[@]}
 if [ "${rpms_len}"  -lt "${num_needed}" ]; then
-    echo 1>&2 "Error: Need at least ${num_needed} RPMS. But found ${rpms_len}"
+    echo 1>&2 "Error: Need at least ${num_needed} RPMS, but found ${rpms_len}."
     exit 1
 fi
 
@@ -161,4 +160,4 @@ EOF
 done
 
 # Generate DRPMS fixtures from RPMS and DRPMS
-createrepo --checksum sha256 --delta "${output_dir}"
+createrepo --checksum sha256 --deltas "${output_dir}"

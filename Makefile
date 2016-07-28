@@ -37,8 +37,8 @@ fixtures: fixtures/docker \
 	fixtures/python \
 	fixtures/rpm \
 	fixtures/rpm-erratum \
-	fixtures/rpm-unsigned \
 	fixtures/rpm-invalid-updateinfo \
+	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/srpm \
 	fixtures/srpm-unsigned
@@ -56,9 +56,18 @@ fixtures/python:
 fixtures/rpm:
 	rpm/gen-fixtures.sh $@ rpm/assets
 
+fixtures/rpm-erratum:
+	rpm/gen-erratum.sh $@ rpm/assets
+
+fixtures/rpm-invalid-updateinfo:
+	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
+
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rpm/del-fixtures-sign.sh $@
+
+fixtures/rpm-updated-updateinfo:
+	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
 fixtures/srpm:
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
@@ -66,14 +75,5 @@ fixtures/srpm:
 fixtures/srpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
 	rpm/del-fixtures-sign.sh $@
-
-fixtures/rpm-erratum:
-	rpm/gen-erratum.sh $@ rpm/assets
-
-fixtures/rpm-invalid-updateinfo:
-	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
-
-fixtures/rpm-updated-updateinfo:
-	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
 .PHONY: help lint clean all

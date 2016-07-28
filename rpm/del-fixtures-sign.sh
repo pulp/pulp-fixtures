@@ -13,12 +13,12 @@ show_help() {
 fmt <<EOF
 usage: del-fixtures-sign.sh <target_dir>
 
-Delete signatures of all RPM/SRPM/DRPM files recursively in <target_dir>
+Recursively delete signatures from all RPM/SRPM/DRPM files in <target_dir>
 
 EOF
 cat <<EOF
 <target_dir>
-    The directory from which package's signature will be removed.
+    The directory from which package signatures will be removed.
 EOF
 }
 
@@ -37,6 +37,6 @@ else
     target_dir="$(realpath --canonicalize-existing "${1}")"
 fi
 
-# Delete signatures from packages in target_dir recursively
+# Recursively delete signatures from packages in target_dir
 find "${target_dir}" \( -name '*.rpm' -o -name '*.srpm' -o -name '*.drpm' \) \
     -print0 | xargs -0 rpmsign --delsign
