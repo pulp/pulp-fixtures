@@ -5,25 +5,33 @@
 #
 set -euo pipefail
 
+#------------------------------------------------------------------------------
+# Helper Functions
+#------------------------------------------------------------------------------
+
 # Print a message to stdout explaining how to use this script.
 #
 # NOTE: $0 corresponds to the the script's name only in some shells and in some
 # contexts.
 show_help() {
 fmt <<EOF
-usage: gen-fixtures-delta.sh <output_dir> <assets_dir> <dpkg_name>
+usage: gen-fixtures-delta.sh <output_dir> <assets_dir>
 
-Create <output_dir>. Use packages in <assets_dir> to generate DRPM fixture data
-for package <dpkg_name> and place the results into <output_dir>.
+Create <output_dir>. Walk through the RPMs in <assets_dir>, and generate a DRPM
+for each adjacent pair of RPMs. Copy the source RPMs to <output_dir>, and place
+the generated DRPMs in <output_dir>/drpms.
+
+The RPMs in <assets_dir> should be related. (It doesn't make sense to generate a
+DRPM for upgrading from firefox to gimp.) This script will exit with a non-zero
+exit code if any adjacent pair of RPMs have differing base package names or
+architectures.
 
 EOF
 cat <<EOF
 <output_dir>
     The directory into which generated fixtures are placed.
 <assets_dir>
-    The directory from which source material is read.
- <dpkg_name>
-    The name of package which delta RPM will be generated for
+    The directory from which RPMs are read.
 EOF
 }
 
@@ -76,14 +84,17 @@ get_rpm_arch() {
     echo "${parts[-2]}"
 }
 
+#------------------------------------------------------------------------------
+# Business Logic
+#------------------------------------------------------------------------------
 
 # Fetch output_dir from user.
-if [ "$#" -lt 3 ]; then
+if [ "$#" -lt 2 ]; then
     echo 1>&2 'Error: Too few arguments received.'
     echo 1>&2
     show_help 1>&2
     exit 1
-elif [ "$#" -gt 3 ]; then
+elif [ "$#" -gt 2 ]; then
     echo 1>&2 'Error: Too many arguments received.'
     echo 1>&2
     show_help 1>&2
@@ -91,73 +102,52 @@ elif [ "$#" -gt 3 ]; then
 else
     output_dir="$(realpath --canonicalize-missing "${1}")"
     assets_dir="$(realpath --canonicalize-existing "${2}")"
-    package_name="${3}"
 fi
 
-# Copy all RPMs from assets_dir to output_dir
-# Create directory 'drpms' for DRPMS
+# Create and populate ${output_dir}, and verify that we have enough RPMs.
 mkdir -vp "${output_dir}/drpms"
 cp -t "${output_dir}" "${assets_dir}/"*.rpm
-
-# Filter and sort all required RPMs.
-rpms=( "${output_dir}/${package_name}"*.rpm )
-IFS=$'\n' rpms=($(sort <<<"${rpms[*]}"))
-
-found_rpms=()
-for (( i=0; i<${#rpms[@]}; i++ ));
-do
-    current_package_name="$(get_rpm_name "${rpms[i]}")"
-    if [ "${current_package_name}" == "${package_name}" ]; then
-        found_rpms+=("${rpms[i]}")
-    fi
-done
-
+rpms=( "${output_dir}/"*.rpm )
+readonly num_rpms=${#rpms[@]}
 readonly num_needed=2
-rpms_len=${#found_rpms[@]}
-if [ "${rpms_len}"  -lt "${num_needed}" ]; then
-    echo 1>&2 "Error: Need at least ${num_needed} RPMS, but found ${rpms_len}."
+if [ "${num_rpms}"  -lt "${num_needed}" ]; then
+    echo 1>&2 "Error: Need at least ${num_needed} RPMS, but found ${num_rpms}."
     exit 1
 fi
 
-# Make DRPMS from RPMS
-# DRPMS is generated from all neighbouring RPMS in filtered RPMS list
-for (( i=0; i < rpms_len - 1; i++ ));
-do
-    pkg_1="${found_rpms[i]}"
-    pkg_2="${found_rpms[i+1]}"
+# Make DRPMs from RPMs.
+IFS=$'\n' rpms=($(sort <<<"${rpms[*]}"))  # sort files by name
+for (( i=0; i < num_rpms - 1; i++ )); do
+    rpm_1="${rpms[i]}"
+    rpm_2="${rpms[i+1]}"
 
-    name_1="$(get_rpm_name "${pkg_1}")"
-    name_2="$(get_rpm_name "${pkg_2}")"
-
+    name_1="$(get_rpm_name "${rpm_1}")"
+    name_2="$(get_rpm_name "${rpm_2}")"
     if [ "${name_1}" != "${name_2}" ]; then
         fmt 1>&2 <<EOF
 Error: Old and new packages must have the same name, but are different. Package
-names are ${name_1} and ${name_2}.
+names are ${name_1} and ${name_2}. (From ${rpm_1} and ${rpm_2}.)
 EOF
         exit 1
     fi
 
-    arch_1="$(get_rpm_arch "${pkg_1}")"
-    arch_2="$(get_rpm_arch "${pkg_2}")"
-
+    arch_1="$(get_rpm_arch "${rpm_1}")"
+    arch_2="$(get_rpm_arch "${rpm_2}")"
     if [ "${arch_1}" != "${arch_2}" ]; then
         fmt 1>&2 <<EOF
 Error: Old and new packages must have the same architecture, but are different.
-Package architectures are ${arch_1} and ${arch_2}.
+Package architectures are ${arch_1} and ${arch_2}. (From ${rpm_1} and ${rpm_2}.)
 EOF
         exit 1
     fi
 
-    ver_1="$(get_rpm_version "${pkg_1}")"
-    ver_2="$(get_rpm_version "${pkg_2}" )"
-
-    rel_1="$(get_rpm_release "${pkg_1}" "${arch_1}")"
-    rel_2="$(get_rpm_release "${pkg_2}" "${arch_2}")"
-
-    dpkg="${name_2}-${ver_1}-${rel_1}_${ver_2}-${rel_2}.${arch_2}.drpm"
-
-    makedeltarpm "${pkg_1}" "${pkg_2}" "${output_dir}"/drpms/"${dpkg}"
+    ver_1="$(get_rpm_version "${rpm_1}")"
+    ver_2="$(get_rpm_version "${rpm_2}" )"
+    rel_1="$(get_rpm_release "${rpm_1}" "${arch_1}")"
+    rel_2="$(get_rpm_release "${rpm_2}" "${arch_2}")"
+    makedeltarpm "${rpm_1}" "${rpm_2}" \
+        "${output_dir}/drpms/${name_2}-${ver_1}-${rel_1}_${ver_2}-${rel_2}.${arch_2}.drpm"
 done
 
-# Generate DRPMS fixtures from RPMS and DRPMS
+# Generate repodata directory.
 createrepo --checksum sha256 --deltas "${output_dir}"

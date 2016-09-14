@@ -47,7 +47,7 @@ fixtures/docker:
 	docker/gen-fixtures.sh $@
 
 fixtures/drpm-unsigned:
-	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm test-alpha
+	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 	rpm/del-fixtures-sign.sh $@
 
 fixtures/python:
