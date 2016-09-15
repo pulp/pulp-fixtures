@@ -21,13 +21,13 @@ Dependencies
 ------------
 
 The make targets and fixture generation scripts do little more than call out to
-system utilities and mangle the results. It's the user's responsibility to
-ensure the necessary utilities are available and usable. Dependencies are listed
-below, according to make target. Common system utilities like ``fmt``, ``patch``
-and ``realpath`` are omitted.
+system executables and mangle the results. It's the user's responsibility to
+ensure the necessary executables are available and usable. Dependencies are
+listed below, according to make target. Common system executables like ``fmt``,
+``patch`` and ``realpath`` are omitted.
 
-All RPM, SRPM and DRPM fixtures are signed with an OpenPGP-compatible keypair,
-except where otherwise stated.
+Some RPM, SRPM and DRPM fixtures are signed with an OpenPGP-compatible keypair.
+See ``make help``.
 
 .. WARNING:: The private key used to sign RPM, SRPM and DRPM files is publicly
     available. The signatures on these files afford absolutely *no* security.
@@ -37,7 +37,7 @@ except where otherwise stated.
     The ``shellcheck`` executable must be available.
 
 ``fixtures/docker``
-    The ``docker`` utility must be available.
+    The ``docker`` executable must be available.
 
     Ensure the service is running and usable by the current user. This may
     require adding the current user to an appropriate group and reloading
@@ -45,13 +45,14 @@ except where otherwise stated.
     newgrp``.
 
 ``fixtures/drpm-unsigned``
-    The ``createrepo``, ``makedeltarpm`` and ``rpmsign`` utilities must be available.
+    The ``createrepo`` and ``makedeltarpm`` executables must be available.
 
 ``fixtures/python``
     No exotic dependencies are needed.
 
 ``fixtures/rpm``
-    The ``createrepo`` and ``modifyrepo`` utilities must be available.
+    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
+    available.
 
 ``fixtures/rpm-erratum``
     The ``md5sum`` and ``sha256sum`` executables must be available. Note:
@@ -64,58 +65,70 @@ except where otherwise stated.
       target may exhibit erroneous behaviour.
 
 ``fixtures/rpm-invalid-updateinfo``
-    See ``fixtures/rpm``.
+    See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-pkglists-updateinfo``
-    See ``fixtures/rpm``.
+    See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-unsigned``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
+    The ``createrepo`` and ``modifyrepo`` executables must be available.
 
 ``fixtures/rpm-updated-updateinfo``
-    See ``fixtures/rpm``.
+    See ``fixtures/rpm-unsigned``.
 
 ``fixtures/srpm``
-    The ``createrepo`` and ``modifyrepo`` utilities must be available.
+    The ``createrepo`` and ``modifyrepo`` executables must be available.
 
 ``fixtures/srpm-unsigned``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
+    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
+    available.
+
+``gnupghome``
+    The ``gpg`` executable must be available.
 
 Package Signatures
 ------------------
 
-The RPM, SRPM and DRPM assets are signed, and signatures are stripped as needed
-when generating fixtures. The opposite approach of using unsigned fixtures and
-signing them as needed is safer, as it better prevents the keypair from going
-out of sync with fixtures. However, the sign-as-needed approach is not taken
-because installing and configuring GnuPG can be a hassle.
+The RPM, SRPM and DRPM assets are unsigned, and signatures are added as needed
+when generating fixtures. The opposite approach of using signed assets and
+stripping signatures as needed is less safe, as the keypair can more easily go
+out of sync with the assets.
 
-Should any new assets need to be signed, or should any existing assets need to
-be re-signed, a brief guide to doing so follows.
+By default, GnuPG works with files in the ``~/.gnupg`` directory, and the
+``rpmsign`` executable works with the ``~/.rpmmacros`` file. (Other RPM
+packaging tools also use this file.) It is unacceptable for Pulp Fixtures to
+modify these files. Given this, how can package signing be done?
 
-First make sure you have ``gnupg2`` and ``rpm-sign`` packages installed. Then
-import the private key by running ``gpg2 --import
-rpm/GPG-RPM-PRIVATE-KEY-pulp-qe``. Create or update the ``~/.rpmmacros`` file
-with the following lines::
+Altering the behaviour of GnuPG is easy: if the ``GNUPGHOME`` environment
+variable is set, the named directory is used instead of ``~/.gnupg``.
 
-    %_signature gpg
-    %_gpg_name  Pulp QE
+Altering the behaviour of ``rpmsign`` is harder: It includes hard-coded
+references to ``~/.rpmmacros``. The solution adopted is to pass all needed
+macros via the ``--define`` option, so that the ``~/.rpmmacros`` file need not
+be consulted. Using this option is hacky, as it is not listed in the ``rpmsign``
+man page, and it is mentioned only briefly in the ``rpm`` man page. However,
+this solution is more targeted than an alternative solution like temporarily
+overriding the ``HOME`` environment variable.
 
-That will ensure the RPM sign is going to use the Pulp QE key imported
-previously. Finally, sign the packages and verify their signatures with:
+To see which packages have been signed with the Pulp QE key, execute a command
+like the following:
 
 .. code-block:: sh
 
-    find rpm \( -name '*.rpm' -o -name '*.srpm' -o -name '*.drpm' \) | xargs rpm --addsign
-    find rpm \( -name '*.rpm' -o -name '*.srpm' -o -name '*.drpm' \) | xargs rpm --checksig
+    find fixtures \( -name '*.rpm' -o -name '*.srpm' -o -name '*.drpm' \) | xargs rpm --checksig
 
-If the package is not signed then an output line like
-``fixtures/rpm-unsigned/lion-0.4-1.noarch.rpm: sha1 md5 OK`` will be shown, on
-the other hand, if the package is signed, an output line like
-``fixtures/rpm/lion-0.4-1.noarch.rpm: (RSA) sha1 ((MD5) PGP) md5 NOT OK (MISSING
-KEYS: RSA#269d9d98 (MD5) PGP#269d9d98)``. Be aware that the ``MISSING KEYS``
-message is present because the public key was not imported to the RPM keys
-store, and you probably will not want to import it since the key is not safe.
+If a line like the following is shown, then the named package is unsigned::
+
+    fixtures/rpm-unsigned/lion-0.4-1.noarch.rpm: sha1 md5 OK
+
+If a line like the following is shown, then the named package is signed::
+
+    fixtures/rpm/lion-0.4-1.noarch.rpm: (RSA) sha1 ((MD5) PGP) md5 NOT OK (MISSING KEYS: RSA#269d9d98 (MD5) PGP#269d9d98)
+
+The ``MISSING KEYS`` message is present because the Pulp QE public key has not
+been imported to your keystore. You should not import it, as **the Pulp QE
+private key is public.** It exists for testing purposes, and provides no
+assurances of identity.
 
 .. _Pulp #2020: https://pulp.plan.io/issues/2020
 .. _Pulp RPM Errata:
