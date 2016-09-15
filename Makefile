@@ -5,6 +5,7 @@ help:
 	@echo "  clean           to remove fixture data and 'gnupghome'"
 	@echo "  fixtures        to create all fixture data"
 	@echo "  fixtures/docker to create Docker fixture data"
+	@echo "  fixtures/drpm   to create DRPM fixture data with signed packages"
 	@echo "  fixtures/drpm-unsigned"
 	@echo "                  to create DRPM fixtures with unsigned packages"
 	@echo "  fixtures/python to create Python fixture data"
@@ -38,6 +39,7 @@ all: fixtures
 	$(warning The `all` target is deprecated. Use `fixtures` instead.)
 
 fixtures: fixtures/docker \
+	fixtures/drpm \
 	fixtures/drpm-unsigned \
 	fixtures/python \
 	fixtures/rpm \
@@ -51,6 +53,12 @@ fixtures: fixtures/docker \
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
+
+fixtures/drpm: gnupghome
+	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
+	GNUPGHOME=$$(realpath -e gnupghome) rpmsign --define '_gpg_name Pulp QE' \
+		--addsign --fskpath ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe --signfiles \
+		$$(find $@ -name '*.drpm')
 
 fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
