@@ -66,6 +66,9 @@ except where otherwise stated.
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm``.
 
+``fixtures/rpm-pkglists-updateinfo``
+    See ``fixtures/rpm``.
+
 ``fixtures/rpm-unsigned``
     The ``createrepo``, ``modifyrepo`` and ``rpmsign`` utilities must be available.
 
