@@ -67,10 +67,8 @@ fixtures/python:
 	python/gen-fixtures.sh $@ python/assets
 
 fixtures/rpm: gnupghome
-	rpm/gen-fixtures.sh $@ rpm/assets
-	GNUPGHOME=$$(realpath -e gnupghome) rpmsign --define '_gpg_name Pulp QE' \
-		--addsign --fskpath ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe --signfiles \
-		$$(find $@ -name '*.rpm')
+	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
+		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
@@ -88,10 +86,8 @@ fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
 fixtures/srpm: gnupghome
-	rpm/gen-fixtures.sh $@ rpm/assets-srpm
-	GNUPGHOME=$$(realpath -e gnupghome) rpmsign --define '_gpg_name Pulp QE' \
-		--addsign --fskpath ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe --signfiles \
-		$$(find $@ -name '*.src.rpm')
+	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
+		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
 
 fixtures/srpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
