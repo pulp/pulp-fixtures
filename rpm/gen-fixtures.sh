@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #
 # Generate an RPM repository.
-
-# TODO move check_getopt to a separate script
 #
 set -euo pipefail
+
+# Assume this script has been called from the Pulp Fixtures makefile.
+source ./rpm/common.sh
 
 # See: http://mywiki.wooledge.org/BashFAQ/028
 readonly script_name='gen-fixtures.sh'
@@ -24,24 +25,6 @@ Options:
         corresponding public key must have a uid (name) of "Pulp QE". (You can
         check this by executing 'gpg public-key' and examining the "uid" field.)
 EOF
-}
-
-# Verify that getopt(1) supports modern option parsing.
-check_getopt() {
-    if [ "$(getopt --test || true)" != '' ]; then
-        fmt 1>&2 <<EOF
-An old version of getopt is installed. Its limitations include being unable to
-cope with whitespace and other shell-specific special characters. Please upgrade
-getopt, or execute this script on a more up-to-date system.
-
-Execute 'getopt --test' to see if getopt is new enough. A modern getopt will
-print no output and return 4. A traditional getopt will print '--' and return 0.
-For more information, see getopt(1).
-
-This script will now exit, so as to avoid possibly causing damage.
-EOF
-        exit 1
-    fi
 }
 
 # Transform $@. $temp is needed. If omitted, non-zero exit codes are ignored.
