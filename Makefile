@@ -55,10 +55,8 @@ fixtures/docker:
 	docker/gen-fixtures.sh $@
 
 fixtures/drpm: gnupghome
-	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
-	GNUPGHOME=$$(realpath -e gnupghome) rpmsign --define '_gpg_name Pulp QE' \
-		--addsign --fskpath ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe --signfiles \
-		$$(find $@ -name '*.drpm')
+	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
+		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
 
 fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
