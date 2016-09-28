@@ -103,10 +103,6 @@ fixtures/rpm-erratum:
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
 
-# NOTE: There is no known specification (syntax, naming, etc) of mirrorlist
-# files. These files are modeled on CentOS mirrorlists. See:
-# http://mirrorlist.centos.org/?release=6&arch=x86_64&repo=os. For an example of
-# an alternate implementation, see: https://www.archlinux.org/mirrorlist/.
 fixtures/rpm-mirrorlist-bad:
 	echo $(base_url)/fixtures/rpm-unsignedd/ > $@
 
