@@ -1,3 +1,7 @@
+# The base URL of where fixtures are hosted. The default is compatible with
+# `python3 -m http.server`.
+base_url=http://localhost:8000
+
 help:
 	@echo "Please use \`make <target>' where <target> is one of:"
 	@echo "  help            to show this message"
@@ -14,13 +18,16 @@ help:
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
-	@echo "  fixtures/rpm-mirrorlist-bad"
-	@echo "  fixtures/rpm-mirrorlist-good"
-	@echo "  fixtures/rpm-mirrorlist-mixed"
-	@echo "                  to create a mirrorlist text file containing one or"
-	@echo "                  more entries. 'bad' and 'good' reference unusable"
-	@echo "                  and usable repositories, respectively. 'mixed'"
-	@echo "                  references both."
+	@echo "  fixtures/rpm-mirrorlist-bad [base_url=...]"
+	@echo "  fixtures/rpm-mirrorlist-good [base_url=...]"
+	@echo "  fixtures/rpm-mirrorlist-mixed [base_url=...]"
+	@echo "                  to create a text file referencing one or more RPM"
+	@echo "                  repositories. 'bad' and 'good' reference unusable"
+	@echo "                  and usable repositories, respectively, and 'mixed'"
+	@echo "                  references both. base_url should be set to where"
+	@echo "                  the fixtures will be hosted. It defaults to"
+	@echo "                  http://localhost:8000, for compatibility with"
+	@echo "                  'python3 -m http.server'."
 	@echo "  fixtures/rpm-pkglists-updateinfo"
 	@echo "                  to create RPM fixtures with multiple pkglists and"
 	@echo "                  collections in updateinfo.xml"
@@ -89,13 +96,13 @@ fixtures/rpm-invalid-updateinfo:
 # http://mirrorlist.centos.org/?release=6&arch=x86_64&repo=os. For an example of
 # an alternate implementation, see: https://www.archlinux.org/mirrorlist/.
 fixtures/rpm-mirrorlist-bad:
-	echo http://localhost:8000/fixtures/rpmm-unsigned/ > $@
+	echo $(base_url)/fixtures/rpmm-unsigned/ > $@
 
 fixtures/rpm-mirrorlist-good: fixtures/rpm-unsigned
-	echo http://localhost:8000/fixtures/rpm-unsigned/ > $@
+	echo $(base_url)/fixtures/rpm-unsigned/ > $@
 
 fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
-	echo -e 'http://localhost:8000/fixtures/rpmm-unsigned/\nhttp://localhost:8000/fixtures/rpm-unsigned/' > $@
+	echo -e '$(base_url)/fixtures/rpmm-unsigned/\n$(base_url)/fixtures/rpm-unsigned/' > $@
 
 fixtures/rpm-pkglists-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
