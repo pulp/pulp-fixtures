@@ -14,6 +14,13 @@ help:
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
+	@echo "  fixtures/rpm-mirrorlist-bad"
+	@echo "  fixtures/rpm-mirrorlist-good"
+	@echo "  fixtures/rpm-mirrorlist-mixed"
+	@echo "                  to create a mirrorlist text file containing one or"
+	@echo "                  more entries. 'bad' and 'good' reference unusable"
+	@echo "                  and usable repositories, respectively. 'mixed'"
+	@echo "                  references both."
 	@echo "  fixtures/rpm-pkglists-updateinfo"
 	@echo "                  to create RPM fixtures with multiple pkglists and"
 	@echo "                  collections in updateinfo.xml"
@@ -45,6 +52,9 @@ fixtures: fixtures/docker \
 	fixtures/rpm \
 	fixtures/rpm-erratum \
 	fixtures/rpm-invalid-updateinfo \
+	fixtures/rpm-mirrorlist-bad \
+	fixtures/rpm-mirrorlist-good \
+	fixtures/rpm-mirrorlist-mixed \
 	fixtures/rpm-pkglists-updateinfo \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
@@ -73,6 +83,19 @@ fixtures/rpm-erratum:
 
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
+
+# NOTE: There is no known specification (syntax, naming, etc) of mirrorlist
+# files. These files are modeled on CentOS mirrorlists. See:
+# http://mirrorlist.centos.org/?release=6&arch=x86_64&repo=os. For an example of
+# an alternate implementation, see: https://www.archlinux.org/mirrorlist/.
+fixtures/rpm-mirrorlist-bad:
+	echo http://localhost:8000/fixtures/rpmm-unsigned/ > $@
+
+fixtures/rpm-mirrorlist-good: fixtures/rpm-unsigned
+	echo http://localhost:8000/fixtures/rpm-unsigned/ > $@
+
+fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
+	echo -e 'http://localhost:8000/fixtures/rpmm-unsigned/\nhttp://localhost:8000/fixtures/rpm-unsigned/' > $@
 
 fixtures/rpm-pkglists-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch

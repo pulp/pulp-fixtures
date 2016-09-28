@@ -70,6 +70,26 @@ See ``make help``.
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-mirrorlist-bad``
+    No exotic dependencies are needed.
+
+    .. NOTE:: The mirrorlists reference http://localhost:8000/…. This base URL
+        **must** be changed to the base URL of the host serving the generated
+        fixtures. The default base URL is valid if fixtures are served with
+        ``python3 -m http.server``.
+
+    .. NOTE:: There is no known specification (syntax, naming, etc) of
+        mirrorlist files. These files are modeled on CentOS mirrorlists. See:
+        http://mirrorlist.centos.org/?release=6&arch=x86_64&repo=os. For an
+        example of an alternate implementation, see:
+        https://www.archlinux.org/mirrorlist/.
+
+``fixtures/rpm-mirrorlist-good``
+    See ``fixtures/rpm-mirrorlist-bad``.
+
+``fixtures/rpm-mirrorlist-mixed``
+    See ``fixtures/rpm-mirrorlist-bad``.
+
 ``fixtures/rpm-pkglists-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
