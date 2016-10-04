@@ -96,13 +96,17 @@ fixtures/rpm-invalid-updateinfo:
 # http://mirrorlist.centos.org/?release=6&arch=x86_64&repo=os. For an example of
 # an alternate implementation, see: https://www.archlinux.org/mirrorlist/.
 fixtures/rpm-mirrorlist-bad:
-	echo $(base_url)/fixtures/rpmm-unsigned/ > $@
+	echo $(base_url)/fixtures/rpm-unsignedd/ > $@
 
 fixtures/rpm-mirrorlist-good: fixtures/rpm-unsigned
 	echo $(base_url)/fixtures/rpm-unsigned/ > $@
 
 fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
-	echo -e '$(base_url)/fixtures/rpmm-unsigned/\n$(base_url)/fixtures/rpm-unsigned/' > $@
+	echo $(base_url)/fixtures/rpm-unsigneddddd/ > $@
+	echo $(base_url)/fixtures/rpm-unsignedddd/ >> $@
+	echo $(base_url)/fixtures/rpm-unsigneddd/ >> $@
+	echo $(base_url)/fixtures/rpm-unsignedd/ >> $@
+	echo $(base_url)/fixtures/rpm-unsigned/ >> $@
 
 fixtures/rpm-pkglists-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
