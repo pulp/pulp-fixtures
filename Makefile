@@ -14,6 +14,8 @@ help:
 	@echo "                  to create DRPM fixtures with unsigned packages"
 	@echo "  fixtures/python-pulp"
 	@echo "                  to create a Pulp Python repository"
+	@echo "  fixtures/python-pypi [base_url=...]"
+	@echo "                  to create a PyPI Python repository"
 	@echo "  fixtures/rpm    to create RPM fixture data with signed packages"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
@@ -25,10 +27,7 @@ help:
 	@echo "                  to create a text file referencing one or more RPM"
 	@echo "                  repositories. 'bad' and 'good' reference unusable"
 	@echo "                  and usable repositories, respectively, and 'mixed'"
-	@echo "                  references both. base_url should be set to where"
-	@echo "                  the fixtures will be hosted. It defaults to"
-	@echo "                  http://localhost:8000, for compatibility with"
-	@echo "                  'python3 -m http.server'."
+	@echo "                  references both."
 	@echo "  fixtures/rpm-pkglists-updateinfo"
 	@echo "                  to create RPM fixtures with multiple pkglists and"
 	@echo "                  collections in updateinfo.xml"
@@ -42,6 +41,10 @@ help:
 	@echo "                  to create SRPM fixture data with unsigned packages"
 	@echo "  gnupghome       to create a GnuPG home directory and import the"
 	@echo "                  Pulp QE public key"
+	@echo ""
+	@echo "base_url should be set to where the fixtures will be hosted. It"
+	@echo "defaults to $(base_url), for compatibility with"
+	@echo "'python3 -m http.server'. It should not have a trailing slash."
 
 clean:
 	rm -rf fixtures/* gnupghome
@@ -58,6 +61,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm-unsigned \
 	fixtures/python \
 	fixtures/python-pulp \
+	fixtures/python-pypi \
 	fixtures/rpm \
 	fixtures/rpm-erratum \
 	fixtures/rpm-invalid-updateinfo \
@@ -85,6 +89,9 @@ fixtures/python: fixtures/python-pulp
 
 fixtures/python-pulp:
 	cp -r python/pulp-assets $@
+
+fixtures/python-pypi:
+	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
 fixtures/rpm: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \

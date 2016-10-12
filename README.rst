@@ -53,6 +53,9 @@ See ``make help``.
 ``fixtures/python-pulp``
     No exotic dependencies are needed.
 
+``fixtures/python-pypi``
+    No exotic dependencies are needed.
+
 ``fixtures/rpm``
     The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
     available.
