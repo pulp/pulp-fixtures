@@ -12,7 +12,8 @@ help:
 	@echo "  fixtures/drpm   to create DRPM fixture data with signed packages"
 	@echo "  fixtures/drpm-unsigned"
 	@echo "                  to create DRPM fixtures with unsigned packages"
-	@echo "  fixtures/python to create Python fixture data"
+	@echo "  fixtures/python-pulp"
+	@echo "                  to create a Pulp Python repository"
 	@echo "  fixtures/rpm    to create RPM fixture data with signed packages"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
@@ -56,6 +57,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm \
 	fixtures/drpm-unsigned \
 	fixtures/python \
+	fixtures/python-pulp \
 	fixtures/rpm \
 	fixtures/rpm-erratum \
 	fixtures/rpm-invalid-updateinfo \
@@ -78,8 +80,11 @@ fixtures/drpm: gnupghome
 fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 
-fixtures/python:
-	python/gen-fixtures.sh $@ python/assets
+fixtures/python: fixtures/python-pulp
+	ln -s ./python-pulp $@
+
+fixtures/python-pulp:
+	cp -r python/pulp-assets $@
 
 fixtures/rpm: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
