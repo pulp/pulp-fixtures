@@ -85,6 +85,7 @@ fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 
 fixtures/python: fixtures/python-pulp
+	$(warning The `fixtures/python` target is deprecated. Use `fixtures/python-pulp` instead.)
 	ln -s ./python-pulp $@
 
 fixtures/python-pulp:
