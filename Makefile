@@ -9,14 +9,14 @@ help:
 	@echo "  clean           to remove fixture data and 'gnupghome'"
 	@echo "  fixtures        to create all fixture data"
 	@echo "  fixtures/docker to create Docker fixture data"
-	@echo "  fixtures/drpm   to create DRPM fixture data with signed packages"
+	@echo "  fixtures/drpm-signed"
+	@echo "                  to create DRPM fixtures with signed packages"
 	@echo "  fixtures/drpm-unsigned"
 	@echo "                  to create DRPM fixtures with unsigned packages"
 	@echo "  fixtures/python-pulp"
 	@echo "                  to create a Pulp Python repository"
 	@echo "  fixtures/python-pypi [base_url=...]"
 	@echo "                  to create a PyPI Python repository"
-	@echo "  fixtures/rpm    to create RPM fixture data with signed packages"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
@@ -31,11 +31,13 @@ help:
 	@echo "  fixtures/rpm-pkglists-updateinfo"
 	@echo "                  to create RPM fixtures with multiple pkglists and"
 	@echo "                  collections in updateinfo.xml"
+	@echo "  fixtures/rpm-signed"
+	@echo "                  to create RPM fixture data with signed packages"
 	@echo "  fixtures/rpm-unsigned"
 	@echo "                  to create RPM fixture data with unsigned packages"
 	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
-	@echo "  fixtures/srpm"
+	@echo "  fixtures/srpm-signed"
 	@echo "                  to create SRPM fixture data with signed packages"
 	@echo "  fixtures/srpm-unsigned"
 	@echo "                  to create SRPM fixture data with unsigned packages"
@@ -58,6 +60,7 @@ all: fixtures
 
 fixtures: fixtures/docker \
 	fixtures/drpm \
+	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/python \
 	fixtures/python-pulp \
@@ -69,15 +72,21 @@ fixtures: fixtures/docker \
 	fixtures/rpm-mirrorlist-good \
 	fixtures/rpm-mirrorlist-mixed \
 	fixtures/rpm-pkglists-updateinfo \
+	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/srpm \
+	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
 
-fixtures/drpm: gnupghome
+fixtures/drpm: fixtures/drpm-signed
+	$(warning The `fixtures/drpm` target is deprecated. Use `fixtures/drpm-signed` instead.)
+	ln -s ./drpm-signed $@
+
+fixtures/drpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
 		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
 
@@ -94,9 +103,9 @@ fixtures/python-pulp:
 fixtures/python-pypi:
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
-fixtures/rpm: gnupghome
-	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
-		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets
+fixtures/rpm: fixtures/rpm-signed
+	$(warning The `fixtures/rpm` target is deprecated. Use `fixtures/rpm-signed` instead.)
+	ln -s ./rpm-signed $@
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
@@ -120,13 +129,21 @@ fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
 fixtures/rpm-pkglists-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
 
+fixtures/rpm-signed: gnupghome
+	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
+		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets
+
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
-fixtures/srpm: gnupghome
+fixtures/srpm: fixtures/srpm-signed
+	$(warning The `fixtures/srpm` target is deprecated. Use `fixtures/srpm-signed` instead.)
+	ln -s ./srpm-signed $@
+
+fixtures/srpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
 		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
 

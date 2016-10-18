@@ -44,7 +44,7 @@ See ``make help``.
     permissions, with a command such as ``gpasswd --add $(id -u) docker &&
     newgrp``.
 
-``fixtures/drpm``
+``fixtures/drpm-signed``
     The ``createrepo``, ``makedeltarpm`` and ``rpmsign`` utilities must be available.
 
 ``fixtures/drpm-unsigned``
@@ -55,10 +55,6 @@ See ``make help``.
 
 ``fixtures/python-pypi``
     No exotic dependencies are needed.
-
-``fixtures/rpm``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
-    available.
 
 ``fixtures/rpm-erratum``
     The ``md5sum`` and ``sha256sum`` executables must be available.
@@ -93,13 +89,17 @@ See ``make help``.
 ``fixtures/rpm-pkglists-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-signed``
+    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
+    available.
+
 ``fixtures/rpm-unsigned``
     The ``createrepo`` and ``modifyrepo`` executables must be available.
 
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
-``fixtures/srpm``
+``fixtures/srpm-signed``
     The ``createrepo`` and ``modifyrepo`` executables must be available.
 
 ``fixtures/srpm-unsigned``
