@@ -20,16 +20,25 @@ contents into <output-dir>. <output-dir> need not exist, but all parent
 directories must exist.
 
 Options:
-    --signing-key <signing-key>
+    --signing-key <path>
         A private key with which to sign RPMs in the generated repository. The
         corresponding public key must have a uid (name) of "Pulp QE". (You can
         check this by executing 'gpg public-key' and examining the "uid" field.)
+    --packages-dir <relative-path>
+        The path in which to place packages, relative to the root of the
+        repository. If not specified, packages are placed in the root of the
+        repository. Passing \`--packages-dir .\` is equivalent to the default
+        action.
 EOF
 }
 
 # Transform $@. $temp is needed. If omitted, non-zero exit codes are ignored.
 check_getopt
-temp=$(getopt --options '' --longoptions signing-key: --name "$script_name" -- "$@")
+temp=$(getopt \
+    --options '' \
+    --longoptions signing-key:,packages-dir: \
+    --name "$script_name" \
+    -- "$@")
 eval set -- "$temp"
 unset temp
 
@@ -41,6 +50,7 @@ fi
 while true; do
     case "$1" in
         --signing-key) signing_key="$(realpath --canonicalize-existing "$2")"; shift 2;;
+        --packages-dir) packages_dir="$2"; shift 2;;
         --) shift; break;;
         *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
     esac
@@ -55,12 +65,16 @@ trap cleanup EXIT  # bash pseudo signal
 trap 'cleanup ; trap - SIGINT ; kill -s SIGINT $$' SIGINT
 trap 'cleanup ; trap - SIGTERM ; kill -s SIGTERM $$' SIGTERM
 working_dir="$(mktemp --directory)"
+packages_dir="$(realpath --canonicalize-missing "${working_dir}/${packages_dir}")"
+if [ "${working_dir}" != "${packages_dir}" ]; then
+    mkdir -p "${packages_dir}"
+fi
 
 # Sign RPMs and genereate repository metadata.
 #
 # NOTE: --groupfile should not be in $output_dir, but createrepo requires that
 # --groupfile be relative to $output_dir. Thus, the relative path calculation.
-cp --reflink=auto -t "${working_dir}" "${assets_dir}/"*.rpm
+cp --reflink=auto -t "${packages_dir}" "${assets_dir}/"*.rpm
 if [ -n "${signing_key:-}" ]; then
     find "${working_dir}" -name '*.rpm' -print0 | xargs -0 rpmsign \
         --define '_gpg_name Pulp QE' --addsign --fskpath "${signing_key}" \

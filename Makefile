@@ -17,6 +17,9 @@ help:
 	@echo "                  to create a Pulp Python repository"
 	@echo "  fixtures/python-pypi [base_url=...]"
 	@echo "                  to create a PyPI Python repository"
+	@echo "  fixtures/rpm-alt-layout"
+	@echo "                  to create an RPM repository with packages in a"
+	@echo "                  dedicated directory"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-invalid-updateinfo"
@@ -66,6 +69,7 @@ fixtures: fixtures/docker \
 	fixtures/python-pulp \
 	fixtures/python-pypi \
 	fixtures/rpm \
+	fixtures/rpm-alt-layout \
 	fixtures/rpm-erratum \
 	fixtures/rpm-invalid-updateinfo \
 	fixtures/rpm-mirrorlist-bad \
@@ -106,6 +110,9 @@ fixtures/python-pypi:
 fixtures/rpm: fixtures/rpm-signed
 	$(warning The `fixtures/rpm` target is deprecated. Use `fixtures/rpm-signed` instead.)
 	ln -s ./rpm-signed $@
+
+fixtures/rpm-alt-layout:
+	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
