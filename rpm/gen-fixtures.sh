@@ -65,7 +65,7 @@ trap cleanup EXIT  # bash pseudo signal
 trap 'cleanup ; trap - SIGINT ; kill -s SIGINT $$' SIGINT
 trap 'cleanup ; trap - SIGTERM ; kill -s SIGTERM $$' SIGTERM
 working_dir="$(mktemp --directory)"
-packages_dir="$(realpath --canonicalize-missing "${working_dir}/${packages_dir}")"
+packages_dir="$(realpath --canonicalize-missing "${working_dir}/${packages_dir:-}")"
 if [ "${working_dir}" != "${packages_dir}" ]; then
     mkdir -p "${packages_dir}"
 fi
