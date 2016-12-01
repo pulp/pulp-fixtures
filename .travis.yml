@@ -6,6 +6,7 @@ before_install:
     - cabal update
     - git clone https://github.com/koalaman/shellcheck.git
     - cd shellcheck
+    - git checkout v0.4.4
     - cabal install
     - cd ..
     - export PATH="$HOME/.cabal/bin:$PATH"
