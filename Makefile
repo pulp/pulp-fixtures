@@ -13,6 +13,10 @@ help:
 	@echo "                  to create DRPM fixtures with signed packages"
 	@echo "  fixtures/drpm-unsigned"
 	@echo "                  to create DRPM fixtures with unsigned packages"
+	@echo "  fixtures/file   to create File fixtures"
+	@echo "  fixtures/file-mixed"
+	@echo "                  to create File fixtures with some not available"
+	@echo "                  files on the PULP_MANIFEST"
 	@echo "  fixtures/python-pulp"
 	@echo "                  to create a Pulp Python repository"
 	@echo "  fixtures/python-pypi [base_url=...]"
@@ -65,6 +69,8 @@ fixtures: fixtures/docker \
 	fixtures/drpm \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
+	fixtures/file \
+	fixtures/file-mixed \
 	fixtures/python \
 	fixtures/python-pulp \
 	fixtures/python-pypi \
@@ -96,6 +102,14 @@ fixtures/drpm-signed: gnupghome
 
 fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
+
+fixtures/file:
+	file/gen-fixtures.sh $@
+
+fixtures/file-mixed:
+	file/gen-fixtures.sh $@
+	echo missing-1.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
+	echo missing-2.iso,ab6d91d4956d1a009bd6d03b3591f95aaae83b36907f77dd1ac71c400715b901,2097152 >> $@/PULP_MANIFEST
 
 fixtures/python: fixtures/python-pulp
 	$(warning The `fixtures/python` target is deprecated. Use `fixtures/python-pulp` instead.)
