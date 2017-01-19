@@ -67,6 +67,12 @@ See ``make help``.
         script is based primarily on the `Pulp RPM Errata`_ documentation. As a
         result, this target may exhibit erroneous behaviour.
 
+``fixtures/rpm-incomplete-filelists``
+    See ``fixtures/rpm-unsigned``.
+
+``fixtures/rpm-incomplete-other``
+    See ``fixtures/rpm-unsigned``.
+
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
@@ -85,6 +91,15 @@ See ``make help``.
 
 ``fixtures/rpm-mirrorlist-mixed``
     See ``fixtures/rpm-mirrorlist-bad``.
+
+``fixtures/rpm-missing-filelists``
+    See ``fixtures/rpm-unsigned``.
+
+``fixtures/rpm-missing-other``
+    See ``fixtures/rpm-unsigned``.
+
+``fixtures/rpm-missing-primary``
+    See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-pkglists-updateinfo``
     See ``fixtures/rpm-unsigned``.

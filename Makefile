@@ -26,6 +26,12 @@ help:
 	@echo "                  dedicated directory"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
+	@echo "  fixtures/rpm-incomplete-filelists"
+	@echo "                  to create an RPM repository with an incomplete"
+	@echo "                  filelists.xml"
+	@echo "  fixtures/rpm-incomplete-other"
+	@echo "                  to create an RPM repository with an incomplete"
+	@echo "                  other.xml"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
 	@echo "  fixtures/rpm-mirrorlist-bad [base_url=...]"
@@ -35,6 +41,12 @@ help:
 	@echo "                  repositories. 'bad' and 'good' reference unusable"
 	@echo "                  and usable repositories, respectively, and 'mixed'"
 	@echo "                  references both."
+	@echo "  fixtures/rpm-missing-filelists"
+	@echo "                  to create an RPM repository without filelists.xml"
+	@echo "  fixtures/rpm-missing-other"
+	@echo "                  to create an RPM repository without other.xml"
+	@echo "  fixtures/rpm-missing-primary"
+	@echo "                  to create an RPM repository without primary.xml"
 	@echo "  fixtures/rpm-pkglists-updateinfo"
 	@echo "                  to create RPM fixtures with multiple pkglists and"
 	@echo "                  collections in updateinfo.xml"
@@ -77,10 +89,15 @@ fixtures: fixtures/docker \
 	fixtures/rpm \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-erratum \
+	fixtures/rpm-incomplete-filelists \
+	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-updateinfo \
 	fixtures/rpm-mirrorlist-bad \
 	fixtures/rpm-mirrorlist-good \
 	fixtures/rpm-mirrorlist-mixed \
+	fixtures/rpm-missing-filelists \
+	fixtures/rpm-missing-other \
+	fixtures/rpm-missing-primary \
 	fixtures/rpm-pkglists-updateinfo \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
@@ -131,6 +148,18 @@ fixtures/rpm-alt-layout:
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
 
+fixtures/rpm-incomplete-filelists:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	gunzip $@/repodata/*-filelists.xml.gz
+	sed -i -e '/<package /,/<\/package>/d' $@/repodata/*-filelists.xml
+	gzip $@/repodata/*-filelists.xml
+
+fixtures/rpm-incomplete-other:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	gunzip $@/repodata/*-other.xml.gz
+	sed -i -e '/<package /,/<\/package>/d' $@/repodata/*-other.xml
+	gzip $@/repodata/*-other.xml
+
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
 
@@ -146,6 +175,18 @@ fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
 	echo $(base_url)/fixtures/rpm-unsigneddd/ >> $@
 	echo $(base_url)/fixtures/rpm-unsignedd/ >> $@
 	echo $(base_url)/fixtures/rpm-unsigned/ >> $@
+
+fixtures/rpm-missing-filelists:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	rm $@/repodata/*-filelists.*
+
+fixtures/rpm-missing-other:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	rm $@/repodata/*-other.*
+
+fixtures/rpm-missing-primary:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	rm $@/repodata/*-primary.*
 
 fixtures/rpm-pkglists-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
