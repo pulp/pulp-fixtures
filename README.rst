@@ -67,6 +67,10 @@ See ``make help``.
         script is based primarily on the `Pulp RPM Errata`_ documentation. As a
         result, this target may exhibit erroneous behaviour.
 
+``fixtures/rpm-with-pulp-distribution``
+
+    See ``fixtures/rpm-unsigned``
+
 ``fixtures/rpm-incomplete-filelists``
     See ``fixtures/rpm-unsigned``.
 

@@ -26,6 +26,9 @@ help:
 	@echo "                  dedicated directory"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
+	@echo "  fixtures/rpm-with-pulp-distribution"
+	@echo "                  to create an RPM repository with extra files and"
+	@echo "                  a PULP_DISTRIBUTION.xml file."
 	@echo "  fixtures/rpm-incomplete-filelists"
 	@echo "                  to create an RPM repository with an incomplete"
 	@echo "                  filelists.xml"
@@ -89,6 +92,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-erratum \
+	fixtures/rpm-with-pulp-distribution \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-updateinfo \
@@ -147,6 +151,16 @@ fixtures/rpm-alt-layout:
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
+
+fixtures/rpm-with-pulp-distribution:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	echo "productid" > $@/repodata/productid
+	mkdir $@/release-notes
+	echo "release information" > $@/release-notes/release-info
+	echo "<pulp_distribution version=\"1\">" > $@/PULP_DISTRIBUTION.xml
+	echo "<file>repodata/productid</file>" >> $@/PULP_DISTRIBUTION.xml
+	echo "<file>release-notes/release-info</file>" >> $@/PULP_DISTRIBUTION.xml
+	echo "</pulp_distribution>" >> $@/PULP_DISTRIBUTION.xml
 
 fixtures/rpm-incomplete-filelists:
 	rpm/gen-fixtures.sh $@ rpm/assets
