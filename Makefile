@@ -26,9 +26,6 @@ help:
 	@echo "                  dedicated directory"
 	@echo "  fixtures/rpm-erratum"
 	@echo "                  to create a JSON erratum referencing the RPM fixtures"
-	@echo "  fixtures/rpm-with-pulp-distribution"
-	@echo "                  to create an RPM repository with extra files and"
-	@echo "                  a PULP_DISTRIBUTION.xml file."
 	@echo "  fixtures/rpm-incomplete-filelists"
 	@echo "                  to create an RPM repository with an incomplete"
 	@echo "                  filelists.xml"
@@ -59,6 +56,9 @@ help:
 	@echo "                  to create RPM fixture data with unsigned packages"
 	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
+	@echo "  fixtures/rpm-with-pulp-distribution"
+	@echo "                  to create an RPM repository with extra files and"
+	@echo "                  a PULP_DISTRIBUTION.xml file."
 	@echo "  fixtures/srpm-signed"
 	@echo "                  to create SRPM fixture data with signed packages"
 	@echo "  fixtures/srpm-unsigned"
@@ -92,7 +92,6 @@ fixtures: fixtures/docker \
 	fixtures/rpm \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-erratum \
-	fixtures/rpm-with-pulp-distribution \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-updateinfo \
@@ -106,6 +105,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
+	fixtures/rpm-with-pulp-distribution \
 	fixtures/srpm \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
@@ -151,16 +151,6 @@ fixtures/rpm-alt-layout:
 
 fixtures/rpm-erratum:
 	rpm/gen-erratum.sh $@ rpm/assets
-
-fixtures/rpm-with-pulp-distribution:
-	rpm/gen-fixtures.sh $@ rpm/assets
-	echo "productid" > $@/repodata/productid
-	mkdir $@/release-notes
-	echo "release information" > $@/release-notes/release-info
-	echo "<pulp_distribution version=\"1\">" > $@/PULP_DISTRIBUTION.xml
-	echo "<file>repodata/productid</file>" >> $@/PULP_DISTRIBUTION.xml
-	echo "<file>release-notes/release-info</file>" >> $@/PULP_DISTRIBUTION.xml
-	echo "</pulp_distribution>" >> $@/PULP_DISTRIBUTION.xml
 
 fixtures/rpm-incomplete-filelists:
 	rpm/gen-fixtures.sh $@ rpm/assets
@@ -214,6 +204,21 @@ fixtures/rpm-unsigned:
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+
+fixtures/rpm-with-pulp-distribution:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	echo "productid" > $@/repodata/productid
+	mkdir $@/release-notes
+	echo "release information" > $@/release-notes/release-info
+	echo "<pulp_distribution version=\"1\">" > $@/PULP_DISTRIBUTION.xml
+	echo "<file>repodata/productid</file>" >> $@/PULP_DISTRIBUTION.xml
+	echo "<file>release-notes/release-info</file>" >> $@/PULP_DISTRIBUTION.xml
+	echo "</pulp_distribution>" >> $@/PULP_DISTRIBUTION.xml
+	echo "[general]" > $@/treeinfo
+	echo "arch=x86_64" >> $@/treeinfo
+	echo "family=Zoo" >> $@/treeinfo
+	echo "timestamp=1485887759" >> $@/treeinfo
+	echo "version=42" >> $@/treeinfo
 
 fixtures/srpm: fixtures/srpm-signed
 	$(warning The `fixtures/srpm` target is deprecated. Use `fixtures/srpm-signed` instead.)
