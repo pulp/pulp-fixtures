@@ -50,6 +50,9 @@ See ``make help``.
 ``fixtures/drpm-unsigned``
     The ``createrepo`` and ``makedeltarpm`` executables must be available.
 
+``fixtures/puppet``
+    The ``puppet`` executable must be available.
+
 ``fixtures/python-pulp``
     No exotic dependencies are needed.
 
