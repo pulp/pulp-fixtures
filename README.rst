@@ -132,6 +132,12 @@ See ``make help``.
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-with-non-ascii``
+    The ``fedpkg`` executable must be available.
+
+``fixtures/rpm-with-non-utf-8``
+    The ``fedpkg`` executable must be available.
+
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.
 

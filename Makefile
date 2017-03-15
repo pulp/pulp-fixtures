@@ -57,6 +57,10 @@ help:
 	@echo "                  to create RPM fixture data with unsigned packages"
 	@echo "  fixtures/rpm-updated-updateinfo"
 	@echo "                  to create RPM fixtures with invalid updateinfo.xml"
+	@echo "  fixtures/rpm-with-non-ascii"
+	@echo "                  to create an RPM file with non-ascii characters"
+	@echo "  fixtures/rpm-with-non-utf-8"
+	@echo "                  to create an RPM file with non-utf-8 characters"
 	@echo "  fixtures/rpm-with-pulp-distribution"
 	@echo "                  to create an RPM repository with extra files and"
 	@echo "                  a PULP_DISTRIBUTION.xml file."
@@ -75,8 +79,11 @@ clean:
 	rm -rf fixtures/* gnupghome
 
 # xargs communicates return values better than find's `-exec` argument.
+# --external-sources is used because at least one script sources
+# /etc/os-release. Passing /etc/os-release to shellcheck's argument list
+# produces unnecessary warnings.
 lint:
-	find . -name '*.sh' -print0 | xargs -0 shellcheck
+	find . -name '*.sh' -print0 | xargs -0 shellcheck --external-sources
 
 all: fixtures
 	$(warning The `all` target is deprecated. Use `fixtures` instead.)
@@ -107,6 +114,8 @@ fixtures: fixtures/docker \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
+	fixtures/rpm-with-non-ascii \
+	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-with-pulp-distribution \
 	fixtures/srpm \
 	fixtures/srpm-signed \
@@ -209,6 +218,12 @@ fixtures/rpm-unsigned:
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+
+fixtures/rpm-with-non-ascii:
+	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
+
+fixtures/rpm-with-non-utf-8:
+	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-pulp-distribution:
 	rpm/gen-fixtures.sh $@ rpm/assets
