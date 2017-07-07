@@ -116,6 +116,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-non-utf-8 \
+	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
 	fixtures/srpm \
 	fixtures/srpm-signed \
@@ -223,6 +224,9 @@ fixtures/rpm-with-non-ascii:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-non-utf-8:
+	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
+
+fixtures/rpm-with-vendor:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-pulp-distribution:

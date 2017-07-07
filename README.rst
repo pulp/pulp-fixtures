@@ -138,6 +138,9 @@ See ``make help``.
 ``fixtures/rpm-with-non-utf-8``
     The ``fedpkg`` executable must be available.
 
+``fixtures/rpm-with-vendor``
+    The ``fedpkg`` executable must be available.
+
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.
 
