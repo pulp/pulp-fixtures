@@ -17,6 +17,7 @@ help:
 	@echo "  fixtures/file-mixed"
 	@echo "                  to create File fixtures with some not available"
 	@echo "                  files on the PULP_MANIFEST"
+	@echo "  fixtures/ostree to create a OSTree ostree repositories"
 	@echo "  fixtures/puppet to create a dummy Puppet module"
 	@echo "  fixtures/python-pulp"
 	@echo "                  to create a Pulp Python repository"
@@ -143,6 +144,9 @@ fixtures/file-mixed:
 	file/gen-fixtures.sh $@
 	echo missing-1.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 	echo missing-2.iso,ab6d91d4956d1a009bd6d03b3591f95aaae83b36907f77dd1ac71c400715b901,2097152 >> $@/PULP_MANIFEST
+
+fixtures/ostree:
+	ostree/gen-fixtures.sh $@/small
 
 fixtures/puppet:
 	puppet/gen-module.sh $@

@@ -65,6 +65,9 @@ See ``make help``.
 ``fixtures/puppet``
     The ``puppet`` executable must be available.
 
+``fixtures/ostree``
+    The ``ostree`` executable must be available.
+
 ``fixtures/python-pulp``
     No exotic dependencies are needed.
 
