@@ -142,7 +142,7 @@ See ``make help``.
     The ``fedpkg`` executable must be available.
 
 ``fixtures/rpm-with-vendor``
-    The ``fedpkg`` executable must be available.
+    The ``fedpkg`` and ``createrepo`` executables must be available.
 
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.

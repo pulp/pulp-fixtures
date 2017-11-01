@@ -65,6 +65,9 @@ help:
 	@echo "  fixtures/rpm-with-pulp-distribution"
 	@echo "                  to create an RPM repository with extra files and"
 	@echo "                  a PULP_DISTRIBUTION.xml file."
+	@echo "  fixtures/rpm-with-vendor"
+	@echo "                  to create an RPM repository with an RPM that has a"
+	@echo "                  vendor"
 	@echo "  fixtures/srpm-signed"
 	@echo "                  to create SRPM fixture data with signed packages"
 	@echo "  fixtures/srpm-unsigned"
@@ -231,7 +234,7 @@ fixtures/rpm-with-non-utf-8:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-vendor:
-	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
+	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-pulp-distribution:
 	rpm/gen-fixtures.sh $@ rpm/assets
