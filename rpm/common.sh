@@ -20,3 +20,68 @@ EOF
         exit 1
     fi
 }
+
+# Given the path to an RPM, return its epoch.
+#
+# Examples:
+#
+#   'assets/1!baby-walrus-5.21-1.noarch.rpm' → 1
+#   'assets/baby-walrus-5.21-1.noarch.rpm' → 0
+get_rpm_epoch() {
+    local filename
+    filename="$(basename "${1}")"
+    case "${filename}" in
+        *'!'*)
+            echo "${filename%\!*}"
+            ;;
+        *)
+            echo 0
+            ;;
+    esac
+}
+
+# Given the path to an RPM, return its name.
+#
+# Example: 'assets/1!baby-walrus-5.21-1.noarch.rpm' → baby-walrus
+get_rpm_name() {
+    local filename
+    filename="$(basename "${1}")"
+    filename="${filename#*\!}"  # strip epoch
+    filename="${filename%-*}"  # strip release and architecture
+    filename="${filename%-*}"  # strip version
+    echo "${filename}"
+}
+
+# Given the path to an RPM, return its version.
+#
+# Example: 'assets/1!baby-walrus-5.21-1.noarch.rpm' → 5.21
+get_rpm_version() {
+    local filename
+    filename="$(basename "${1}")"
+    filename="${filename#*\!}"  # strip epoch
+    filename="${filename%-*}"  # strip release and architecture
+    filename="${filename##*-}"  # strip name
+    echo "${filename}"
+}
+
+# Given the path to an RPM, return its release.
+#
+# Example: 'assets/1!baby-walrus-5.21-1.noarch.rpm' → 1
+get_rpm_release() {
+    local filename
+    filename="$(basename "${1}")"
+    filename="${filename##*-}"  # strip epoch, name and version
+    filename="${filename%%.*}"  # strip architecture
+    echo "${filename}"
+}
+
+# Given the path to an RPM, return its architecture.
+#
+# Example: 'assets/1!baby-walrus-5.21-1.noarch.rpm' → noarch.rpm
+get_rpm_architecture() {
+    local filename
+    filename="$(basename "${1}")"
+    filename="${filename##*-}"  # strip epoch, name and version
+    filename="${filename#*.}"  # strip release
+    echo "${filename}"
+}

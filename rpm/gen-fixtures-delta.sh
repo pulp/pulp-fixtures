@@ -34,55 +34,6 @@ Options:
 EOF
 }
 
-# Given a path to an RPM package, echo the package name.
-#
-# e.g. assets/walrus-baby-5.21-1.noarch.rpm → walrus-baby
-get_rpm_name() {
-    local filename parts end
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    end=$(( ${#parts[@]} - 2 ))
-    for ((i=0; i< end ; i++)); do
-        rpm_name+="${parts[i]}"-
-    done
-    rpm_name="${rpm_name::-1}"
-    echo "${rpm_name#*\!}"  # strip epoch
-}
-
-# Given a path to an RPM package, echo the package version.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → 5.21
-get_rpm_version() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    echo "${parts[-2]}"
-}
-
-# Given a pathto an RPM package, echo the package release.
-#
-# e.g. assets/yum-cron-3.4.3-10.fc16.noarch.rpm  → 10.fc16
-get_rpm_release() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    last_part="${parts[-1]}"
-    pattern="${2}.rpm"
-
-    release="${last_part%.$pattern}"
-    echo "${release}"
-}
-
-# Given a path to an RPM package, echo the package arch.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → noarch
-get_rpm_arch() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr . "\n"))
-    echo "${parts[-2]}"
-}
-
 #------------------------------------------------------------------------------
 # Business Logic
 #------------------------------------------------------------------------------
@@ -143,8 +94,8 @@ EOF
         exit 1
     fi
 
-    arch_1="$(get_rpm_arch "${rpm_1}")"
-    arch_2="$(get_rpm_arch "${rpm_2}")"
+    arch_1="$(get_rpm_architecture "${rpm_1}")"
+    arch_2="$(get_rpm_architecture "${rpm_2}")"
     if [ "${arch_1}" != "${arch_2}" ]; then
         fmt 1>&2 <<EOF
 Error: Old and new packages must have the same architecture, but are different.
@@ -158,7 +109,7 @@ EOF
     rel_1="$(get_rpm_release "${rpm_1}" "${arch_1}")"
     rel_2="$(get_rpm_release "${rpm_2}" "${arch_2}")"
     makedeltarpm "${rpm_1}" "${rpm_2}" \
-        "${working_dir}/drpms/${name_2}-${ver_1}-${rel_1}_${ver_2}-${rel_2}.${arch_2}.drpm"
+        "${working_dir}/drpms/${name_1}-${ver_1}-${rel_1}_${ver_2}-${rel_2}.${arch_1%.rpm}.drpm"
 done
 
 # Sign DRPMs and generate repository metadata.

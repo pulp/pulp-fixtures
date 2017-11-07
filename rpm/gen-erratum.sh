@@ -5,6 +5,9 @@
 #
 set -euo pipefail
 
+# Assume this script has been called from the Pulp Fixtures makefile.
+source ./rpm/common.sh
+
 #------------------------------------------------------------------------------
 # Helper Functions
 #------------------------------------------------------------------------------
@@ -34,7 +37,7 @@ EOF
 # Given an RPM filename, echo a JSON description of the RPM.
 make_erratum_package() {
 cat <<EOF
-"arch": "$(get_rpm_arch "${1}")",
+"arch": "$(get_rpm_architecture "${1}")",
 "epoch": "$(get_rpm_epoch "${1}")",
 "filename": "$(basename "${1}")",
 "name": "$(get_rpm_name "${1}")",
@@ -48,63 +51,6 @@ cat <<EOF
 ],
 "version": "$(get_rpm_version "${1}")"
 EOF
-}
-
-# Given a path to an RPM package, echo the package epoch.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → 0
-get_rpm_epoch() {
-    local filename
-    filename="$(basename "${1}")"
-    # If an epoch is listed, return it. Otherwise, assume an epoch of 0.
-    case "${filename}" in
-        *'!'*)
-            echo "${filename#\!*}"
-            ;;
-        *)
-            echo 0
-            ;;
-    esac
-}
-
-# Given a path to an RPM package, echo the package name.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → walrus
-get_rpm_name() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    echo "${parts[0]#*\!}"  # strip epoch
-}
-
-# Given a path to an RPM package, echo the package version.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → 5.21
-get_rpm_version() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    echo "${parts[1]}"
-}
-
-# Given a path to an RPM package, echo the package release.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → 1
-get_rpm_release() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr - "\n"))
-    echo "${parts[2]%%.*}"
-}
-
-# Given a path to an RPM package, echo the package arch.
-#
-# e.g. assets/walrus-5.21-1.noarch.rpm → noarch
-get_rpm_arch() {
-    local filename parts
-    filename="$(basename "${1}")"
-    IFS=$'\n' parts=($(echo "${filename}" | tr . "\n"))
-    echo "${parts[-2]}"
 }
 
 # Given a path to a file, echo the file's sha256 checksum.
