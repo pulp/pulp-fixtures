@@ -83,11 +83,8 @@ clean:
 	rm -rf fixtures/* gnupghome
 
 # xargs communicates return values better than find's `-exec` argument.
-# --external-sources is used because at least one script sources
-# /etc/os-release. Passing /etc/os-release to shellcheck's argument list
-# produces unnecessary warnings.
 lint:
-	find . -name '*.sh' -print0 | xargs -0 shellcheck --external-sources
+	find . -name '*.sh' -print0 | xargs -0 shellcheck
 
 all: fixtures
 	$(warning The `all` target is deprecated. Use `fixtures` instead.)

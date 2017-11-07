@@ -51,10 +51,9 @@ working_dir="$(mktemp --directory)"
 # Copy the spec file into the workspace and generate an RPM.
 cp "${spec_file}" "${working_dir}/"
 (
-    source /etc/os-release
     cd "${working_dir}"
-    fedpkg --release "f${VERSION_ID}" local
+    fedpkg --release f25 local
     install -Dm644 \
-        "noarch/$(basename "${spec_file%.spec}")-1-1.fc${VERSION_ID}.noarch.rpm" \
-        "${output_dir}/$(basename "${spec_file%.spec}")-1-1.fc${VERSION_ID}.noarch.rpm"
+        "noarch/$(basename "${spec_file%.spec}")-1-1.fc25.noarch.rpm" \
+        "${output_dir}/$(basename "${spec_file%.spec}")-1-1.fc25.noarch.rpm"
 )
