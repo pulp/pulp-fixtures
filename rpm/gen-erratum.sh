@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# coding=utf-8
 #
 # Generate an erratum that can be uploaded to a Pulp RPM repository.
 #

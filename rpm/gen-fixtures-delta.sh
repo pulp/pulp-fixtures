@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# coding=utf-8
 #
 # Generate RPM repository with DRPM fixture data.
 #

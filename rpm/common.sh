@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# coding=utf-8
 #
 # Re-usable functions for use by the other RPM-generation scripts.
 

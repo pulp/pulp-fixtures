@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# coding=utf-8
 #
 # WARNING: Calling this script by hand is not recommended. It should instead be
 # called by the pulp-fixtures make file. That's because this script doesn't
