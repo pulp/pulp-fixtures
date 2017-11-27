@@ -94,6 +94,9 @@ See ``make help``.
 ``fixtures/rpm-incomplete-other``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-invalid-rpm``
+    No exotic dependencies are needed.
+
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm-unsigned``.
 

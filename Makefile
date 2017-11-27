@@ -34,6 +34,8 @@ help:
 	@echo "  fixtures/rpm-incomplete-other"
 	@echo "                  to create an RPM repository with an incomplete"
 	@echo "                  other.xml"
+	@echo "  fixtures/rpm-invalid-rpm"
+	@echo "                  to create an invalid RPM"
 	@echo "  fixtures/rpm-invalid-updateinfo"
 	@echo "                  to create RPM fixtures with updated updateinfo.xml"
 	@echo "  fixtures/rpm-mirrorlist-bad [base_url=...]"
@@ -104,6 +106,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-erratum \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
+	fixtures/rpm-invalid-rpm \
 	fixtures/rpm-invalid-updateinfo \
 	fixtures/rpm-mirrorlist-bad \
 	fixtures/rpm-mirrorlist-good \
@@ -182,6 +185,9 @@ fixtures/rpm-incomplete-other:
 	gunzip $@/repodata/*-other.xml.gz
 	sed -i -e '/<package /,/<\/package>/d' $@/repodata/*-other.xml
 	gzip $@/repodata/*-other.xml
+
+fixtures/rpm-invalid-rpm:
+	rpm/gen-invalid-rpm.sh $@
 
 fixtures/rpm-invalid-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
