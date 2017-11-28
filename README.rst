@@ -59,6 +59,9 @@ See ``make help``.
 ``fixtures/file``
     No exotic dependencies are needed.
 
+``fixtures/file2``
+    No exotic dependencies are needed.
+
 ``fixtures/file-mixed``
     See ``fixtures/file``.
 

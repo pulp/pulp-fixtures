@@ -13,7 +13,9 @@ help:
 	@echo "                  to create DRPM fixtures with signed packages"
 	@echo "  fixtures/drpm-unsigned"
 	@echo "                  to create DRPM fixtures with unsigned packages"
-	@echo "  fixtures/file   to create File fixtures"
+	@echo "  fixtures/file   to create file fixtures"
+	@echo "  fixtures/file2  to create file fixtures, with same file names but"
+	@echo "                  different contents"
 	@echo "  fixtures/file-mixed"
 	@echo "                  to create File fixtures with some not available"
 	@echo "                  files on the PULP_MANIFEST"
@@ -96,6 +98,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
+	fixtures/file2 \
 	fixtures/file-mixed \
 	fixtures/puppet \
 	fixtures/python \
@@ -141,6 +144,9 @@ fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 
 fixtures/file:
+	file/gen-fixtures.sh $@
+
+fixtures/file2:
 	file/gen-fixtures.sh $@
 
 fixtures/file-mixed:
