@@ -103,6 +103,9 @@ See ``make help``.
 ``fixtures/rpm-invalid-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-long-updateinfo``
+    See ``fixtures/rpm-unsigned``.
+
 ``fixtures/rpm-mirrorlist-bad``
     No exotic dependencies are needed.
 
