@@ -28,8 +28,6 @@ help:
 	@echo "  fixtures/rpm-alt-layout"
 	@echo "                  to create an RPM repository with packages in a"
 	@echo "                  dedicated directory"
-	@echo "  fixtures/rpm-erratum"
-	@echo "                  to create a JSON erratum referencing the RPM fixtures"
 	@echo "  fixtures/rpm-incomplete-filelists"
 	@echo "                  to create an RPM repository with an incomplete"
 	@echo "                  filelists.xml"
@@ -108,7 +106,6 @@ fixtures: fixtures/docker \
 	fixtures/python-pypi \
 	fixtures/rpm \
 	fixtures/rpm-alt-layout \
-	fixtures/rpm-erratum \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -179,9 +176,6 @@ fixtures/rpm: fixtures/rpm-signed
 
 fixtures/rpm-alt-layout:
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
-
-fixtures/rpm-erratum:
-	rpm/gen-erratum.sh $@ rpm/assets
 
 fixtures/rpm-incomplete-filelists:
 	rpm/gen-fixtures.sh $@ rpm/assets
