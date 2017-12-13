@@ -79,7 +79,7 @@ fi
 
 # Make DRPMs from RPMs.
 mkdir "${working_dir}/drpms"
-IFS=$'\n' rpms=($(sort <<<"${rpms[*]}"))  # sort files by name
+mapfile -t -d $'\0' rpms < <(printf '%s\0' "${rpms[@]}" | sort -z)  # sort rpms
 for (( i=0; i < num_rpms - 1; i++ )); do
     rpm_1="${rpms[i]}"
     rpm_2="${rpms[i+1]}"

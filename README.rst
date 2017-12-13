@@ -20,11 +20,10 @@ For exact usage instructions, clone this repository and run ``make help``.
 Dependencies
 ------------
 
-The make targets and fixture generation scripts do little more than call out to
-system executables and mangle the results. It's the user's responsibility to
-ensure the necessary executables are available and usable. Dependencies are
-listed below, according to make target. Common system executables like ``fmt``,
-``patch`` and ``realpath`` are omitted.
+Most make targets are implemented as bash scripts. Bash 4.4 or newer is
+required. In addition, exotic dependencies are listed below, according to make
+target. Common dependencies like ``fmt``, ``patch`` and ``realpath`` are
+omitted.
 
 Some RPM, SRPM and DRPM fixtures are signed with an OpenPGP-compatible keypair.
 See ``make help``.
