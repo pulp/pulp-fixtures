@@ -96,4 +96,8 @@ modifyrepo --mdtype updateinfo \
 # to prevent cleanup() from reaping an innocent directory. --no-preserve is used
 # because `mktemp -d` creates directories with a mode of 700, and a mode of 755
 # (or whatever the umask dictates) is desired.
-cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"
+if [ -d "${output_dir}" ]; then
+    cp -r --no-preserve=mode --reflink=auto "${working_dir}"/* "${output_dir}"
+else
+    cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"
+fi
