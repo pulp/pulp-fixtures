@@ -23,6 +23,8 @@ help:
 	@echo "    fixtures/file2"
 	@echo "        Create file fixtures, with same file names but different"
 	@echo "        contents."
+	@echo "    fixtures/file-large"
+	@echo "        Create large file fixtures, with 10 file fixtures."
 	@echo "    fixtures/file-mixed"
 	@echo "        Create File fixtures with some not available files on the"
 	@echo "        PULP_MANIFEST."
@@ -105,6 +107,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm-unsigned \
 	fixtures/file \
 	fixtures/file2 \
+	fixtures/file-large\
 	fixtures/file-mixed \
 	fixtures/puppet \
 	fixtures/python \
@@ -154,6 +157,9 @@ fixtures/file:
 
 fixtures/file2:
 	file/gen-fixtures.sh $@
+
+fixtures/file-large:
+	file/gen-fixtures.sh $@ --number 10
 
 fixtures/file-mixed:
 	file/gen-fixtures.sh $@
