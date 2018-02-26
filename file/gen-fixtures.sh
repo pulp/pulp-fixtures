@@ -62,7 +62,7 @@ working_dir="$(mktemp --directory)"
 # Create the pseudo ISO files and update the PULP_MANIFEST with the generated
 # file information
 for ((i=0; i<number; i++)); do
-    of="${working_dir}/$((i + 1))"
+    of="${working_dir}/$((i + 1)).iso"
     dd if=/dev/urandom of="${of}" bs=1K count=1
     echo "$((i + 1)),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
     >> "${working_dir}/PULP_MANIFEST"
