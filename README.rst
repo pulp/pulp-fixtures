@@ -64,6 +64,9 @@ See ``make help``.
 ``fixtures/file-large``
     No exotic dependencies are needed.
 
+``fixtures/file-many``
+    No exotic dependencies are needed.
+
 ``fixtures/file-mixed``
     See ``fixtures/file``.
 

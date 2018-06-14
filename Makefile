@@ -25,6 +25,8 @@ help:
 	@echo "        contents."
 	@echo "    fixtures/file-large"
 	@echo "        Create large file fixtures, with 10 file fixtures."
+	@echo "    fixtures/file-many"
+	@echo "        Create many file fixtures, with 250 file fixtures."
 	@echo "    fixtures/file-mixed"
 	@echo "        Create File fixtures with some not available files on the"
 	@echo "        PULP_MANIFEST."
@@ -108,6 +110,7 @@ fixtures: fixtures/docker \
 	fixtures/file \
 	fixtures/file2 \
 	fixtures/file-large\
+	fixtures/file-many\
 	fixtures/file-mixed \
 	fixtures/puppet \
 	fixtures/python \
@@ -160,6 +163,9 @@ fixtures/file2:
 
 fixtures/file-large:
 	file/gen-fixtures.sh $@ --number 10
+
+fixtures/file-many:
+	file/gen-fixtures.sh $@ --number 250
 
 fixtures/file-mixed:
 	file/gen-fixtures.sh $@
