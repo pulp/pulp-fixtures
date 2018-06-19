@@ -80,7 +80,7 @@ See ``make help``.
     No exotic dependencies are needed.
 
 ``fixtures/python-pypi``
-    No exotic dependencies are needed.
+    The ``jq``, ``jinja2`` and ``python3`` executables must be available.
 
 ``fixtures/rpm-alt-layout``
     See ``fixtures/rpm-unsigned``.

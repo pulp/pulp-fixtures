@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf8'?>
+<html>
+<head>
+    <title>Links for {{project}}</title>
+    <meta name="api-version" value="2" />
+</head>
+<body>
+{% for distribution in projects[project] %}
+
+  <a href="{{base_url}}/fixtures/python-pypi/packages/{{distribution}}" rel="internal">{{distribution}}</a><br />
+{% endfor %}
+</body>
+</html>

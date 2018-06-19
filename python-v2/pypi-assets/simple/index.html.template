@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf8'?>
+<html>
+<head>
+    <title>Simple Index</title>
+    <meta name="api-version" value="2" />
+</head>
+<body>
+{% for key, value in projects.items() %}
+  <a href="{{key}}">{{key}}</a><br />
+{% endfor %}
+</body>
+</html>

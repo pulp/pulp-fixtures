@@ -186,7 +186,7 @@ fixtures/python-pulp:
 	cp -r python/pulp-assets $@
 
 fixtures/python-pypi:
-	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
+	python-v2/gen-pypi-repo.sh $@ python-v2/pypi-assets $(base_url)
 
 fixtures/rpm: fixtures/rpm-signed
 	$(warning The `fixtures/rpm` target is deprecated. Use `fixtures/rpm-signed` instead.)
