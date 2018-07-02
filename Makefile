@@ -7,7 +7,11 @@ help:
 	@echo "    help"
 	@echo "        Show this message."
 	@echo "    lint"
-	@echo "        Lint the fixture generation scripts."
+	@echo "        Run all of the linters."
+	@echo "    lint-pylint"
+	@echo "        Run pylint on all Python scripts."
+	@echo "    lint-shellcheck"
+	@echo "        Run shellcheck on all shell scripts."
 	@echo "    clean"
 	@echo "        Remove fixture data and 'gnupghome'."
 	@echo "    fixtures"
@@ -97,7 +101,18 @@ clean:
 	rm -rf fixtures/* gnupghome
 
 # xargs communicates return values better than find's `-exec` argument.
-lint:
+lint: lint-pylint lint-shellcheck
+
+# Refactoring out common code is very easy to do. it's also pretty easy to deal
+# with Python's import machinery with Python 3.5+: one can use
+# importlib.util.spec_from_file_location and importlib.util.module_from_spec to
+# load a file and insert it anywhere into the Python interpreter's namespace.
+# The real problem is that we don't have a namespace reserved for Pulp Fixtures,
+# so any namespace we choose might might cause forward compatibility issues.
+lint-pylint:
+	find . -name '*.py' -print0 | xargs -0 pylint --disable duplicate-code
+
+lint-shellcheck:
 	find . -name '*.sh' -print0 | xargs -0 shellcheck
 
 all: fixtures
@@ -293,4 +308,4 @@ gnupghome:
 	install -dm700 gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) gpg --import rpm/GPG-RPM-PRIVATE-KEY-pulp-qe
 
-.PHONY: help lint clean all
+.PHONY: help lint lint-pylint lint-shellcheck clean all

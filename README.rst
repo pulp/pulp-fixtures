@@ -36,6 +36,12 @@ See ``make help``.
     No exotic dependencies are needed.
 
 ``lint``
+    See ``lint-pylint`` and ``lint-shellcheck``.
+
+``lint-pylint``
+    The ``pylint`` executable must be available.
+
+``lint-shellcheck``
     The ``shellcheck`` executable must be available.
 
 ``clean``

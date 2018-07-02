@@ -1,8 +1,16 @@
 sudo: required
 dist: xenial
+# We lint with pylint before linting with shellcheck because the former step is
+# far faster than the latter step. The virtualenv is deactivated during all
+# shellcheck linting to avoid any possible environment-related errors.
 before_install:
     - sudo apt-get -qq update
-    - sudo apt-get install -y cabal-install
+    - sudo apt-get install -y cabal-install python3-venv
+    - python3 -m venv ~/env
+    - source ~/env/bin/activate
+    - pip install --upgrade pip
+    - pip install pylint
+    - deactivate
     - cabal update
     - git clone https://github.com/koalaman/shellcheck.git
     - cd shellcheck
@@ -11,5 +19,6 @@ before_install:
     - cd ..
     - export PATH="$HOME/.cabal/bin:$PATH"
     - which shellcheck
+    - source ~/env/bin/activate
 script:
     make lint
