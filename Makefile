@@ -45,6 +45,8 @@ help:
 	@echo "    fixtures/rpm-alt-layout"
 	@echo "        Create an RPM repository with packages in a dedicated"
 	@echo "        directory."
+	@echo "    fixtures/rpm-with-modules"
+	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-incomplete-filelists"
 	@echo "        Create an RPM repository with an incomplete filelists.xml."
 	@echo "    fixtures/rpm-incomplete-other"
@@ -133,6 +135,7 @@ fixtures: fixtures/docker \
 	fixtures/python-pypi \
 	fixtures/rpm \
 	fixtures/rpm-alt-layout \
+	fixtures/rpm-with-modules \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -268,6 +271,10 @@ fixtures/rpm-unsigned:
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+
+fixtures/rpm-with-modules:
+	rpm/gen-fixtures.sh $@ rpm/assets
+	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-non-ascii:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"

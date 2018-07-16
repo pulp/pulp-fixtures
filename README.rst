@@ -144,6 +144,9 @@ See ``make help``.
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-with-modules``
+    The ``createrepo`` and ``modifyrepo`` executables must be available.
+
 ``fixtures/rpm-with-non-ascii``
     The ``fedpkg`` executable must be available.
 
