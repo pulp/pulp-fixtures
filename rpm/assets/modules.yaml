@@ -4,6 +4,9 @@ version: 2
 data:
   name: walrus
   stream: 5.21
+  version: 20180704144203
+  context: deadbeef
+  arch: x86_64
   summary: Walrus 5.21 module
   description: >-
     A module for the walrus 5.21 package
@@ -26,6 +29,7 @@ data:
   stream: 0.71
   version: 20180707144203
   context: c0ffee42
+  arch: x86_64
   summary: Walrus 0.71 module
   description: >-
     A module for the walrus 0.71 package
