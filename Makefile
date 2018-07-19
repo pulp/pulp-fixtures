@@ -27,6 +27,9 @@ help:
 	@echo "    fixtures/file2"
 	@echo "        Create file fixtures, with same file names but different"
 	@echo "        contents."
+	@echo "    fixtures/file-invalid"
+	@echo "        Create file fixtures with a file that doesn't match"
+	@echo "        the manifest"
 	@echo "    fixtures/file-large"
 	@echo "        Create large file fixtures, with 10 file fixtures."
 	@echo "    fixtures/file-many"
@@ -126,6 +129,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm-unsigned \
 	fixtures/file \
 	fixtures/file2 \
+	fixtures/file-invalid\
 	fixtures/file-large\
 	fixtures/file-many\
 	fixtures/file-mixed \
@@ -178,6 +182,11 @@ fixtures/file:
 
 fixtures/file2:
 	file/gen-fixtures.sh $@
+
+fixtures/file-invalid:
+	file/gen-fixtures.sh $@
+	echo 'blah' > $@/4.iso
+	echo 4.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 
 fixtures/file-large:
 	file/gen-fixtures.sh $@ --number 10
