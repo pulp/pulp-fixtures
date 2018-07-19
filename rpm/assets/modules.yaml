@@ -16,7 +16,7 @@ data:
         - walrus
   artifacts:
     rpms:
-      - walrus-5.21-1.noarch
+      - walrus-0:5.21-1.noarch
 ...
 ---
 document: modulemd
@@ -41,7 +41,7 @@ data:
         - walrus
   artifacts:
     rpms:
-      - walrus-0.71-1.noarch
+      - walrus-0:0.71-1.noarch
 ...
 ---
 document: modulemd-defaults
