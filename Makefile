@@ -296,7 +296,7 @@ fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
 fixtures/rpm-with-modules:
-	rpm/gen-fixtures.sh $@ rpm/assets
+	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-non-ascii:
