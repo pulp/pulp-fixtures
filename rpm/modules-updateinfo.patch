@@ -14,7 +14,7 @@
 +  <description>Duck_Kangaro_Erratum description</description>
 +  <pkglist>
 +    <collection short="">
-+      <name>1</name>
++      <name>coll_name1</name>
 +      <module name="kangaroo" stream="0" version="20180730223407" context="deadbeef" arch="noarch"/>
 +      <package arch="noarch" name="kangaroo" release="1" src="http://www.fedoraproject.org"
 +               version="0.3">
@@ -22,7 +22,7 @@
 +      </package>
 +    </collection>
 +    <collection short="">
-+      <name>1</name>
++      <name>coll_name2</name>
 +      <module name="duck" stream="0" version="20180730233102" context="deadbeef" arch="noarch"/>
 +      <package arch="noarch" name="duck" release="1" src="http://www.fedoraproject.org"
 +               version="0.7">
