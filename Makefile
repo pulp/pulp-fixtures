@@ -158,8 +158,8 @@ fixtures: fixtures/docker \
 	fixtures/rpm-missing-other \
 	fixtures/rpm-missing-primary \
 	fixtures/rpm-pkglists-updateinfo \
-  fixtures/rpm-richnweak-deps \
-  fixtures/rpm-richnweak-deps/srpms \
+    fixtures/rpm-richnweak-deps \
+    fixtures/rpm-richnweak-deps/srpms \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \

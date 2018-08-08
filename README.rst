@@ -144,6 +144,12 @@ See ``make help``.
 ``fixtures/rpm-unsigned``
     The ``createrepo`` and ``modifyrepo`` executables must be available.
 
+``fixtures/rpm-richnweak-deps/srpms``
+    The ``mock`` executable must be available.
+
+``fixtures/rpm-richnweak-deps``
+    See ``fixtures/rpm-richnweak-deps/srpms``.
+
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
