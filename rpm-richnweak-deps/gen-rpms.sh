@@ -59,7 +59,7 @@ for srpm in "${@}"; do
     filename="${filename%.src.rpm}.noarch.rpm"
     cp "/var/lib/mock/${mock_env}/result/${filename}" "${working_dir}/"
 done
-
+createrepo --checksum sha256 "${working_dir}"
 # Create or populate $output_dir.
 #
 # A $working_dir is used to make fixture generation more atomic. If fixture

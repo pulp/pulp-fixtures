@@ -17,4 +17,4 @@ Provides:  lemon, citrussy, fruity
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - washed and squeezed
+- washed and squeezed

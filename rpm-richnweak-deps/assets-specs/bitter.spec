@@ -17,4 +17,4 @@ Suggests: (Cobbler or contireau)
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - described
+- described

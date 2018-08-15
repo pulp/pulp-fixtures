@@ -18,4 +18,4 @@ A generic Contireau, nothing fancy.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - bought
+- bought

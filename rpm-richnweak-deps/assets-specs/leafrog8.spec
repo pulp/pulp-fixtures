@@ -18,4 +18,4 @@ An old-school, froggy tasting Scotch.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - estd.
+- estd.

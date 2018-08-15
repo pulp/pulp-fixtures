@@ -18,4 +18,4 @@ Pealed and cut, fresh, fresh, fresh.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - Freshly pealed, cut and packed.
+- Freshly pealed, cut and packed.

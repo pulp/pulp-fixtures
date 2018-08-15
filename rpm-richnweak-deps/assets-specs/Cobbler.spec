@@ -25,5 +25,5 @@ Stir well and add bits of fresh fruit before serving
 %files
 
 %changelog
-* Tue Feb 27 2017 Mr. Bartender
-  - served
+* Tue Feb 27 2018 Mr. Bartender
+- served

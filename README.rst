@@ -144,11 +144,10 @@ See ``make help``.
 ``fixtures/rpm-unsigned``
     The ``createrepo`` and ``modifyrepo`` executables must be available.
 
-``fixtures/rpm-richnweak-deps/srpms``
-    The ``mock`` executable must be available.
-
 ``fixtures/rpm-richnweak-deps``
-    See ``fixtures/rpm-richnweak-deps/srpms``.
+    The ``mock`` and ``createrepo`` executable must be available.
+    All users that are to use mock must be added to the mock group.
+    ``usermod --append --groups mock "$(whoami)"``
 
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
@@ -167,6 +166,10 @@ See ``make help``.
 
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.
+
+``fixtures/srpm-richnweak-deps``
+    The ``rpmdev-setuptree``, ``rpmbuild`` and ``createrepo`` executable must be
+    available.
 
 ``fixtures/srpm-signed``
     The ``createrepo`` and ``modifyrepo`` executables must be available.

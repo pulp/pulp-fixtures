@@ -19,4 +19,4 @@ Properly washed and gently squeezed, fresh, fresh, fresh.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - washed and squeezed
+- washed and squeezed

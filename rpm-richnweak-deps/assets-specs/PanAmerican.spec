@@ -26,5 +26,5 @@ stir well and top off with Soda Water.
 %files
 
 %changelog
-* Tue Feb 27 2017 Mr. Bartender
-  - modified&served
+* Tue Feb 27 2018 Mr. Bartender
+- modified&served

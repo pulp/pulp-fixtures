@@ -17,4 +17,4 @@ SSIA
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - scooped
+- scooped

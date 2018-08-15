@@ -78,9 +78,6 @@ help:
 	@echo "    fixtures/rpm-richnweak-deps"
 	@echo "        Create RPM fixture data with packages with regular,"
 	@echo "        weak and very weak dependencies."
-	@echo "    fixtures/rpm-richnweak-deps/srpms"
-	@echo "        Create SRPM fixture data with packages with regular,"
-	@echo "        weak and very weak dependencies."
 	@echo "    fixtures/rpm-signed"
 	@echo "        Create RPM fixture data with signed packages."
 	@echo "    fixtures/rpm-unsigned"
@@ -96,6 +93,9 @@ help:
 	@echo "        PULP_DISTRIBUTION.xml file."
 	@echo "    fixtures/rpm-with-vendor"
 	@echo "        Create an RPM repository with an RPM that has a vendor."
+	@echo "    fixtures/srpm-richnweak-deps"
+	@echo "        Create SRPM fixture data with packages with regular,"
+	@echo "        weak and very weak dependencies."
 	@echo "    fixtures/srpm-signed"
 	@echo "        Create SRPM fixture data with signed packages."
 	@echo "    fixtures/srpm-unsigned"
@@ -158,8 +158,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-missing-other \
 	fixtures/rpm-missing-primary \
 	fixtures/rpm-pkglists-updateinfo \
-    fixtures/rpm-richnweak-deps \
-    fixtures/rpm-richnweak-deps/srpms \
+	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
@@ -168,6 +167,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
 	fixtures/srpm \
+	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
 
@@ -286,11 +286,8 @@ fixtures/rpm-signed: gnupghome
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
 
-fixtures/rpm-richnweak-deps/srpms:
-	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
-
-fixtures/rpm-richnweak-deps: fixtures/rpm-richnweak-deps/srpms
-	rpm-richnweak-deps/gen-rpms.sh $@ $@/srpms/*.src.rpm
+fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps
+	rpm-richnweak-deps/gen-rpms.sh $@ $</*.src.rpm
 
 fixtures/rpm-updated-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
@@ -326,6 +323,9 @@ fixtures/rpm-with-pulp-distribution:
 fixtures/srpm: fixtures/srpm-signed
 	$(warning The `fixtures/srpm` target is deprecated. Use `fixtures/srpm-signed` instead.)
 	ln -s ./srpm-signed $@
+
+fixtures/srpm-richnweak-deps:
+	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
 
 fixtures/srpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \

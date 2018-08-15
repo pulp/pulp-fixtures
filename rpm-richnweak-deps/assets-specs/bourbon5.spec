@@ -18,4 +18,4 @@ A corn-grain spirit
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - bought
+- bought

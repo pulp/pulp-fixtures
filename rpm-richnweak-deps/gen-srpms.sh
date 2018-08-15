@@ -60,6 +60,7 @@ for specfile in "${@}"; do
     filename="$(rpm --query --queryformat '%{NEVR}.src.rpm' --specfile "${specfile}")"
     cp ~/rpmbuild/SRPMS/"${filename}" "${working_dir}"/
 done
+createrepo --checksum sha256 "${working_dir}"
 
 # Create or populate $output_dir.
 #

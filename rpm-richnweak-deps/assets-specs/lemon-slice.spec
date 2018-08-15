@@ -18,4 +18,4 @@ Properly washed and thinly sliced, fresh, fresh, fresh.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - washed and sliced
+- washed and sliced

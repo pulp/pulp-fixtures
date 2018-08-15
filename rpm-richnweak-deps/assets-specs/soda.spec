@@ -18,4 +18,4 @@ Soda... Sort of a sparkling water.
 
 %changelog
 * Tue Feb 27 2018 Mr. Bartender
-  - Poured
+- Poured
