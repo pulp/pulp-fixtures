@@ -50,6 +50,29 @@ version: 2
 data:
   name: duck
   stream: 0
+  version: 201809302113907
+  context: deadbeef
+  arch: noarch
+  summary: Duck 0.8 module
+  description: >-
+    A module for the duck 0.8 package
+  license:
+    module:
+      - MIT
+  profiles:
+    default:
+      rpms:
+        - duck
+  artifacts:
+    rpms:
+      - duck-0:0.8-1.noarch
+...
+---
+document: modulemd
+version: 2
+data:
+  name: duck
+  stream: 0
   version: 20180730233102
   context: deadbeef
   arch: noarch
