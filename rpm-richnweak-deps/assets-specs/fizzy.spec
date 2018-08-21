@@ -8,6 +8,7 @@ Vendor:	 You
 Group:  Preferences
 URL:  http://you.yourself.thou/Preference/
 Suggests: (PanAmerican or soda)
+Provides: fizzy
 BuildArch:	noarch
 
 %description

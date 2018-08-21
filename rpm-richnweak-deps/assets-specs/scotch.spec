@@ -1,5 +1,5 @@
 Summary: The Leafrog Scotch
-Name:	 leafrog
+Name:	 scotch
 Version:	8
 Release:	10
 License:	21+

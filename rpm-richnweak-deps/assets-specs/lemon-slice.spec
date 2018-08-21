@@ -8,7 +8,7 @@ Vendor:	 Lem:ON!
 Group:  Fruits
 URL:  http://lem.on/Fruits/
 BuildArch:	noarch
-Provides: lemon, citrussy, fruity
+Provides: lemon, citrussy, fruity, lemon-slice
 Requires: lemon
 
 %description

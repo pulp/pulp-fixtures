@@ -9,6 +9,7 @@ Group:  Preferences
 URL:  http://you.yourself.thou/Preference/
 BuildArch:	noarch
 Suggests: (Cobbler or contireau)
+Provides: bitter
 
 %description
 ... usually felt when one want to satisfy their Bitter passions ...

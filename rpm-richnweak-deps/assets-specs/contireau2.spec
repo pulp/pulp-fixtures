@@ -8,7 +8,7 @@ Vendor:	 Contireauers
 Group:  Cocktails
 URL:  http://contireaue.rs/Contireau
 BuildArch:	noarch
-Provides: citrussy, fruity, bitter
+Provides: citrussy, fruity, bitter, contireau
 Suggests: (Cobbler)
 
 %description

@@ -10,7 +10,7 @@ URL:  http://www.cocktails.in.th/whiskey.html
 Requires: (bourbon == 5.10 and tablespoon-sugar == 1.0)
 Requires: soda, lemon-juice5 = 5.10
 Recommends: (lemon-slice if fruity)
-Provides: long-drink, bourbon, citrussy, lemon, fruity, fizzy
+Provides: long-drink, bourbon, citrussy, lemon, fruity, fizzy, PanAmerican
 BuildArch:	noarch
 
 %description

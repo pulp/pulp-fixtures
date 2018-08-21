@@ -8,6 +8,7 @@ Vendor:	 You
 Group:  Preferences
 URL:  http://you.yourself.thou/Preference/
 Suggests: (orange-bits or lemon-jiuce)
+Provides: fruity
 BuildArch:	noarch
 
 %description
