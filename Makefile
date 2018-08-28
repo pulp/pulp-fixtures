@@ -41,8 +41,6 @@ help:
 	@echo "        Create a OSTree ostree repositories."
 	@echo "    fixtures/puppet"
 	@echo "        Create a dummy Puppet module."
-	@echo "    fixtures/python-pulp"
-	@echo "        Create a Pulp Python repository."
 	@echo "    fixtures/python-pypi [base_url=...]"
 	@echo "        Create a PyPI Python repository."
 	@echo "    fixtures/rpm-alt-layout"
@@ -139,8 +137,6 @@ fixtures: fixtures/docker \
 	fixtures/file-many\
 	fixtures/file-mixed \
 	fixtures/puppet \
-	fixtures/python \
-	fixtures/python-pulp \
 	fixtures/python-pypi \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
@@ -206,15 +202,8 @@ fixtures/ostree:
 fixtures/puppet:
 	puppet/gen-module.sh $@
 
-fixtures/python: fixtures/python-pulp
-	$(warning The `fixtures/python` target is deprecated. Use `fixtures/python-pulp` instead.)
-	ln -s ./python-pulp $@
-
-fixtures/python-pulp:
-	cp -r python/pulp-assets $@
-
 fixtures/python-pypi:
-	python-v2/gen-pypi-repo.sh $@ python-v2/pypi-assets $(base_url)
+	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
 fixtures/rpm-alt-layout:
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
