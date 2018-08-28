@@ -130,7 +130,6 @@ all: fixtures
 	$(warning The `all` target is deprecated. Use `fixtures` instead.)
 
 fixtures: fixtures/docker \
-	fixtures/drpm \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
@@ -143,7 +142,6 @@ fixtures: fixtures/docker \
 	fixtures/python \
 	fixtures/python-pulp \
 	fixtures/python-pypi \
-	fixtures/rpm \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
 	fixtures/rpm-incomplete-filelists \
@@ -166,17 +164,12 @@ fixtures: fixtures/docker \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
-	fixtures/srpm \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
-
-fixtures/drpm: fixtures/drpm-signed
-	$(warning The `fixtures/drpm` target is deprecated. Use `fixtures/drpm-signed` instead.)
-	ln -s ./drpm-signed $@
 
 fixtures/drpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
@@ -222,10 +215,6 @@ fixtures/python-pulp:
 
 fixtures/python-pypi:
 	python-v2/gen-pypi-repo.sh $@ python-v2/pypi-assets $(base_url)
-
-fixtures/rpm: fixtures/rpm-signed
-	$(warning The `fixtures/rpm` target is deprecated. Use `fixtures/rpm-signed` instead.)
-	ln -s ./rpm-signed $@
 
 fixtures/rpm-alt-layout:
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
@@ -319,10 +308,6 @@ fixtures/rpm-with-pulp-distribution:
 	echo "family=Zoo" >> $@/treeinfo
 	echo "timestamp=1485887759" >> $@/treeinfo
 	echo "version=42" >> $@/treeinfo
-
-fixtures/srpm: fixtures/srpm-signed
-	$(warning The `fixtures/srpm` target is deprecated. Use `fixtures/srpm-signed` instead.)
-	ln -s ./srpm-signed $@
 
 fixtures/srpm-richnweak-deps:
 	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
