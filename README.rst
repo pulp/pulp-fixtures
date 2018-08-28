@@ -85,9 +85,6 @@ See ``make help``.
 ``fixtures/ostree``
     The ``ostree`` executable must be available.
 
-``fixtures/python-pulp``
-    No exotic dependencies are needed.
-
 ``fixtures/python-pypi``
     The ``jq``, ``jinja2`` and ``python3`` executables must be available.
 
