@@ -1,16 +1,16 @@
 Summary: The Cobbler drink
-Name:	 Cobbler
-Version:	1
-Release:	0
-License:	21+
-Packager:	 Mr. Bartender
-Vendor:	 ReFresh Cocktails
-Group:  Cocktails
-URL:  http://www.cocktails.in.th/whiskey.html
-Requires: (scotch == 8.10 and contireau == 2.10 and tablespoon-sugar == 1.0), icecubes
+Name: Cobbler
+Version: 1
+Release: 0
+License: 21+
+Packager: Mr. Bartender
+Vendor: ReFresh Cocktails
+Group: Cocktails
+URL: http://www.cocktails.in.th/whiskey.html
+Requires: (Scotch == 8-10 and contireau == 2-10 and tablespoon-sugar == 1-0), icecubes
 Recommends: (orange-bits if fruity)
-Provides: long-drink, scotch, fruity, citrussy, bitter, Cobbler
-BuildArch:	noarch
+Provides: long-drink, fruity, citrussy, bitter, Cobbler
+BuildArch: noarch
 
 %description
 A refreshing long drink that can be prepared in advance, so that the fruit can soak up some of the taste and alcohol.

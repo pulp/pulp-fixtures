@@ -1,5 +1,5 @@
 Summary: The Leafrog Scotch
-Name:	 scotch
+Name:	 Scotch
 Version:	8
 Release:	10
 License:	21+
@@ -8,7 +8,7 @@ Vendor:	 Leafrog stills
 Group:  Cocktails
 URL:  http://leafrogstil.ls/Leafrog
 BuildArch:	noarch
-Provides: scotch
+Provides: Scotch
 Suggests: (Cobbler)
 
 %description
