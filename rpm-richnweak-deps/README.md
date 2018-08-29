@@ -10,13 +10,13 @@ expressed thru the boolean dependencies within their package ``spec`` files.
 Usage
 ------
 
-Say you'd like to have a refreshing, citrussy and bitter tasting, scotch-based
+Say you'd like to have a refreshing, citrussy and bitter tasting, Scotch-based
 long drink. Assuming your repository contains the necessary ingredients and
 your system is configured with the proper feed, you could query the repository
 for just that:
 
 ```
-$ dnf -b whatprovides citrussy bitter fruity scotch long-drink
+$ dnf -b whatprovides citrussy bitter fruity Scotch long-drink
 ```
 
 Ideally, your query result would look something like:
@@ -28,7 +28,7 @@ Matched from:
 Provide    : citrussy
 Provide    : long-drink
 Provide    : fruity
-Provide    : scotch
+Provide    : Scotch
 Provide    : bitter
 
 $ dnf info Cobbler
@@ -65,7 +65,7 @@ $ sudo dnf --setopt=install_weak_dependencies=False --best instal Cobbler
 If you prefer your bartender to select on your behalf:
 
 ```
-$ sudo dnf --best install long-drink scotch fruity
+$ sudo dnf --best install long-drink Scotch fruity
 ```
 
 that should, thanks to the (weak) rich dependencies, result in getting
