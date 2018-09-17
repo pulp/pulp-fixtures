@@ -73,6 +73,8 @@ help:
 	@echo "    fixtures/rpm-pkglists-updateinfo"
 	@echo "        Create RPM fixtures with multiple pkglists and collections"
 	@echo "        in updateinfo.xml."
+	@echo "    fixtures/rpm-references-updateinfo"
+	@echo "        Create RPM fixtures with updateinfo.xml containing references."
 	@echo "    fixtures/rpm-richnweak-deps"
 	@echo "        Create RPM fixture data with packages with regular,"
 	@echo "        weak and very weak dependencies."
@@ -152,6 +154,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-missing-other \
 	fixtures/rpm-missing-primary \
 	fixtures/rpm-pkglists-updateinfo \
+	fixtures/rpm-references-updateinfo \
 	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
@@ -263,6 +266,9 @@ fixtures/rpm-signed: gnupghome
 
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-references-updateinfo:
+	rpm/gen-patched-fixtures.sh $@ rpm/references-updateinfo.patch
 
 fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps
 	rpm-richnweak-deps/gen-rpms.sh $@ $</*.src.rpm

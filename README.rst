@@ -134,17 +134,20 @@ See ``make help``.
 ``fixtures/rpm-pkglists-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-references-updateinfo``
+    See ``fixtures/rpm-unsigned``.
+
+``fixtures/rpm-richnweak-deps``
+    The ``mock`` and ``createrepo`` executable must be available.
+    All users that are to use mock must be added to the mock group.
+    ``usermod --append --groups mock "$(whoami)"``
+
 ``fixtures/rpm-signed``
     The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
     available.
 
 ``fixtures/rpm-unsigned``
     The ``createrepo`` and ``modifyrepo`` executables must be available.
-
-``fixtures/rpm-richnweak-deps``
-    The ``mock`` and ``createrepo`` executable must be available.
-    All users that are to use mock must be added to the mock group.
-    ``usermod --append --groups mock "$(whoami)"``
 
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.

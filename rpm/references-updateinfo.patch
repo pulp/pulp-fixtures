@@ -1,0 +1,31 @@
+--- rpm/assets/updateinfo.xml
++++ rpm/assets/updateinfo.xml
+@@ -7,6 +7,10 @@
+   <issued date="2012-01-27 16:08:06"/>
+   <updated date="2012-01-27 16:08:06"/>
+   <description>Sea_Erratum</description>
++  <references>
++    <reference href="https://bugzilla.redhat.com/show_bug.cgi?id=1364920" id="1364920" type="bugzilla" title="links: Unix domain sockets shared between anonymous and non-anonymous instances"/>
++    <reference href="https://bugzilla.redhat.com/show_bug.cgi?id=1352033" id="1352033" type="bugzilla" title="links-2.13 is available"/>
++  </references>
+   <pkglist>
+     <collection short="">
+       <name>1</name>
+@@ -30,6 +34,9 @@
+   <issued date="2013-01-27 16:08:08"/>
+   <updated date="2013-02-27 17:00:00"/>
+   <description>ParthaBird_Erratum</description>
++  <references>
++    <reference href="https://bugzilla.redhat.com/show_bug.cgi?id=1191235" id="1191235" type="bugzilla" title="Please add python-celery to EPEL7 build"/>
++  </references>
+   <pkglist>
+     <collection short="">
+       <name>1</name>
+@@ -53,6 +60,7 @@
+   <issued date="2013-01-27 16:08:05"/>
+   <updated date="2013-01-27 16:08:05 UTC"/>
+   <description>Bear_Erratum</description>
++  <references/>
+   <pkglist>
+     <collection short="">
+       <name>1</name>
