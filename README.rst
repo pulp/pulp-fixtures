@@ -161,6 +161,9 @@ See ``make help``.
 ``fixtures/rpm-with-non-utf-8``
     The ``fedpkg`` executable must be available.
 
+``fixtures/rpm-with-sha512``
+    See ``fixtures/rpm-unsigned``.
+
 ``fixtures/rpm-with-vendor``
     The ``fedpkg`` and ``createrepo`` executables must be available.
 
