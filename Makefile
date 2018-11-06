@@ -88,8 +88,6 @@ help:
 	@echo "        Create an RPM file with non-ascii characters."
 	@echo "    fixtures/rpm-with-non-utf-8"
 	@echo "        Create an RPM file with non-utf-8 characters."
-	@echo "    fixtures/rpm-with-sha-512"
-	@echo "        Create RPM fixture data with checksum as 'sha512'."
 	@echo "    fixtures/rpm-with-pulp-distribution"
 	@echo "        Create an RPM repository with extra files and a"
 	@echo "        PULP_DISTRIBUTION.xml file."
@@ -163,7 +161,6 @@ fixtures: fixtures/docker \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-non-utf-8 \
-	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
 	fixtures/srpm-richnweak-deps \
@@ -288,9 +285,6 @@ fixtures/rpm-with-non-ascii:
 
 fixtures/rpm-with-non-utf-8:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
-
-fixtures/rpm-with-sha-512:
-	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
 
 fixtures/rpm-with-vendor:
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"
