@@ -59,6 +59,17 @@ data:
   license:
     module:
       - MIT
+  dependencies:
+  - buildrequires:
+      walrus: [0.71, 5.21]
+      platform: [f28]
+    requires:
+      walrus: [0.71, 5.21]
+      platform: [f28]
+  - buildrequires:
+      platform: [el8]
+    requires:
+      platform: [el8]
   profiles:
     default:
       rpms:
@@ -82,6 +93,13 @@ data:
   license:
     module:
       - MIT
+  dependencies:
+  - buildrequires:
+      walrus: []
+      platform: [-f29, -f30]
+    requires:
+      walrus: []
+      platform: [-f29, -f30]
   profiles:
     default:
       rpms:
@@ -105,6 +123,13 @@ data:
   license:
     module:
       - MIT
+  dependencies:
+  - buildrequires:
+      walrus: [-5.21]
+      platform: [f28]
+    requires:
+      walrus: [-5.21]
+      platform: [f28]
   profiles:
     default:
       rpms:
