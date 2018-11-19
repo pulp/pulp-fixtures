@@ -48,6 +48,8 @@ help:
 	@echo "        directory."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
+	@echo "    fixtures/rpm-with-modules-el8"
+	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-incomplete-filelists"
 	@echo "        Create an RPM repository with an incomplete filelists.xml."
 	@echo "    fixtures/rpm-incomplete-other"
@@ -144,6 +146,7 @@ fixtures: fixtures/docker \
 	fixtures/python-pypi \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
+	fixtures/rpm-with-modules-el8 \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -282,6 +285,10 @@ fixtures/rpm-updated-updateinfo:
 fixtures/rpm-with-modules:
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+
+fixtures/rpm-with-modules-el8:
+	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
+	modifyrepo --mdtype=modules rpm/assets/assets-el8/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-non-ascii:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
