@@ -29,7 +29,7 @@ show_help()
 _mkdir()
 {
   if [ -e "${DIR}" ]; then
-    if [ ! -z "$(ls -A "${DIR}")" ]; then
+    if [ -n "$(ls -A "${DIR}")" ]; then
       echo 1>&2 ""
       echo 1>&2 "${DIR} must be empty."
       echo 1>&2 ""
