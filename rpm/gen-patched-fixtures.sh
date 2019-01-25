@@ -23,6 +23,10 @@ set -euo pipefail
 # Read arguments.
 output_dir="${1}"
 updateinfo_patch=$(realpath "${2}")
+checksum_info="sha256"
+if [ -n "${3:-}" ]; then
+    checksum_info="${3}"
+fi
 
 # Define a procedure for graceful termination.
 cleanup() {
@@ -38,4 +42,4 @@ trap 'cleanup ; trap - SIGTERM ; kill -s SIGTERM $$' SIGTERM
 assets_dir="$(mktemp --directory)"
 cp -rt "${assets_dir}" rpm/assets/*
 patch "${assets_dir}/updateinfo.xml" "${updateinfo_patch}"
-./rpm/gen-fixtures.sh "${output_dir}" "${assets_dir}"
+./rpm/gen-fixtures.sh --checksum-type "${checksum_info}" "${output_dir}" "${assets_dir}"
