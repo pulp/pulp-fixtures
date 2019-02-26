@@ -195,7 +195,7 @@ fixtures/file-invalid:
 	echo 4.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 
 fixtures/file-large:
-	file/gen-fixtures.sh $@ --number 10
+	file/gen-fixtures.sh $@ --number 10 --file-size 10M
 
 fixtures/file-many:
 	file/gen-fixtures.sh $@ --number 250
