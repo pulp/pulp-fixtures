@@ -170,6 +170,9 @@ See ``make help``.
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/srpm-duplicate``
+    See ``fixtures/srpm-richnweak-deps``.
+
 ``fixtures/srpm-richnweak-deps``
     The ``rpmdev-setuptree``, ``rpmbuild`` and ``createrepo`` executable must be
     available.

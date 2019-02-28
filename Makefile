@@ -97,6 +97,8 @@ help:
 	@echo "        PULP_DISTRIBUTION.xml file."
 	@echo "    fixtures/rpm-with-vendor"
 	@echo "        Create an RPM repository with an RPM that has a vendor."
+	@echo "    fixtures/srpm-duplicate"
+	@echo "        Create SRPM fixture data with duplicate entries in repodata."
 	@echo "    fixtures/srpm-richnweak-deps"
 	@echo "        Create SRPM fixture data with packages with regular,"
 	@echo "        weak and very weak dependencies."
@@ -169,9 +171,11 @@ fixtures: fixtures/docker \
 	fixtures/rpm-with-sha-1-modular \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
+	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned
+
 
 fixtures/docker:
 	docker/gen-fixtures.sh $@
@@ -316,6 +320,11 @@ fixtures/rpm-with-pulp-distribution:
 	echo "family=Zoo" >> $@/treeinfo
 	echo "timestamp=1485887759" >> $@/treeinfo
 	echo "version=42" >> $@/treeinfo
+
+fixtures/srpm-duplicate:
+	rpm-richnweak-deps/gen-srpms.sh $@/src srpm-duplicate/assets-specs/*.spec
+	rpm-richnweak-deps/gen-srpms.sh $@/dst srpm-duplicate/assets-specs/*.spec
+	createrepo --checksum sha256 $@
 
 fixtures/srpm-richnweak-deps:
 	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
