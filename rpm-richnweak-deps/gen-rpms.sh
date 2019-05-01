@@ -8,7 +8,7 @@ source rpm-richnweak-deps/common.sh
 # See: http://mywiki.wooledge.org/BashFAQ/028
 readonly script_name='gen-rpms.sh'
 
-readonly mock_env=fedora-26-x86_64
+readonly mock_env=fedora-30-x86_64
 
 # Print usage instructions to stdout.
 show_help() {

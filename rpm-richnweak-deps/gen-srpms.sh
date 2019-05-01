@@ -51,7 +51,7 @@ working_dir="$(mktemp --directory)"
 # Populate ~/rpmbuild/SRPMS/
 rpmdev-setuptree
 for specfile in "${@}"; do
-    rpmbuild -bs --target fc26 "${specfile}" &
+    rpmbuild -bs --target fc30 "${specfile}" &
 done
 wait
 

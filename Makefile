@@ -144,7 +144,6 @@ fixtures: fixtures/docker \
 	fixtures/file-large\
 	fixtures/file-many\
 	fixtures/file-mixed \
-	fixtures/puppet \
 	fixtures/python-pypi \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
@@ -166,7 +165,6 @@ fixtures: fixtures/docker \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-with-non-ascii \
-	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-sha-1-modular \
 	fixtures/rpm-with-vendor \
@@ -212,8 +210,9 @@ fixtures/file-mixed:
 fixtures/ostree:
 	ostree/gen-fixtures.sh $@/small
 
-fixtures/puppet:
-	puppet/gen-module.sh $@
+# Commented out AND removved from the generation: See SATQE-3469
+# fixtures/puppet:
+# 	puppet/gen-module.sh $@
 
 fixtures/python-pypi:
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
@@ -293,8 +292,9 @@ fixtures/rpm-with-modules:
 fixtures/rpm-with-non-ascii:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
-fixtures/rpm-with-non-utf-8:
-	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
+# Commented out AND removed from the generation: See SATQE-3484
+# fixtures/rpm-with-non-utf-8:
+# 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-sha-512:
 	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
