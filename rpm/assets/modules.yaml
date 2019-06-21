@@ -142,6 +142,83 @@ data:
 document: modulemd
 version: 2
 data:
+  name: duck
+  stream: 4
+  version: 20190619105003
+  context: deadbeef
+  arch: noarch
+  summary: duck:4 stream
+  description: >-
+    A module stream for the duck 0.8 package
+    with a profile name of 'daffy'
+  license:
+    module:
+      - MIT
+  profiles:
+    default:
+      rpms:
+        - duck
+  artifacts:
+    rpms:
+      - duck-0:0.8-1.noarch
+...
+---
+document: modulemd
+version: 2
+data:
+  name: duck
+  stream: 5
+  version: 20190621095605
+  context: deadbeef
+  arch: noarch
+  summary: duck:5 stream
+  description: >-
+    A module stream for the duck 0.8 package
+    with a profile name of 'daffy'.
+    Ensures different streams with similar
+    RPM artifacts are not libsolv'd on copy.
+  license:
+    module:
+      - MIT
+  profiles:
+    default:
+      rpms:
+        - duck
+  artifacts:
+    rpms:
+      - duck-0:0.8-1.noarch
+...
+---
+document: modulemd
+version: 2
+data:
+  name: duck
+  stream: 6
+  version: 20190621095706
+  context: deadbeef
+  arch: noarch
+  summary: duck:6 stream
+  description: >-
+    A module stream for the duck 0.8 and frog 0.1 package
+    with a profile name of 'taffy'.
+    Ensures different streams with similar RPM artifacts are not
+    libsolv'd on copy.
+  license:
+    module:
+      - MIT
+  profiles:
+    default:
+      rpms:
+        - duck
+  artifacts:
+    rpms:
+      - duck-0:0.8-1.noarch
+      - frog-0:0.1-1.noarch
+...
+---
+document: modulemd
+version: 2
+data:
   name: walrus
   stream: 5.21
   version: 20180704144203
@@ -205,6 +282,9 @@ data:
   stream: 0
   profiles:
     0: [default]
+    4: [daffy]
+    5: [laffy]
+    6: [taffy]
 ...
 ---
 document: modulemd-defaults
