@@ -1,0 +1,94 @@
+--- updateinfo.xml	2019-07-01 16:14:16.281709951 -0400
++++ updateinfo_packages.xml	2019-07-01 14:17:33.251000000 -0400
+@@ -4,79 +4,30 @@
+   <id>RHEA-2012:0055</id>
+   <title>Sea_Erratum</title>
+   <release>1</release>
+-  <issued date="2012-01-27 16:08:06"/>
+-  <updated date="2012-01-27 16:08:06"/>
++  <issued date="2019-07-01 16:08:06"/>
++  <updated date="2019-07-01 16:08:06"/>
+   <description>Sea_Erratum</description>
+   <pkglist>
+     <collection short="">
+       <name>1</name>
+-      <package arch="noarch" name="walrus" release="1" src="http://www.fedoraproject.org" version="5.21">
+-        <filename>walrus-5.21-1.noarch.rpm</filename>
+-      </package>
+-      <package arch="noarch" name="penguin" release="1" src="http://www.fedoraproject.org" version="0.9.1">
+-        <filename>penguin-0.9.1-1.noarch.rpm</filename>
+-      </package>
+-      <package arch="noarch" name="shark" release="1" src="http://www.fedoraproject.org" version="0.1">
+-        <filename>shark-0.1-1.noarch.rpm</filename>
+-      </package>
+-    </collection>
+-  </pkglist>
+-</update>
+-
+-<update from="errata@redhat.com" status="stable" type="security" version="1">
+-  <id>RHEA-2012:0056</id>
+-  <title>Bird_Erratum</title>
+-  <release>1</release>
+-  <issued date="2013-01-27 16:08:08"/>
+-  <updated date="2013-02-27 17:00:00"/>
+-  <description>ParthaBird_Erratum</description>
+-  <pkglist>
+-    <collection short="">
+-      <name>1</name>
+-      <package arch="noarch" name="crow" release="1" src="http://www.fedoraproject.org" version="0.8">
+-        <filename>crow-0.8-1.noarch.rpm</filename>
+-      </package>
+-      <package arch="noarch" name="stork" release="2" src="http://www.fedoraproject.org" version="0.12">
+-        <filename>stork-0.12-2.noarch.rpm</filename>
+-      </package>
+-      <package arch="noarch" name="duck" release="1" src="http://www.fedoraproject.org" version="0.6">
+-        <filename>duck-0.6-1.noarch.rpm</filename>
++      <package arch="noarch" name="dolphin" release="1" src="http://www.fedoraproject.org" version="3.10.232">
++        <filename>dolphin-3.10.232-1.noarch.rpm</filename>
+       </package>
+     </collection>
+   </pkglist>
+-</update>
+-
+-<update from="errata@redhat.com" status="stable" type="security" version="1">
+-  <id>RHEA-2012:0057</id>
+-  <title>Bear_ErratumPARTHA</title>
+-  <release>1</release>
+-  <issued date="2013-01-27 16:08:05"/>
+-  <updated date="2013-01-27 16:08:05 UTC"/>
+-  <description>Bear_Erratum</description>
+   <pkglist>
+     <collection short="">
+-      <name>1</name>
+-      <package arch="noarch" name="bear" release="1" src="http://www.fedoraproject.org" version="4.1">
+-        <filename>bear-4.1-1.noarch.rpm</filename>
++      <name>2</name>
++      <package arch="noarch" name="pike" release="1" src="http://www.fedoraproject.org" version="2.2">
++        <filename>pike-2.2-1.noarch.rpm</filename>
+       </package>
+     </collection>
+-  </pkglist>
+-</update>
+-
+-<update from="errata@redhat.com" status="stable" type="enhancement" version="1">
+-  <id>RHEA-2012:0058</id>
+-  <title>Gorilla_Erratum</title>
+-  <release>1</release>
+-  <issued date="2013-01-27 16:08:09"/>
+-  <updated date="2014-07-20 06:00:01 UTC"/>
+-  <description>Gorilla_Erratum</description>
+-  <pkglist>
+     <collection short="">
+-      <name>1</name>
+-      <package arch="noarch" name="gorilla" release="1" src="http://www.fedoraproject.org" version="0.62">
+-        <filename>gorilla-0.62-1.noarch.rpm</filename>
++      <name>3</name>
++      <package arch="noarch" name="whale" release="1" src="http://www.fedoraproject.org" version="0.2">
++        <filename>whale-0.2-1.noarch.rpm</filename>
+       </package>
+     </collection>
+   </pkglist>
+ </update>
+-</updates>
++</updates>
+\ No newline at end of file
