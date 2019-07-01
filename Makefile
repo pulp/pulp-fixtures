@@ -163,6 +163,7 @@ fixtures: fixtures/docker \
 	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
+	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-sha-512 \
@@ -275,6 +276,9 @@ fixtures/rpm-signed: gnupghome
 
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-packages-updateinfo: 
+	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch 
 
 fixtures/rpm-references-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/references-updateinfo.patch
