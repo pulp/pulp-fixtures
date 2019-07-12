@@ -139,6 +139,7 @@ fixtures: fixtures/docker \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
+	fixtures/file-chunked \
 	fixtures/file2 \
 	fixtures/file-invalid\
 	fixtures/file-large\
@@ -188,6 +189,9 @@ fixtures/drpm-unsigned:
 
 fixtures/file:
 	file/gen-fixtures.sh $@
+
+fixtures/file-chunked:
+	file/gen-chunked-fixtures.sh $@
 
 fixtures/file2:
 	file/gen-fixtures.sh $@
