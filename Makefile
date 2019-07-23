@@ -34,6 +34,8 @@ help:
 	@echo "        Create large file fixtures, with 10 file fixtures."
 	@echo "    fixtures/file-many"
 	@echo "        Create many file fixtures, with 250 file fixtures."
+	@echo "    fixtures/file-missing"
+	@echo "        Create a file fixture that's missing a file."
 	@echo "    fixtures/file-mixed"
 	@echo "        Create File fixtures with some not available files on the"
 	@echo "        PULP_MANIFEST."
@@ -144,6 +146,7 @@ fixtures: fixtures/docker \
 	fixtures/file-invalid\
 	fixtures/file-large\
 	fixtures/file-many\
+	fixtures/file-missing\
 	fixtures/file-mixed \
 	fixtures/python-pypi \
 	fixtures/rpm-alt-layout \
@@ -206,6 +209,10 @@ fixtures/file-large:
 
 fixtures/file-many:
 	file/gen-fixtures.sh $@ --number 250
+
+fixtures/file-missing:
+	file/gen-fixtures.sh $@
+	echo 100.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 
 fixtures/file-mixed:
 	file/gen-fixtures.sh $@
