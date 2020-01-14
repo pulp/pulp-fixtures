@@ -16,3 +16,14 @@ before_install:
     - source ~/env/bin/activate
 script:
     make lint
+jobs:
+  include:
+    - stage: deploy
+      name: "Build pulp-fixtures docker image"
+      before_install: skip
+      script: docker build -t pulp/pulp-fixtures .
+      deploy:
+        provider: script
+        script: sudo .travis/quay-push.sh
+        on:
+          branch: master
