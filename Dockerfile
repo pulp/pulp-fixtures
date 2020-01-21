@@ -1,6 +1,6 @@
 FROM fedora:30
 
-RUN dnf -y install \
+RUN dnf -yq install \
               git \
               createrepo \
               docker \
@@ -28,9 +28,7 @@ RUN echo "" > pulp-fixtures/docker/gen-fixtures.sh
 # also, mock doesn't seem to work in container (calls mount)
 RUN echo "" > pulp-fixtures/rpm-richnweak-deps/gen-rpms.sh
 
-RUN make -C pulp-fixtures fixtures
-
-RUN cp -R pulp-fixtures/fixtures /usr/share/nginx/html/
+RUN make -C pulp-fixtures /usr/share/nginx/html/fixtures
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
