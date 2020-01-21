@@ -1,29 +1,23 @@
-sudo: required
 dist: xenial
+language: python
+python: 3.7
 # We lint with pylint before linting with shellcheck because the former step is
 # far faster than the latter step. The virtualenv is deactivated during all
 # shellcheck linting to avoid any possible environment-related errors.
 before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -y cabal-install python3-venv
-    - python3 -m venv ~/env
-    - source ~/env/bin/activate
-    - pip install --upgrade pip
     - pip install pylint
-    - deactivate
     - sudo apt-get install -y shellcheck
-    - which shellcheck
-    - source ~/env/bin/activate
-script:
-    make lint
 jobs:
   include:
-    - stage: deploy
+    - stage: lint
+      name: "Lint the code"
+      script: make lint
+    - stage: build
       name: "Build pulp-fixtures docker image"
       before_install: skip
-      script: docker build -t pulp/pulp-fixtures .
+      script: docker build -t quay.io/pulp/pulp-fixtures .
       deploy:
         provider: script
-        script: sudo .travis/quay-push.sh
+        script: bash .travis/quay-push.sh
         on:
           branch: master
