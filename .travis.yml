@@ -24,6 +24,6 @@ jobs:
       script: docker build -t pulp/pulp-fixtures .
       deploy:
         provider: script
-        script: sudo $TRAVIS_BUILD_DIR/.travis/quay-push.sh
+        script: bash .travis/quay-push.sh
         on:
           branch: master
