@@ -68,7 +68,7 @@ working_dir="$(mktemp --directory)"
 file_size="${file_size:-1K}"
 for ((i=0; i<number; i++)); do
     of="${working_dir}/$((i + 1)).iso"
-    dd if=/dev/urandom of="${of}" bs="${file_size}" count=1
+    dd if=/dev/urandom of="${of}" bs="${file_size}" count=1 >/dev/null 2>&1
     echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
     >> "${working_dir}/PULP_MANIFEST"
 done
