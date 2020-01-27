@@ -186,6 +186,9 @@ fixtures: fixtures/docker \
 	fixtures/srpm-unsigned
 
 
+fixtures/debian:
+	debian/gen-fixtures.sh $@
+
 fixtures/docker:
 	docker/gen-fixtures.sh $@
 
