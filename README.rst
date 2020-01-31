@@ -141,9 +141,7 @@ See ``make help``.
     See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-richnweak-deps``
-    The ``mock`` and ``createrepo`` executable must be available.
-    All users that are to use mock must be added to the mock group.
-    ``usermod --append --groups mock "$(whoami)"``
+    The ``createrepo`` executable must be available.
 
 ``fixtures/rpm-signed``
     The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
