@@ -8,8 +8,6 @@ source rpm-richnweak-deps/common.sh
 # See: http://mywiki.wooledge.org/BashFAQ/028
 readonly script_name='gen-rpms.sh'
 
-readonly mock_env=fedora-30-x86_64
-
 # Print usage instructions to stdout.
 show_help() {
 fmt <<EOF
@@ -50,14 +48,12 @@ trap 'cleanup ; trap - SIGINT ; kill -s SIGINT $$' SIGINT
 trap 'cleanup ; trap - SIGTERM ; kill -s SIGTERM $$' SIGTERM
 working_dir="$(mktemp --directory)"
 
-# Generate RPMs, and copy them into $working_dir. Must be done serially, as mock
-# blows away the results directory during each run.
-mock --root "${mock_env}" --init
+# Generate RPMs, and copy them into $working_dir.
 for srpm in "${@}"; do
-    mock --root "${mock_env}" "${srpm}"
+    rpmbuild --rebuild "${srpm}"
     filename="$(basename "${srpm}")"
     filename="${filename%.src.rpm}.noarch.rpm"
-    cp "/var/lib/mock/${mock_env}/result/${filename}" "${working_dir}/"
+    cp "/root/rpmbuild/RPMS/noarch/${filename}" "${working_dir}/"
 done
 createrepo --checksum sha256 "${working_dir}"
 # Create or populate $output_dir.

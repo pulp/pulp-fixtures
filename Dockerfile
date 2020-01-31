@@ -8,7 +8,6 @@ RUN dnf -y install \
               gpg \
               jq \
               make \
-              mock \
               patch \
               puppet \
               python3-jinja2-cli \
@@ -17,16 +16,10 @@ RUN dnf -y install \
               rsync \
               nginx
 
-RUN gpasswd --add "$(whoami)" mock
-
-RUN newgrp -
-
 ADD . /pulp-fixtures
 
 # for now, skip making docker fixtures
 RUN echo "" > pulp-fixtures/docker/gen-fixtures.sh
-# also, mock doesn't seem to work in container (calls mount)
-RUN echo "" > pulp-fixtures/rpm-richnweak-deps/gen-rpms.sh
 
 RUN make -C pulp-fixtures fixtures
 
