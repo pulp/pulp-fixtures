@@ -15,7 +15,10 @@ jobs:
     - stage: build
       name: "Build pulp-fixtures docker image"
       before_install: skip
-      script: docker build -t quay.io/pulp/pulp-fixtures .
+      script:
+        - docker build -t quay.io/pulp/pulp-fixtures .
+        - docker run -d -p 8000:80 quay.io/pulp/pulp-fixtures
+        - curl --fail localhost:8000/fixtures/file/PULP_MANIFEST
       deploy:
         provider: script
         script: bash .travis/quay-push.sh
