@@ -152,6 +152,7 @@ fixtures: fixtures/docker \
 	fixtures/file-perf \
 	fixtures/file-mixed \
 	fixtures/python-pypi \
+	fixtures/rpm-kickstart \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
 	fixtures/rpm-incomplete-filelists \
@@ -232,6 +233,9 @@ fixtures/ostree:
 fixtures/python-pypi:
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
+fixtures/rpm-kickstart:
+	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
+
 fixtures/rpm-alt-layout:
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
 
@@ -294,8 +298,8 @@ fixtures/rpm-signed: gnupghome
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
 
-fixtures/rpm-packages-updateinfo: 
-	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch 
+fixtures/rpm-packages-updateinfo:
+	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch
 
 fixtures/rpm-references-updateinfo:
 	rpm/gen-patched-fixtures.sh $@ rpm/references-updateinfo.patch
@@ -313,8 +317,9 @@ fixtures/rpm-with-modules:
 fixtures/rpm-with-non-ascii:
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
-# Commented out AND removed from the generation: See SATQE-3484
-# fixtures/rpm-with-non-utf-8:
+# See SATQE-3484
+fixtures/rpm-with-non-utf-8:
+	cp -R ./rpm/assets-non-utf-8 ./fixtures/rpm-with-non-utf-8
 # 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 fixtures/rpm-with-sha-512:
