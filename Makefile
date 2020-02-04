@@ -153,6 +153,7 @@ fixtures: fixtures/docker \
 	fixtures/file-mixed \
 	fixtures/python-pypi \
 	fixtures/rpm-kickstart \
+	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
 	fixtures/rpm-incomplete-filelists \
