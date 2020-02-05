@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.com/pulp/pulp-fixtures.svg?branch=master
+    :target: https://travis-ci.com/pulp/pulp-fixtures
+
 Pulp Fixtures
 =============
 

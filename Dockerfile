@@ -2,7 +2,6 @@
 FROM fedora:30 AS fedora-build
 
 RUN dnf -y install \
-              git \
               createrepo \
               docker \
               fedpkg \
@@ -33,16 +32,12 @@ ADD . /pulp-fixtures
 RUN make -C pulp-fixtures fixtures/debian
 
 # === Serve content ===========================================================
-FROM fedora:30 AS server
-
-RUN dnf -y install nginx
+FROM nginx AS server
 
 RUN mkdir -p /usr/share/nginx/html/fixtures
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
 EXPOSE 80
 
-CMD [ "/usr/sbin/nginx" ]
+CMD ["nginx", "-g", "daemon off;"]
