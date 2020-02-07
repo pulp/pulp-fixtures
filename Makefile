@@ -220,7 +220,10 @@ fixtures/file-many:
 	file/gen-fixtures.sh $@ --number 250
 
 fixtures/file-perf:
-	file/gen-fixtures.sh $@ --number 100000 --file-size 50
+	# 100,000 files were exceeding Travis' 50 minute time limit
+	# https://pulp.plan.io/issues/6104
+	# file/gen-fixtures.sh $@ --number 100000 --file-size 50
+	file/gen-fixtures.sh $@ --number 20000 --file-size 50
 
 fixtures/file-mixed:
 	file/gen-fixtures.sh $@
