@@ -19,6 +19,7 @@ jobs:
         - docker build -t quay.io/pulp/pulp-fixtures .
         - docker run -d -p 8000:80 quay.io/pulp/pulp-fixtures
         - curl --fail localhost:8000/fixtures/file/PULP_MANIFEST
+        - curl --fail localhost:8000/fixtures/debian/dists/ragnarok/Release
       deploy:
         provider: script
         script: bash .travis/quay-push.sh
