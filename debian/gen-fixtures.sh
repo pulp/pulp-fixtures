@@ -51,5 +51,6 @@ reprepro -C jotunheimr includedeb ragnarok jotunheimr/*.deb
 
 rm dists/ragnarok/jotunheimr/binary-armeb/Packages
 
-cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/dists "${OUTPUTDIR}"
-cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/pool "${OUTPUTDIR}"
+mkdir -p "${OUTPUTDIR}"
+cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/dists -t "${OUTPUTDIR}"
+cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/pool -t "${OUTPUTDIR}"
