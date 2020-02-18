@@ -47,6 +47,7 @@ mkdir jotunheimr
 cp -a "${SRCDIR}/conf" .
 reprepro -C asgard includeudeb ragnarok asgard_udebs/*.udeb
 reprepro -C asgard includedeb ragnarok asgard/*.deb
+reprepro -C asgard includedeb nosuite asgard/*.deb
 reprepro -C jotunheimr includedeb ragnarok jotunheimr/*.deb
 
 rm dists/ragnarok/jotunheimr/binary-armeb/Packages
