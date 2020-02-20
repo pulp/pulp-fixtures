@@ -29,7 +29,7 @@ RUN apt-get update && apt-get -y install equivs reprepro
 
 ADD . /pulp-fixtures
 
-RUN make -C pulp-fixtures fixtures/debian
+RUN make -C pulp-fixtures fixtures/debian fixtures/debian-invalid
 
 # === Serve content ===========================================================
 FROM nginx AS server
