@@ -189,6 +189,9 @@ fixtures: fixtures/docker \
 fixtures/debian: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) debian/gen-fixtures.sh $@
 
+fixtures/debian-invalid: fixtures/debian
+	debian/gen-invalid-fixtures.sh $@
+
 fixtures/docker:
 	docker/gen-fixtures.sh $@
 

@@ -6,6 +6,7 @@ UdebComponents: asgard
 SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
 
 codename: nosuite
+Description: This is a valid Debian repository.
 Architectures: ppc64
 Components: asgard
 SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
