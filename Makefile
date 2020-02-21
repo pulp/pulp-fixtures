@@ -201,7 +201,7 @@ fixtures/docker:
 
 fixtures/drpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
-		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
+		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
 
 fixtures/drpm-unsigned:
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
@@ -307,7 +307,7 @@ fixtures/rpm-pkglists-updateinfo:
 
 fixtures/rpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
-		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets
+		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets
 
 fixtures/rpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets
@@ -371,13 +371,13 @@ fixtures/srpm-richnweak-deps:
 
 fixtures/srpm-signed: gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
-		--signing-key ./rpm/GPG-RPM-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
+		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
 
 fixtures/srpm-unsigned:
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
 
 gnupghome:
 	install -dm700 gnupghome
-	GNUPGHOME=$$(realpath -e gnupghome) gpg --import rpm/GPG-RPM-PRIVATE-KEY-pulp-qe
+	GNUPGHOME=$$(realpath -e gnupghome) gpg --import common/GPG-PRIVATE-KEY-pulp-qe
 
 .PHONY: help lint lint-pylint lint-shellcheck clean all
