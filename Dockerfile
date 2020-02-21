@@ -27,7 +27,10 @@ FROM debian:stretch AS debian-build
 
 RUN apt-get update && apt-get -y install equivs reprepro
 
-ADD . /pulp-fixtures
+RUN mkdir -p /pulp-fixtures/fixtures
+ADD Makefile /pulp-fixtures
+ADD common /pulp-fixtures/common
+ADD debian /pulp-fixtures/debian
 
 RUN make -C pulp-fixtures fixtures/debian fixtures/debian-invalid
 
