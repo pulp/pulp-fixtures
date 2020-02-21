@@ -50,6 +50,12 @@ See ``make help``.
 ``clean``
     No exotic dependencies are needed.
 
+``fixtures/debian``
+    The ``gnupg``, ``equivs``, and ``reprepro`` packages must be installed.
+
+``fixtures/debian-invalid``
+    Depends on the ``fixtures/debian`` target.
+
 ``fixtures/docker``
     The ``docker`` executable must be available.
 
