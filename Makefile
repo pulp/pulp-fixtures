@@ -124,7 +124,7 @@ help:
 	@echo "http.server'. It should not have a trailing slash."
 
 clean:
-	rm -rf fixtures/* gnupghome
+	rm -rf fixtures gnupghome
 
 # xargs communicates return values better than find's `-exec` argument.
 lint: lint-pylint lint-shellcheck
@@ -141,10 +141,18 @@ lint-pylint:
 lint-shellcheck:
 	find . -name '*.sh' -print0 | xargs -0 shellcheck
 
-all: fixtures
-	$(warning The `all` target is deprecated. Use `fixtures` instead.)
+all: all-skipped all-debian all-fedora
+	$(warning The `all` target is deprecated. Use `all-fedora` or `all-debian` instead.)
 
-fixtures: fixtures/docker \
+# for now, skip making docker fixtures
+all-skipped: \
+	fixtures/docker \
+
+all-debian: \
+	fixtures/debian \
+	fixtures/debian-invalid \
+
+all-fedora: \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
@@ -187,166 +195,172 @@ fixtures: fixtures/docker \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
-	fixtures/srpm-unsigned
+	fixtures/srpm-unsigned \
 
+gnupghome:
+	install -dm700 $@
+	GNUPGHOME=$$(realpath -e gnupghome) gpg --import common/GPG-PRIVATE-KEY-pulp-qe
 
-fixtures/debian: gnupghome
+fixtures:
+	mkdir -p $@
+
+fixtures/debian: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) debian/gen-fixtures.sh $@
 
-fixtures/debian-invalid: fixtures/debian
+fixtures/debian-invalid: fixtures fixtures/debian
 	debian/gen-invalid-fixtures.sh $@
 
-fixtures/docker:
+fixtures/docker: fixtures
 	docker/gen-fixtures.sh $@
 
-fixtures/drpm-signed: gnupghome
+fixtures/drpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
 		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
 
-fixtures/drpm-unsigned:
+fixtures/drpm-unsigned: fixtures
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 
-fixtures/file:
+fixtures/file: fixtures
 	file/gen-fixtures.sh $@
 
-fixtures/file-chunked:
+fixtures/file-chunked: fixtures
 	file/gen-chunked-fixtures.sh $@
 
-fixtures/file2:
+fixtures/file2: fixtures
 	file/gen-fixtures.sh $@
 
-fixtures/file-invalid:
+fixtures/file-invalid: fixtures
 	file/gen-fixtures.sh $@
 	echo 'blah' > $@/4.iso
 	echo 4.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 
-fixtures/file-large:
+fixtures/file-large: fixtures
 	file/gen-fixtures.sh $@ --number 10 --file-size 10M
 
-fixtures/file-many:
+fixtures/file-many: fixtures
 	file/gen-fixtures.sh $@ --number 250
 
-fixtures/file-perf:
+fixtures/file-perf: fixtures
 	# 100,000 files were exceeding Travis' 50 minute time limit
 	# https://pulp.plan.io/issues/6104
 	# file/gen-fixtures.sh $@ --number 100000 --file-size 50
 	file/gen-fixtures.sh $@ --number 20000 --file-size 50
 
-fixtures/file-mixed:
+fixtures/file-mixed: fixtures
 	file/gen-fixtures.sh $@
 	echo missing-1.iso,4a36e4eede4a61fd547040b53b1656b6dd489bd5bc4c0dd5fe55892dcf1669e8,1048576 >> $@/PULP_MANIFEST
 	echo missing-2.iso,ab6d91d4956d1a009bd6d03b3591f95aaae83b36907f77dd1ac71c400715b901,2097152 >> $@/PULP_MANIFEST
 
-fixtures/ostree:
+fixtures/ostree: fixtures
 	ostree/gen-fixtures.sh $@/small
 
 # Commented out AND removved from the generation: See SATQE-3469
 # fixtures/puppet:
 # 	puppet/gen-module.sh $@
 
-fixtures/python-pypi:
+fixtures/python-pypi: fixtures
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
-fixtures/rpm-kickstart:
+fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
 
-fixtures/rpm-alt-layout:
+fixtures/rpm-alt-layout: fixtures
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
 
-fixtures/rpm-incomplete-filelists:
+fixtures/rpm-incomplete-filelists: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	gunzip $@/repodata/*-filelists.xml.gz
 	sed -i -e '/<package /,/<\/package>/d' $@/repodata/*-filelists.xml
 	gzip $@/repodata/*-filelists.xml
 
-fixtures/rpm-incomplete-other:
+fixtures/rpm-incomplete-other: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	gunzip $@/repodata/*-other.xml.gz
 	sed -i -e '/<package /,/<\/package>/d' $@/repodata/*-other.xml
 	gzip $@/repodata/*-other.xml
 
-fixtures/rpm-invalid-rpm:
+fixtures/rpm-invalid-rpm: fixtures
 	rpm/gen-invalid-rpm.sh $@
 
-fixtures/rpm-invalid-updateinfo:
+fixtures/rpm-invalid-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
 
-fixtures/rpm-string-version-updateinfo:
+fixtures/rpm-string-version-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/rpm-string-version-updateinfo.patch
 
-fixtures/rpm-long-updateinfo:
+fixtures/rpm-long-updateinfo: fixtures
 	rpm/gen-long-updateinfo.sh $@
 
-fixtures/rpm-mirrorlist-bad:
+fixtures/rpm-mirrorlist-bad: fixtures
 	echo $(base_url)/fixtures/rpm-unsignedd/ > $@
 
-fixtures/rpm-mirrorlist-good: fixtures/rpm-unsigned
+fixtures/rpm-mirrorlist-good: fixtures fixtures/rpm-unsigned
 	echo $(base_url)/fixtures/rpm-unsigned/ > $@
 
-fixtures/rpm-mirrorlist-mixed: fixtures/rpm-unsigned
+fixtures/rpm-mirrorlist-mixed: fixtures fixtures/rpm-unsigned
 	echo $(base_url)/fixtures/rpm-unsigneddddd/ > $@
 	echo $(base_url)/fixtures/rpm-unsignedddd/ >> $@
 	echo $(base_url)/fixtures/rpm-unsigneddd/ >> $@
 	echo $(base_url)/fixtures/rpm-unsignedd/ >> $@
 	echo $(base_url)/fixtures/rpm-unsigned/ >> $@
 
-fixtures/rpm-missing-filelists:
+fixtures/rpm-missing-filelists: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rm $@/repodata/*-filelists.*
 
-fixtures/rpm-missing-other:
+fixtures/rpm-missing-other: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rm $@/repodata/*-other.*
 
-fixtures/rpm-missing-primary:
+fixtures/rpm-missing-primary: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rm $@/repodata/*-primary.*
 
-fixtures/rpm-pkglists-updateinfo:
+fixtures/rpm-pkglists-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
 
-fixtures/rpm-signed: gnupghome
+fixtures/rpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
 		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets
 
-fixtures/rpm-unsigned:
+fixtures/rpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 
-fixtures/rpm-packages-updateinfo:
+fixtures/rpm-packages-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch
 
-fixtures/rpm-references-updateinfo:
+fixtures/rpm-references-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/references-updateinfo.patch
 
-fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps
+fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps fixtures
 	rpm-richnweak-deps/gen-rpms.sh $@ $</*.src.rpm
 
-fixtures/rpm-updated-updateinfo:
+fixtures/rpm-updated-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
 
-fixtures/rpm-with-modules:
+fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
-fixtures/rpm-with-non-ascii:
+fixtures/rpm-with-non-ascii: fixtures
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
 # See SATQE-3484
-fixtures/rpm-with-non-utf-8:
+fixtures/rpm-with-non-utf-8: fixtures
 	cp -R ./rpm/assets-non-utf-8 ./fixtures/rpm-with-non-utf-8
 # 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
-fixtures/rpm-with-sha-512:
+fixtures/rpm-with-sha-512: fixtures
 	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
 
-fixtures/rpm-with-sha-1-modular:
+fixtures/rpm-with-sha-1-modular: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch sha1
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
-fixtures/rpm-with-vendor:
+fixtures/rpm-with-vendor: fixtures
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"
 
-fixtures/rpm-with-pulp-distribution:
+fixtures/rpm-with-pulp-distribution: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	echo "productid" > $@/repodata/productid
 	mkdir $@/release-notes
@@ -361,23 +375,19 @@ fixtures/rpm-with-pulp-distribution:
 	echo "timestamp=1485887759" >> $@/treeinfo
 	echo "version=42" >> $@/treeinfo
 
-fixtures/srpm-duplicate:
+fixtures/srpm-duplicate: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@/src srpm-duplicate/assets-specs/*.spec
 	rpm-richnweak-deps/gen-srpms.sh $@/dst srpm-duplicate/assets-specs/*.spec
 	createrepo --checksum sha256 $@
 
-fixtures/srpm-richnweak-deps:
+fixtures/srpm-richnweak-deps: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
 
-fixtures/srpm-signed: gnupghome
+fixtures/srpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
 		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
 
-fixtures/srpm-unsigned:
+fixtures/srpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
 
-gnupghome:
-	install -dm700 gnupghome
-	GNUPGHOME=$$(realpath -e gnupghome) gpg --import common/GPG-PRIVATE-KEY-pulp-qe
-
-.PHONY: help lint lint-pylint lint-shellcheck clean all
+.PHONY: help lint lint-pylint lint-shellcheck clean all all-skipped all-debian all-fedora
