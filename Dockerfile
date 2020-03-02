@@ -17,10 +17,7 @@ RUN dnf -y install \
 
 ADD . /pulp-fixtures
 
-# for now, skip making docker fixtures
-RUN echo "" > pulp-fixtures/docker/gen-fixtures.sh
-
-RUN make -C pulp-fixtures fixtures
+RUN make -C pulp-fixtures all-fedora
 
 # === Build fixtures (Debian) =================================================
 FROM debian:stretch AS debian-build
@@ -32,7 +29,7 @@ ADD Makefile /pulp-fixtures
 ADD common /pulp-fixtures/common
 ADD debian /pulp-fixtures/debian
 
-RUN make -C pulp-fixtures fixtures/debian fixtures/debian-invalid
+RUN make -C pulp-fixtures all-debian
 
 # === Serve content ===========================================================
 FROM nginx AS server
