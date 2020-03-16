@@ -20,6 +20,16 @@ mkdir asgard
   done
 )
 
+mkdir asgard_update
+(
+  cd asgard_update
+
+  for CTL in "${SRCDIR}"/asgard_update/*.ctl
+  do
+    equivs-build --arch ppc64 "${CTL}"
+  done
+)
+
 mkdir asgard_udebs
 (
   cd asgard_udebs
@@ -50,8 +60,17 @@ reprepro -C asgard includedeb ragnarok asgard/*.deb
 reprepro -C asgard includedeb nosuite asgard/*.deb
 reprepro -C jotunheimr includedeb ragnarok jotunheimr/*.deb
 
+# Help to test that this artifact gets decompressed on the fly
 rm dists/ragnarok/jotunheimr/binary-armeb/Packages
 
 mkdir -p "${OUTPUTDIR}"
 cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/dists -t "${OUTPUTDIR}"
 cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/pool -t "${OUTPUTDIR}"
+
+# update packages and publish as new repository version
+reprepro -C asgard includedeb ragnarok asgard_update/*.deb
+reprepro remove ragnarok "thor"
+
+mkdir -p "${OUTPUTDIR}_update"
+cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/dists -t "${OUTPUTDIR}_update"
+cp -r --no-preserve=mode --reflink=auto "${TMPDIR}"/pool -t "${OUTPUTDIR}_update"
