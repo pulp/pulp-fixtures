@@ -1,7 +1,7 @@
 # === Build fixtures (Fedora) =================================================
 FROM fedora:30 AS fedora-build
 
-RUN dnf -y install \
+RUN dnf -yq install \
               createrepo \
               docker \
               fedpkg \
@@ -37,6 +37,9 @@ FROM nginx AS server
 RUN mkdir -p /usr/share/nginx/html/fixtures
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
+
+# turn on autoindex
+RUN sed -i -e '/location.*\/.*{/a autoindex on\;' /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
