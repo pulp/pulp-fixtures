@@ -157,6 +157,7 @@ all-skipped: \
 all-debian: \
 	fixtures/debian \
 	fixtures/debian-invalid \
+	fixtures/debian-complex-dists \
 
 all-fedora: \
 	fixtures/drpm-signed \
@@ -220,6 +221,9 @@ fixtures/debian: fixtures gnupghome
 
 fixtures/debian-invalid: fixtures fixtures/debian
 	debian/gen-invalid-fixtures.sh $@
+
+fixtures/debian-complex-dists: fixtures gnupghome
+	GNUPGHOME=$$(realpath -e gnupghome) debian/gen_complex_dists_fixtures.sh $@
 
 fixtures/docker: fixtures
 	docker/gen-fixtures.sh $@

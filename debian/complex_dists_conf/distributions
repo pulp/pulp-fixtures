@@ -1,0 +1,10 @@
+Origin: pulp-fixtures
+Label: Debian-security-like-fixture
+Suite: stable
+Version: 10
+Codename: ragnarok/updates
+Architectures: armeb ppc64
+Components: asgard jotunheimr
+FakeComponentPrefix: updates
+Description: A fixtures repo with a structure modeled on debian-security.
+SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
