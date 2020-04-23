@@ -164,6 +164,7 @@ all-fedora: \
 	fixtures/file-perf \
 	fixtures/file-mixed \
 	fixtures/python-pypi \
+	fixtures/rpm-advisory-diffpkgs \
 	fixtures/rpm-kickstart \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
@@ -187,6 +188,7 @@ all-fedora: \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
+	fixtures/rpm-updated-updateversion \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-sha-1-modular \
@@ -260,6 +262,9 @@ fixtures/ostree: fixtures
 
 fixtures/python-pypi: fixtures
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
+
+fixtures/rpm-advisory-diffpkgs: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/advisory-diffpkgs.patch
 
 fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
@@ -337,6 +342,9 @@ fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps fixtures
 
 fixtures/rpm-updated-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+
+fixtures/rpm-updated-updateversion: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateversion.patch
 
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch

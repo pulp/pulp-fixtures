@@ -1,0 +1,11 @@
+--- a/rpm/assets/updateinfo.xml
++++ b/rpm/assets/updateinfo.xml
+@@ -23,7 +23,7 @@
+   </pkglist>
+ </update>
+ 
+-<update from="errata@redhat.com" status="stable" type="security" version="1">
++<update from="errata@redhat.com" status="stable" type="security" version="2">
+   <id>RHEA-2012:0056</id>
+   <title>Bird_Erratum</title>
+   <release>1</release>
