@@ -50,9 +50,15 @@ help:
 	@echo "        Create a dummy Puppet module."
 	@echo "    fixtures/python-pypi [base_url=...]"
 	@echo "        Create a PyPI Python repository."
+	@echo "    fixtures/rpm-advisory-incomplete-package-list"
+	@echo "        Create an RPM repository with advisory with incomplete package list."
+	@echo "    fixtures/rpm-advisory-diff-repo"
+	@echo "        Create an RPM repository with advisory with different package list."
 	@echo "    fixtures/rpm-alt-layout"
 	@echo "        Create an RPM repository with packages in a dedicated"
 	@echo "        directory."
+	@echo "    fixtures/rpm-advisory-no-update-date"
+	@echo "        Create an RPM repository with advisory without updated date."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-incomplete-filelists"
@@ -165,6 +171,9 @@ all-fedora: \
 	fixtures/file-mixed \
 	fixtures/python-pypi \
 	fixtures/rpm-advisory-diffpkgs \
+	fixtures/rpm-advisory-incomplete-package-list \
+	fixtures/rpm-advisory-diff-repo \
+	fixtures/rpm-advisory-no-update-date \
 	fixtures/rpm-kickstart \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
@@ -263,8 +272,17 @@ fixtures/ostree: fixtures
 fixtures/python-pypi: fixtures
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
+fixtures/rpm-advisory-incomplete-package-list: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/advisory-incomplete-package-list.patch
+
 fixtures/rpm-advisory-diffpkgs: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/advisory-diffpkgs.patch
+
+fixtures/rpm-advisory-diff-repo: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/advisory-diff-repo.patch
+
+fixtures/rpm-advisory-no-update-date: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/advisory-no-update-date.patch
 
 fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
