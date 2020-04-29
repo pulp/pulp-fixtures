@@ -1,0 +1,10 @@
+--- a/rpm/assets/updateinfo.xml
++++ b/rpm/assets/updateinfo.xml
+@@ -28,7 +28,6 @@
+   <title>Bird_Erratum</title>
+   <release>1</release>
+   <issued date="2013-01-27 16:08:08"/>
+-  <updated date="2013-02-27 17:00:00"/>
+   <description>ParthaBird_Erratum</description>
+   <pkglist>
+     <collection short="">

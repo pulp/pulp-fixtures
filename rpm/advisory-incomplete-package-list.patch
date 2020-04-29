@@ -1,0 +1,12 @@
+--- a/rpm/assets/updateinfo.xml
++++ b/rpm/assets/updateinfo.xml
+@@ -36,9 +36,6 @@
+       <package arch="noarch" name="crow" release="1" src="http://www.fedoraproject.org" version="0.8">
+         <filename>crow-0.8-1.noarch.rpm</filename>
+       </package>
+-      <package arch="noarch" name="stork" release="2" src="http://www.fedoraproject.org" version="0.12">
+-        <filename>stork-0.12-2.noarch.rpm</filename>
+-      </package>
+       <package arch="noarch" name="duck" release="1" src="http://www.fedoraproject.org" version="0.6">
+         <filename>duck-0.6-1.noarch.rpm</filename>
+       </package>
