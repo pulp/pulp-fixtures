@@ -22,6 +22,11 @@ jobs:
         - curl --fail localhost:8000/fixtures/debian/dists/ragnarok/Release
       deploy:
         provider: script
+        script: bash .travis/docker-push.sh
+        on:
+          branch: master
+      deploy:
+        provider: script
         script: bash .travis/quay-push.sh
         on:
           branch: master
