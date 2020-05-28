@@ -17,4 +17,5 @@ IMAGE_TAG=${QUAY_USER_OR_ORG_NAME:-latest}
 
 # Reference: https://adriankoshka.github.io/blog/posts/travis-and-quay/
 echo "$QUAY_BOT_PASSWORD" | docker login -u "$QUAY_BOT_USERNAME" --password-stdin quay.io
+docker tag pulp/pulp-fixtures "quay.io/$QUAY_PROJECT_NAME/$QUAY_REPO_NAME:$IMAGE_TAG"
 docker push "quay.io/$QUAY_PROJECT_NAME/$QUAY_REPO_NAME:$IMAGE_TAG"
