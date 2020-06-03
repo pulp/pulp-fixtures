@@ -41,6 +41,9 @@ COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
 # turn on autoindex
 RUN sed -i -e '/location.*\/.*{/a autoindex on\;' /etc/nginx/conf.d/default.conf
 
+# remove the index page
+RUN rm /usr/share/nginx/html/index.html
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
