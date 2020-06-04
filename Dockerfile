@@ -34,12 +34,12 @@ RUN make -C pulp-fixtures all-debian
 # === Serve content ===========================================================
 FROM nginx AS server
 
-RUN mkdir -p /usr/share/nginx/html/fixtures
-COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
-COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html/fixtures
+RUN rm /usr/share/nginx/html/index.html
+COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html
+COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
 
 # turn on autoindex
-RUN sed -i -e '/location.*\/.*{/a autoindex on\;' /etc/nginx/conf.d/default.conf
+RUN sed -i -e '/location \/ {/a autoindex on\;' /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
