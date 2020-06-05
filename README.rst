@@ -20,6 +20,30 @@ Smash does not directly make use of Pulp Fixtures. Instead:
 
 For exact usage instructions, clone this repository and run ``make help``.
 
+Container
+---------
+
+You can run these fixtures locally using a container. We host the container images at both quay and
+docker hub::
+
+    podman run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
+    podman run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
+
+Or with docker::
+
+    docker run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
+    docker run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
+
+You can also build and run the pulp fixtures container locally with podman/buildah::
+
+    buildah bud -f Containerfile -t pulp/pulp-fixtures .
+    podman run -d -p 8000:80 pulp/pulp-fixtures
+
+Or you can use docker::
+
+    docker build -f Containerfile -t pulp/pulp-fixtures .
+    docker run -d -p 8000:80 pulp/pulp-fixtures
+
 Dependencies
 ------------
 
