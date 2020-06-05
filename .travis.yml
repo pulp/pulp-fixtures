@@ -16,7 +16,7 @@ jobs:
       name: "Build pulp-fixtures docker image"
       before_install: skip
       script:
-        - docker build -t pulp/pulp-fixtures .
+        - docker build -f Containerfile -t pulp/pulp-fixtures .
         - docker run -d -p 8000:80 pulp/pulp-fixtures
         - curl --fail localhost:8000/file/PULP_MANIFEST
         - curl --fail localhost:8000/debian/dists/ragnarok/Release
