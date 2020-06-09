@@ -319,17 +319,17 @@ fixtures/rpm-long-updateinfo: fixtures
 	rpm/gen-long-updateinfo.sh $@
 
 fixtures/rpm-mirrorlist-bad: fixtures
-	echo $(base_url)/fixtures/rpm-unsignedd/ > $@
+	echo $(base_url)/rpm-unsignedd/ > $@
 
 fixtures/rpm-mirrorlist-good: fixtures fixtures/rpm-unsigned
-	echo $(base_url)/fixtures/rpm-unsigned/ > $@
+	echo $(base_url)/rpm-unsigned/ > $@
 
 fixtures/rpm-mirrorlist-mixed: fixtures fixtures/rpm-unsigned
-	echo $(base_url)/fixtures/rpm-unsigneddddd/ > $@
-	echo $(base_url)/fixtures/rpm-unsignedddd/ >> $@
-	echo $(base_url)/fixtures/rpm-unsigneddd/ >> $@
-	echo $(base_url)/fixtures/rpm-unsignedd/ >> $@
-	echo $(base_url)/fixtures/rpm-unsigned/ >> $@
+	echo $(base_url)/rpm-unsigneddddd/ > $@
+	echo $(base_url)/rpm-unsignedddd/ >> $@
+	echo $(base_url)/rpm-unsigneddd/ >> $@
+	echo $(base_url)/rpm-unsignedd/ >> $@
+	echo $(base_url)/rpm-unsigned/ >> $@
 
 fixtures/rpm-missing-filelists: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
