@@ -45,7 +45,7 @@ def format_url(metadata, base_url):
                 urljoin,
                 [
                     base_url,
-                    "fixtures/python-pypi/packages/",
+                    "python-pypi/packages/",
                     distribution["filename"],
                 ],
             )

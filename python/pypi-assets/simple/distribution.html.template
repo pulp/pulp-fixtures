@@ -7,7 +7,7 @@
 <body>
 {% for distribution in projects[project] %}
 
-  <a href="{{base_url}}/fixtures/python-pypi/packages/{{distribution}}" rel="internal">{{distribution}}</a><br />
+  <a href="{{base_url}}/python-pypi/packages/{{distribution}}" rel="internal">{{distribution}}</a><br />
 {% endfor %}
 </body>
 </html>
