@@ -17,7 +17,7 @@ RUN dnf -yq install \
 
 ADD . /pulp-fixtures
 
-RUN make -C pulp-fixtures all-fedora
+RUN make -C pulp-fixtures all-fedora base_url=BASE_URL
 
 # === Build fixtures (Debian) =================================================
 FROM debian:stretch AS debian-build
@@ -43,4 +43,9 @@ RUN sed -i -e '/location \/ {/a autoindex on\;' /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENV BASE_URL=http://localhost:8000
+
+ADD entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+CMD ["./entrypoint.sh"]
