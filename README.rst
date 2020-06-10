@@ -44,6 +44,10 @@ Or you can use docker::
     docker build -f Containerfile -t pulp/pulp-fixtures .
     docker run -d -p 8000:80 pulp/pulp-fixtures
 
+By default the base url is ``http://localhost:8000``. If you want to change this, run::
+
+    podman run -d -e BASE_URL=http://pulp-fixtures pulp/pulp-fixtures
+
 Dependencies
 ------------
 
