@@ -17,9 +17,11 @@ jobs:
       before_install: skip
       script:
         - docker build -f Containerfile -t pulp/pulp-fixtures .
-        - docker run -d -p 8000:80 pulp/pulp-fixtures
+        - docker run -d -e BASE_URL=http://example.com -p 8000:80 pulp/pulp-fixtures
+        - sleep 2 # it can take a couple seconds for sed to run and nginx to boot
         - curl --fail localhost:8000/file/PULP_MANIFEST
         - curl --fail localhost:8000/debian/dists/ragnarok/Release
+        - '[[ $(curl localhost:8000/rpm-mirrorlist-good) == "http://example.com/rpm-unsigned/" ]] || exit 1'
       deploy:
         - provider: script
           script: bash .travis/docker-push.sh
