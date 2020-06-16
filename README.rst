@@ -27,6 +27,7 @@ You can run these fixtures locally using a container. We host the container imag
 docker hub::
 
     podman run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
+
     podman run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
 
 Or with docker::
