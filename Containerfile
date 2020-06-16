@@ -22,7 +22,7 @@ RUN make -C pulp-fixtures all-fedora base_url=BASE_URL
 # === Build fixtures (Debian) =================================================
 FROM debian:stretch AS debian-build
 
-RUN apt-get update && apt-get -y install equivs reprepro
+RUN apt-get -q update && apt-get -yq install equivs reprepro
 
 RUN mkdir -p /pulp-fixtures/fixtures
 ADD Makefile /pulp-fixtures
