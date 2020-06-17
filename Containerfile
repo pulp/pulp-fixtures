@@ -17,7 +17,7 @@ RUN dnf -yq install \
 
 ADD . /pulp-fixtures
 
-RUN make -C pulp-fixtures all-fedora base_url=BASE_URL
+RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
 
 # === Build fixtures (Debian) =================================================
 FROM debian:stretch AS debian-build
