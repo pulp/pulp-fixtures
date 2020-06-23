@@ -38,8 +38,8 @@ RUN rm /usr/share/nginx/html/index.html
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
 
-# turn on autoindex
-RUN sed -i -e '/location \/ {/a autoindex on\;' /etc/nginx/conf.d/default.conf
+# use custom nginx.conf
+COPY common/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
