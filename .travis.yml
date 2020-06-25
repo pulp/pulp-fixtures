@@ -1,6 +1,9 @@
 dist: xenial
 language: python
 python: 3.7
+addons:
+  hosts:
+    - pulp-fixtures
 # We lint with pylint before linting with shellcheck because the former step is
 # far faster than the latter step. The virtualenv is deactivated during all
 # shellcheck linting to avoid any possible environment-related errors.
@@ -17,14 +20,15 @@ jobs:
       before_install: skip
       script:
         - docker build -f Containerfile -t pulp/pulp-fixtures .
-        - docker run -d -e BASE_URL=http://example.com -p 8000:80 pulp/pulp-fixtures
+        - docker run -d -e BASE_URL=http://pulp-fixtures:8000 -p 8000:80 pulp/pulp-fixtures
         - sleep 2 # it can take a couple seconds for sed to run and nginx to boot
-        - curl --fail localhost:8000/file/PULP_MANIFEST
-        - curl --fail localhost:8000/debian/dists/ragnarok/Release
-        - curl -L localhost:8000/rpm-unsigned/?badtoken | grep "Wrong auth token"
-        - curl --fail -L localhost:8000/rpm-unsigned/?secret
-        - curl --fail -L localhost:8000/file-large/?parameter
-        - '[[ $(curl localhost:8000/rpm-mirrorlist-good) == "http://example.com/rpm-unsigned/" ]] || exit 1'
+        - curl --fail pulp-fixtures:8000/file/PULP_MANIFEST
+        - curl --fail pulp-fixtures:8000/debian/dists/ragnarok/Release
+        - curl -L pulp-fixtures:8000/rpm-unsigned/?badtoken | grep "Wrong auth token"
+        - curl --fail -L pulp-fixtures:8000/rpm-unsigned/?secret
+        - curl --fail -L pulp-fixtures:8000/file-large/?parameter
+        - '[[ $(curl pulp-fixtures:8000/rpm-mirrorlist-good) == "http://pulp-fixtures:8000/rpm-unsigned/" ]] || exit 1'
+        - pip install --trusted-host pulp-fixtures -i http://pulp-fixtures:8000/python-pypi/simple/ shelf-reader
       deploy:
         - provider: script
           script: bash .travis/docker-push.sh
