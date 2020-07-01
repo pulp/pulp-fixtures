@@ -3,13 +3,12 @@ FROM fedora:30 AS fedora-build
 
 RUN dnf -yq install \
               createrepo \
-              docker \
               fedpkg \
               gpg \
               jq \
               make \
+              ostree \
               patch \
-              puppet \
               python3-jinja2-cli \
               rpm-build \
               rpm-sign \
@@ -37,6 +36,9 @@ FROM nginx AS server
 RUN rm /usr/share/nginx/html/index.html
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
+
+ADD docker/assets/busybox:latest.tar /usr/share/nginx/html/docker/busybox:latest.tar
+ADD puppet/assets/pulpqe-dummypuppet.tar.gz /usr/share/nginx/html/puppet/pulpqe-dummypuppet.tar.gz
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf

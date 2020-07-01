@@ -208,6 +208,7 @@ all-fedora: \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned \
+	fixtures/ostree \
 
 gnupghome:
 	install -dm700 $@
