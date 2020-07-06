@@ -116,6 +116,8 @@ help:
 	@echo "        PULP_DISTRIBUTION.xml file."
 	@echo "    fixtures/rpm-with-vendor"
 	@echo "        Create an RPM repository with an RPM that has a vendor."
+	@echo "    fixtures/rpm-zchunk"
+	@echo "        Create an RPM repository with zchunk metadata."
 	@echo "    fixtures/srpm-duplicate"
 	@echo "        Create SRPM fixture data with duplicate entries in repodata."
 	@echo "    fixtures/srpm-richnweak-deps"
@@ -210,6 +212,7 @@ all-fedora: \
 	fixtures/rpm-with-sha-1-modular \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-with-pulp-distribution \
+	fixtures/rpm-zchunk \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
@@ -424,6 +427,9 @@ fixtures/rpm-with-pulp-distribution: fixtures
 	echo "family=Zoo" >> $@/treeinfo
 	echo "timestamp=1485887759" >> $@/treeinfo
 	echo "version=42" >> $@/treeinfo
+
+fixtures/rpm-zchunk: fixtures
+	rpm/gen-fixtures.sh --zchunk $@ rpm/assets
 
 fixtures/srpm-duplicate: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@/src srpm-duplicate/assets-specs/*.spec

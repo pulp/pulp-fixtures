@@ -32,6 +32,7 @@ jobs:
         - curl --fail -o /dev/null pulp-fixtures:8000/docker/busybox:latest.tar
         - curl --fail -o /dev/null pulp-fixtures:8000/puppet/pulpqe-dummypuppet.tar.gz
         - curl --fail pulp-fixtures:8000/ostree/small/summary
+        - curl pulp-fixtures:8000/rpm-zchunk/repodata/ | grep filelists.xml.zck
       deploy:
         - provider: script
           script: bash .travis/docker-push.sh
