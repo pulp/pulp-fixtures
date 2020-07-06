@@ -39,6 +39,7 @@ COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
 
 COPY docker/assets/busybox:latest.tar /usr/share/nginx/html/docker/busybox:latest.tar
 COPY puppet/assets/pulpqe-dummypuppet.tar.gz /usr/share/nginx/html/puppet/pulpqe-dummypuppet.tar.gz
+COPY rpm/assets-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm /usr/share/nginx/html/rpm-with-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf
