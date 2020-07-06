@@ -29,8 +29,8 @@ jobs:
         - curl --fail -L pulp-fixtures:8000/file-large/?parameter
         - '[[ $(curl pulp-fixtures:8000/rpm-mirrorlist-good) == "http://pulp-fixtures:8000/rpm-unsigned/" ]] || exit 1'
         - pip install --trusted-host pulp-fixtures -i http://pulp-fixtures:8000/python-pypi/simple/ shelf-reader
-        - curl --fail pulp-fixtures:8000/docker/busybox:latest.tar
-        - curl --fail pulp-fixtures:8000/puppet/pulpqe-dummypuppet.tar.gz
+        - curl --fail -o /dev/null pulp-fixtures:8000/docker/busybox:latest.tar
+        - curl --fail -o /dev/null pulp-fixtures:8000/puppet/pulpqe-dummypuppet.tar.gz
         - curl --fail pulp-fixtures:8000/ostree/small/summary
       deploy:
         - provider: script
