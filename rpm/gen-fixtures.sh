@@ -33,6 +33,8 @@ Options:
     --checksum-type <type>
         The type of checksum that has to be included in repomd while using the
         $(createrepo) command. Default checksum type is sha256.
+    --zchunk
+        Whether or not to run createrepo with --zck option.
 
 EOF
 }
@@ -41,7 +43,7 @@ EOF
 check_getopt
 temp=$(getopt \
     --options '' \
-    --longoptions signing-key:,packages-dir:,checksum-type: \
+    --longoptions signing-key:,packages-dir:,checksum-type:,zchunk \
     --name "$script_name" \
     -- "$@")
 eval set -- "$temp"
@@ -57,6 +59,7 @@ while true; do
         --signing-key) signing_key="$(realpath --canonicalize-existing "$2")"; shift 2;;
         --packages-dir) packages_dir="$2"; shift 2;;
         --checksum-type) checksum_type="$2"; shift 2;;
+        --zchunk) zchunk="--zck"; shift 1;;
         --) shift; break;;
         *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
     esac
@@ -87,7 +90,7 @@ if [ -n "${signing_key:-}" ]; then
         --signfiles
 fi
 checksum_type_default=sha256
-createrepo --checksum "${checksum_type:-${checksum_type_default}}" \
+createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
     --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
     "${working_dir}"
 modifyrepo --mdtype updateinfo \
