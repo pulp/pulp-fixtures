@@ -37,8 +37,8 @@ RUN rm /usr/share/nginx/html/index.html
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
 
-ADD docker/assets/busybox:latest.tar /usr/share/nginx/html/docker/busybox:latest.tar
-ADD puppet/assets/pulpqe-dummypuppet.tar.gz /usr/share/nginx/html/puppet/pulpqe-dummypuppet.tar.gz
+COPY docker/assets/busybox:latest.tar /usr/share/nginx/html/docker/busybox:latest.tar
+COPY puppet/assets/pulpqe-dummypuppet.tar.gz /usr/share/nginx/html/puppet/pulpqe-dummypuppet.tar.gz
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf
