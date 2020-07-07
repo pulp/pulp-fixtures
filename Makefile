@@ -61,6 +61,8 @@ help:
 	@echo "        Create an RPM repository with advisory without updated date."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
+	@echo "    fixtures/rpm-with-modules-modified"
+	@echo "        Create an RPM repository with modules but without some dependencies."
 	@echo "    fixtures/rpm-incomplete-filelists"
 	@echo "        Create an RPM repository with an incomplete filelists.xml."
 	@echo "    fixtures/rpm-incomplete-other"
@@ -97,6 +99,8 @@ help:
 	@echo "        Create RPM fixture data with signed packages."
 	@echo "    fixtures/rpm-unsigned"
 	@echo "        Create RPM fixture data with unsigned packages."
+	@echo "    fixtures/rpm-unsigned-modified"
+	@echo "        Create RPM fixture without the whale package."
 	@echo "    fixtures/rpm-updated-updateinfo"
 	@echo "        Create RPM fixtures with updated updateinfo.xml."
 	@echo "    fixtures/rpm-with-non-ascii"
@@ -179,6 +183,7 @@ all-fedora: \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
+	fixtures/rpm-with-modules-modified \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -196,6 +201,7 @@ all-fedora: \
 	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
+	fixtures/rpm-unsigned-modified \
 	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-updated-updateversion \
@@ -354,6 +360,11 @@ fixtures/rpm-signed: fixtures gnupghome
 fixtures/rpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 
+fixtures/rpm-unsigned-modified: fixtures
+	rpm/gen-fixtures.sh $@ rpm/assets
+	rm $@/whale-0.2-1.noarch.rpm 
+	createrepo --update $@
+
 fixtures/rpm-packages-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch
 
@@ -371,6 +382,14 @@ fixtures/rpm-updated-updateversion: fixtures
 
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
+	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+
+fixtures/rpm-with-modules-modified: fixtures
+	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
+	rm $@/kangaroo-0.3-1.noarch.rpm
+	rm $@/shark-0.1-1.noarch.rpm
+	rm $@/stork-0.12-2.noarch.rpm
+	createrepo --update $@
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-non-ascii: fixtures
