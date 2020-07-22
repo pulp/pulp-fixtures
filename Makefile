@@ -181,6 +181,7 @@ all-fedora: \
 	fixtures/rpm-advisory-incomplete-package-list \
 	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
+	fixtures/rpm-distribution-tree \
 	fixtures/rpm-kickstart \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
@@ -300,6 +301,16 @@ fixtures/rpm-advisory-no-update-date: fixtures
 
 fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
+
+fixtures/rpm-distribution-tree: fixtures gnupghome fixtures/rpm-signed
+	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree
+	mkdir -p ./fixtures/rpm-distribution-tree/addons/dolphin
+	mkdir ./fixtures/rpm-distribution-tree/addons/whale
+	mkdir -p ./fixtures/rpm-distribution-tree/variants/land
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/addons/dolphin rpm/assets-pkg-dolphin
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/addons/whale rpm/assets-pkg-whale
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/variants/land rpm/assets-pkg-lion
+	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
 
 fixtures/rpm-alt-layout: fixtures
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets

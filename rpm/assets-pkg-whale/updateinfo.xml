@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<updates>
+<update from="errata@redhat.com" status="stable" type="security" version="1">
+  <id>RHEA-2012:0055</id>
+  <title>Sea_Erratum</title>
+  <release>1</release>
+  <issued date="2012-01-27 16:08:06"/>
+  <updated date="2012-01-27 16:08:06"/>
+  <description>Sea_Erratum</description>
+  <pkglist>
+    <collection short="">
+      <name>1</name>
+      <package arch="noarch" name="shark" release="1" src="http://www.fedoraproject.org" version="0.1">
+        <filename>shark-0.1-1.noarch.rpm</filename>
+      </package>
+    </collection>
+  </pkglist>
+</update>
+</updates>

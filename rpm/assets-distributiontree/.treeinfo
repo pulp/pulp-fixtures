@@ -1,0 +1,96 @@
+[checksums]
+LiveOS/squashfs.img = sha256:30e14955ebf1352266dc2ff8067e68104607e750abb9d3b36582b8af909fcb58
+images/pxeboot/initrd.img = sha256:5647f05ec18958947d32874eeb788fa396a05d0bab7c1b71f112ceb7e9b31eee
+images/pxeboot/upgrade.img = sha256:30e14955ebf1352266dc2ff8067e68104607e750abb9d3b36582b8af909fcb58
+images/pxeboot/vmlinuz = sha256:91052b444e73f3eebdb93d1fb1506597e96c92d8de9c1e3c3f36b07a57d0a18f
+fixtures/rpm-distribution-tree/addons/dolphin/repodata/repomd.xml = sha256:b6ac17b542fc6188eafadb932d9635209e1498c1ee22ba2490f531fdbd4c49a3
+fixtures/rpm-distribution-tree/addons/whale/repodata/repomd.xml = sha256:54260288eda2bd151c71358c5f2c472654d54420dbf3f2c1aafcb933a42a3074
+
+[general]
+; WARNING.0 = This section provides compatibility with pre-productmd treeinfos.
+; WARNING.1 = Read productmd documentation for details about new format.
+arch = x86_64
+family = Red Hat Enterprise Linux
+name = Red Hat Enterprise Linux 7.6
+packagedir = Packages
+platforms = x86_64,xen
+repository = .
+timestamp = 1539194952
+variant = Sea
+variants = Land,Sea,External
+version = 7.6
+
+[header]
+type = productmd.treeinfo
+version = 1.2
+
+[images-x86_64]
+initrd = images/pxeboot/initrd.img
+kernel = images/pxeboot/vmlinuz
+upgrade = images/pxeboot/upgrade.img
+
+[images-xen]
+initrd = images/pxeboot/initrd.img
+kernel = images/pxeboot/vmlinuz
+upgrade = images/pxeboot/upgrade.img
+
+[media]
+discnum = 1
+totaldiscs = 1
+
+[release]
+name = Red Hat Enterprise Linux
+short = RHEL
+version = 7.6
+
+[stage2]
+mainimage = LiveOS/squashfs.img
+
+[tree]
+arch = x86_64
+build_timestamp = 1539194952
+platforms = x86_64,xen
+variants = Land,Sea,External
+
+[addon-Sea-Dolphin]
+id = Dolphin
+name = Dolphin addon
+packages = addons/dolphin
+repository = addons/dolphin
+type = addon
+uid = Sea-Dolphin
+parent = Sea
+
+[addon-Sea-Whale]
+id = Whale
+name = Whale addon
+packages = addons/whale
+repository = addons/whale
+type = addon
+uid = Sea-Whale
+parent = Sea
+
+[variant-Sea]
+addons = Sea-Dolphin,Sea-Whale
+id = Sea
+name = Sea
+packages = Packages
+repository = .
+type = variant
+uid = Sea
+
+[variant-Land]
+id = Land
+name = Land
+packages = Packages
+repository = variants/land
+type = variant
+uid = Land
+
+[variant-External]
+id = External
+name = External
+packages = ../rpm-signed/
+repository = ../rpm-signed/
+type = variant
+uid = External

@@ -1,0 +1,26 @@
+<pulp_distribution version="1">
+<file>isolinux/upgrade.img
+</file>
+<file>isolinux/TRANS.TBL
+</file>
+<file>isolinux/memtest
+</file>
+<file>isolinux/vmlinuz
+</file>
+<file>isolinux/vesamenu.c32
+</file>
+<file>isolinux/boot.msg
+</file>
+<file>isolinux/initrd.img
+</file>
+<file>isolinux/isolinux.cfg
+</file>
+<file>isolinux/boot.cat
+</file>
+<file>isolinux/splash.png
+</file>
+<file>isolinux/isolinux.bin
+</file>
+<file>isolinux/grub.conf
+</file>
+</pulp_distribution>

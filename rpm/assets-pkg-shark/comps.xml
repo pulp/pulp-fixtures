@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps PUBLIC "-//Red Hat, Inc.//DTD Comps info//EN" "comps.dtd">
+<comps>
+  <group>
+   <id>shark</id>
+   <default>true</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>shark</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">shark</packagereq>
+    </packagelist>
+  </group>
+  <category>
+   <id>all</id>
+   <display_order>90</display_order>
+   <name>all</name>
+   <description></description>
+    <grouplist>
+     <groupid>shark</groupid>
+    </grouplist>
+  </category>
+  <environment>
+    <id>Shark</id>
+    <name>SharkEnvironment</name>
+    <description>Desc of Shark Env</description>
+    <display_order>90</display_order>
+    <grouplist>
+      <groupid>shark</groupid>
+    </grouplist>
+  </environment>
+  <langpacks>
+    <match install="shark-%s" name="shark-en"/>
+  </langpacks>
+</comps>
