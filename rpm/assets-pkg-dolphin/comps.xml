@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps PUBLIC "-//Red Hat, Inc.//DTD Comps info//EN" "comps.dtd">
+<comps>
+  <group>
+   <id>dolphin</id>
+   <default>true</default>
+   <uservisible>true</uservisible>
+   <display_order>1024</display_order>
+   <name>dolphin</name>
+   <description></description>
+    <packagelist>
+      <packagereq type="mandatory">bear</packagereq>
+      <packagereq type="mandatory">lion</packagereq>
+      <packagereq type="mandatory">tiger</packagereq>
+      <packagereq type="mandatory">wolf</packagereq>
+    </packagelist>
+  </group>
+  <category>
+   <id>all</id>
+   <display_order>99</display_order>
+   <name>all</name>
+   <description></description>
+    <grouplist>
+     <groupid>dolphin</groupid>
+    </grouplist>
+  </category>
+  <environment>
+    <id>Dolphin</id>
+    <name>DolphinEnvironment</name>
+    <description>Desc of Dolphin Env</description>
+    <display_order>90</display_order>
+    <grouplist>
+      <groupid>dolphin</groupid>
+    </grouplist>
+  </environment>
+  <langpacks>
+    <match install="dolphin-%s" name="dolphin-en"/>
+  </langpacks>
+</comps>

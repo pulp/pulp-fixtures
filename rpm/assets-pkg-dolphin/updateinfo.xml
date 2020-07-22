@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<updates>
+<update from="errata@redhat.com" status="stable" type="security" version="1">
+  <id>RHEA-2012:0057</id>
+  <title>Bear_ErratumPARTHA</title>
+  <release>1</release>
+  <issued date="2013-01-27 16:08:05"/>
+  <updated date="2013-01-27 16:08:05 UTC"/>
+  <description>Bear_Erratum</description>
+  <pkglist>
+    <collection short="">
+      <name>1</name>
+      <package arch="noarch" name="bear" release="1" src="http://www.fedoraproject.org" version="4.1">
+        <filename>bear-4.1-1.noarch.rpm</filename>
+      </package>
+    </collection>
+  </pkglist>
+</update>
+</updates>
