@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # coding=utf-8
 #
 # Use `docker save` to create a tarball that can be uploaded to a Pulp Docker
