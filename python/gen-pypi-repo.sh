@@ -76,23 +76,22 @@ for project in "${projects[@]}"; do
     #   pypi
     #   ├── Django
     #   │   └── json
-    #   │       └── index.html
+    #   │       └── index.json
     #   └── scipy
     #       └── json
-    #           └── index.html
+    #           └── index.json
     mkdir -p "${working_dir}/pypi/${project}/json/"
 
     # Get project JSON metadata from PyPI
-    # NOTE: The index.html file is actually JSON.
     distributions="$(jq ".[\"projects\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
     curl --silent "https://pypi.org/pypi/${project}/json" \
         | "${assets_dir}/pruner.py" - "${distributions}" \
-        > "${working_dir}/pypi/${project}/json/index.html.tmp"
+        > "${working_dir}/pypi/${project}/json/index.json.tmp"
 
     # Get all referenced eggs and wheels
     pushd "${working_dir}/packages"
     mapfile -t urls < <(jq --raw-output '.["releases"]|.[]|.[]|.url' \
-        < "${working_dir}/pypi/${project}/json/index.html.tmp")
+        < "${working_dir}/pypi/${project}/json/index.json.tmp")
     for url in "${urls[@]}"; do
         curl --silent -O "${url}" &
     done
@@ -101,10 +100,10 @@ for project in "${projects[@]}"; do
 
     # Replace the PyPI urls to point to where the fixture eggs and wheels are located
     "${assets_dir}/urlformatter.py" - "${base_url}" \
-        < "${working_dir}/pypi/${project}/json/index.html.tmp" \
-        > "${working_dir}/pypi/${project}/json/index.html"
+        < "${working_dir}/pypi/${project}/json/index.json.tmp" \
+        > "${working_dir}/pypi/${project}/json/index.json"
 
-    rm "${working_dir}/pypi/${project}/json/index.html.tmp"
+    rm "${working_dir}/pypi/${project}/json/index.json.tmp"
 done
 
 cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"
