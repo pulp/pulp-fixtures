@@ -182,6 +182,9 @@ all-fedora: \
 	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
 	fixtures/rpm-distribution-tree \
+	fixtures/rpm-distribution-tree-changed-addon \
+	fixtures/rpm-distribution-tree-changed-main \
+	fixtures/rpm-distribution-tree-changed-variant \
 	fixtures/rpm-kickstart \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
@@ -311,6 +314,42 @@ fixtures/rpm-distribution-tree: fixtures gnupghome fixtures/rpm-signed
 	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/addons/whale rpm/assets-pkg-whale
 	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/variants/land rpm/assets-pkg-lion
 	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
+
+fixtures/rpm-distribution-tree-changed-addon: fixtures gnupghome fixtures/rpm-signed
+	ln -s ../assets-srpm/test-srpm02-1.0-1.src.rpm ./rpm/assets-pkg-dolphin/test-srpm02-1.0-1.src.rpm
+	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree-changed-addon
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-addon/addons/dolphin
+	mkdir ./fixtures/rpm-distribution-tree-changed-addon/addons/whale
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-addon/variants/land
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-addon/addons/dolphin rpm/assets-pkg-dolphin
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-addon/addons/whale rpm/assets-pkg-whale
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-addon/variants/land rpm/assets-pkg-lion
+	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
+	rm -f ./rpm/assets-pkg-dolphin/test-srpm02-1.0-1.src.rpm
+
+fixtures/rpm-distribution-tree-changed-main: fixtures gnupghome fixtures/rpm-signed
+	ln -s ../assets-srpm/test-srpm01-1.0-1.src.rpm ./rpm/assets-pkg-shark/test-srpm01-1.0-1.src.rpm
+	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree-changed-main
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-main/addons/dolphin
+	mkdir ./fixtures/rpm-distribution-tree-changed-main/addons/whale
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-main/variants/land
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-main/addons/dolphin rpm/assets-pkg-dolphin
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-main/addons/whale rpm/assets-pkg-whale
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-main/variants/land rpm/assets-pkg-lion
+	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
+	rm -f ./rpm/assets-pkg-shark/test-srpm01-1.0-1.src.rpm
+
+fixtures/rpm-distribution-tree-changed-variant: fixtures gnupghome fixtures/rpm-signed
+	ln -s ../assets-srpm/test-srpm03-1.0-1.src.rpm ./rpm/assets-pkg-lion/test-srpm03-1.0-1.src.rpm
+	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree-changed-variant
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-variant/addons/dolphin
+	mkdir ./fixtures/rpm-distribution-tree-changed-variant/addons/whale
+	mkdir -p ./fixtures/rpm-distribution-tree-changed-variant/variants/land
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-variant/addons/dolphin rpm/assets-pkg-dolphin
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-variant/addons/whale rpm/assets-pkg-whale
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-variant/variants/land rpm/assets-pkg-lion
+	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
+	rm -f ./rpm/assets-pkg-lion/test-srpm03-1.0-1.src.rpm
 
 fixtures/rpm-alt-layout: fixtures
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
