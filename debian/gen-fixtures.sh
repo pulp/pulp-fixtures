@@ -59,6 +59,7 @@ reprepro -C asgard includeudeb ragnarok asgard_udebs/*.udeb
 reprepro -C asgard includedeb ragnarok asgard/*.deb
 reprepro -C asgard includedeb nosuite asgard/*.deb
 reprepro -C jotunheimr includedeb ragnarok jotunheimr/*.deb
+reprepro export ginnungagap
 
 # Help to test that this artifact gets decompressed on the fly
 rm dists/ragnarok/jotunheimr/binary-armeb/Packages
