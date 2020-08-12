@@ -10,3 +10,9 @@ Description: This is a valid Debian repository.
 Architectures: ppc64
 Components: asgard
 SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+
+codename: ginnungagap
+Description: This repository is valid, but contains no packages!
+Architectures: armeb ppc64
+Components: asgard jotunheimr
+SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
