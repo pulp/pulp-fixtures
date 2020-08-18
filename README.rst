@@ -7,6 +7,8 @@ Pulp Fixtures
 Pulp Fixtures is a collection of raw fixture data, scripts for compiling that
 data into a useful format, and make targets for controlling the whole mess.
 
+Note that the latest version of these fixtures are available as `hosted fixtures`_.
+
 Why does Pulp Fixtures exist? It exists so that the fixture data used by `Pulp
 Smash`_  can easily be recreated, and can be altered in a controlled way. Pulp
 Smash does not directly make use of Pulp Fixtures. Instead:
@@ -271,6 +273,7 @@ been imported to your keystore. You should not import it, as **the Pulp QE
 private key is public.** It exists for testing purposes, and provides no
 assurances of identity.
 
+.. _hosted fixtures: https://fixtures.pulpproject.org/
 .. _Pulp #2020: https://pulp.plan.io/issues/2020
 .. _Pulp RPM Errata:
     https://docs.pulpproject.org/plugins/pulp_rpm/tech-reference/yum-plugins.html#errata
