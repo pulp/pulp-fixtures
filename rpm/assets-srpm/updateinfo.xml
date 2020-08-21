@@ -10,7 +10,7 @@
   <pkglist>
     <collection short="">
       <name>1</name>
-      <package arch="SRPMS" name="test-srpm01" release="1" src="http://www.fedoraproject.org" version="1.0">
+      <package arch="src" name="test-srpm01" release="1" src="http://www.fedoraproject.org" version="1.0">
         <filename>test-srpm01-1.0-1.src.rpm</filename>
       </package>
     </collection>
@@ -27,10 +27,10 @@
   <pkglist>
     <collection short="">
       <name>1</name>
-      <package arch="SRPMS" name="test-srpm02" release="1" src="http://www.fedoraproject.org" version="1.0">
+      <package arch="src" name="test-srpm02" release="1" src="http://www.fedoraproject.org" version="1.0">
         <filename>test-srpm02-1.0-1.src.rpm</filename>
       </package>
-      <package arch="SRPMS" name="test-srpm03" release="2" src="http://www.fedoraproject.org" version="1.0">
+      <package arch="src" name="test-srpm03" release="2" src="http://www.fedoraproject.org" version="1.0">
         <filename>test-srpm03-1.0-1.src.rpm</filename>
       </package>
     </collection>
