@@ -1,3 +1,6 @@
+ARG FEDORA_FIXTURE=all-fedora
+ARG DEBIAN_FIXTURE=all-debian
+
 # === Build fixtures (Fedora) =================================================
 FROM fedora:30 AS fedora-build
 
@@ -16,7 +19,7 @@ RUN dnf -yq install \
 
 ADD . /pulp-fixtures
 
-RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
+RUN make -C pulp-fixtures ${FEDORA_FIXTURE} base_url=http://BASE_URL
 
 # === Build fixtures (Debian) =================================================
 FROM debian:stretch AS debian-build
@@ -28,7 +31,7 @@ ADD Makefile /pulp-fixtures
 ADD common /pulp-fixtures/common
 ADD debian /pulp-fixtures/debian
 
-RUN make -C pulp-fixtures all-debian
+RUN make -C pulp-fixtures ${DEBIAN_FIXTURE}
 
 # === Serve content ===========================================================
 FROM nginx AS server

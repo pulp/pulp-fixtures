@@ -36,6 +36,14 @@ Or with docker::
     docker run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
     docker run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
 
+By default the base url is ``http://localhost:8000``. If you want to change this, run::
+
+    podman run -d -e BASE_URL=http://pulp-fixtures pulp/pulp-fixtures
+
+
+Building a Container
+^^^^^^^^^^^^^^^^^^^^
+
 You can also build and run the pulp fixtures container locally with podman/buildah::
 
     buildah bud -f Containerfile -t pulp/pulp-fixtures .
@@ -46,9 +54,11 @@ Or you can use docker::
     docker build -f Containerfile -t pulp/pulp-fixtures .
     docker run -d -p 8000:80 pulp/pulp-fixtures
 
-By default the base url is ``http://localhost:8000``. If you want to change this, run::
+You can also specify which fixtures you want to build (defaults to all)::
 
-    podman run -d -e BASE_URL=http://pulp-fixtures pulp/pulp-fixtures
+    podman run -d --build_arg FEDORA_FIXTURE="fixtures/rpm-unsigned" pulp/fixtures
+    podman run -d --build_arg DEBIAN_FIXTURE="fixtures/debian-invalid" pulp/fixtures
+
 
 Dependencies
 ------------
