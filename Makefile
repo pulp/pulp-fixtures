@@ -203,7 +203,6 @@ all-fedora: \
 	fixtures/rpm-distribution-tree-changed-addon \
 	fixtures/rpm-distribution-tree-changed-main \
 	fixtures/rpm-distribution-tree-changed-variant \
-	fixtures/rpm-kickstart \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
@@ -338,9 +337,6 @@ fixtures/rpm-custom-repo-metadata-changed: fixtures
 	echo "Change in custom repository metadata." >> ./rpm/custom_metadata
 	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata-changed/repodata/
 	sed -i 's#<revision>.*#<revision>1234567890</revision>#' ./fixtures/rpm-repo-metadata-changed/repodata/repomd.xml
-
-fixtures/rpm-kickstart: fixtures
-	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
 
 fixtures/rpm-distribution-tree: fixtures gnupghome fixtures/rpm-signed
 	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree
