@@ -57,6 +57,7 @@ mkdir "${working_dir}/packages"
 mapfile -t projects < <(jq --raw-output ".projects|keys|.[]" < "${assets_dir}/projects.json")
 for project in "${projects[@]}"; do
 
+    project_norm=$(echo "${project}" | tr '[:upper:]' '[:lower:]')
     # Create the simple distribution index from a jinja template.
     # The simple API should be laid out like:
     #   simple
@@ -104,6 +105,14 @@ for project in "${projects[@]}"; do
         > "${working_dir}/pypi/${project}/json/index.json"
 
     rm "${working_dir}/pypi/${project}/json/index.json.tmp"
+
+    #Check if normalized name is different, add normalized name files
+    if [ "${project}" != "${project_norm}" ]; then
+        mkdir -p "${working_dir}/simple/${project_norm}"
+        cp "${working_dir}/simple/${project}/index.html" "${working_dir}/simple/${project_norm}/index.html"
+        mkdir -p "${working_dir}/pypi/${project_norm}/json/"
+        cp "${working_dir}/pypi/${project}/json/index.json" "${working_dir}/pypi/${project_norm}/json/index.json"
+    fi
 done
 
 cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"
