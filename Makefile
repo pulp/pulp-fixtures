@@ -103,6 +103,8 @@ help:
 	@echo "        Create RPM fixture without the whale package."
 	@echo "    fixtures/rpm-updated-updateinfo"
 	@echo "        Create RPM fixtures with updated updateinfo.xml."
+	@echo "    fixtures/rpm-with-md5"
+	@echo "        Create RPM fixture data with checksum as 'md5'."
 	@echo "    fixtures/rpm-with-non-ascii"
 	@echo "        Create an RPM file with non-ascii characters."
 	@echo "    fixtures/rpm-with-non-utf-8"
@@ -211,6 +213,7 @@ all-fedora: \
 	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-updated-updateversion \
+	fixtures/rpm-with-md5 \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-sha-1-modular \
@@ -432,6 +435,9 @@ fixtures/rpm-updated-updateinfo: fixtures
 
 fixtures/rpm-updated-updateversion: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateversion.patch
+
+fixtures/rpm-with-md5: fixtures
+	rpm/gen-fixtures.sh --checksum-type "md5" $@ rpm/assets
 
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
