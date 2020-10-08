@@ -183,6 +183,7 @@ all-fedora: \
 	fixtures/rpm-advisory-incomplete-package-list \
 	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
+	fixtures/rpm-custom-repo-metadata \
 	fixtures/rpm-distribution-tree \
 	fixtures/rpm-distribution-tree-changed-addon \
 	fixtures/rpm-distribution-tree-changed-main \
@@ -304,6 +305,10 @@ fixtures/rpm-advisory-diff-repo: fixtures
 
 fixtures/rpm-advisory-no-update-date: fixtures
 	rpm/gen-patched-fixtures.sh $@ rpm/advisory-no-update-date.patch
+
+fixtures/rpm-custom-repo-metadata: fixtures
+	rpm/gen-fixtures.sh ./fixtures/rpm-repo-metadata rpm/assets
+	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata/repodata/
 
 fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
