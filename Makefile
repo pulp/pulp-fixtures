@@ -20,6 +20,12 @@ help:
 	@echo "        Create Debian repository fixtures."
 	@echo "    fixtures/debian-invalid"
 	@echo "        Create invalid Debian repository fixtures."
+	@echo "    fixtures/debian-complex-dists"
+	@echo "        Create Debian repository fixtures with complex distribution."
+	@echo "    fixtures/debian-missing-architecture"
+	@echo "        Create Debian repository fixtures with missing Packages files for some architectures."
+	@echo "    fixtures/debian-flat"
+	@echo "        Create Debian repository fixtures in flat repository format."
 	@echo "    fixtures/docker"
 	@echo "        Create Docker fixture data."
 	@echo "    fixtures/drpm-signed"
@@ -171,6 +177,7 @@ all-debian: \
 	fixtures/debian-invalid \
 	fixtures/debian-complex-dists \
 	fixtures/debian-missing-architecture \
+	fixtures/debian-flat \
 
 all-fedora: \
 	fixtures/drpm-signed \
@@ -251,6 +258,9 @@ fixtures/debian-complex-dists: fixtures gnupghome
 
 fixtures/debian-missing-architecture: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) debian/gen-missing-architecture-fixtures.sh $@
+
+fixtures/debian-flat: fixtures
+	debian/gen-flat-repo-fixtures.sh $@
 
 fixtures/docker: fixtures
 	docker/gen-fixtures.sh $@
