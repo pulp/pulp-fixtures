@@ -59,6 +59,10 @@ help:
 	@echo "        directory."
 	@echo "    fixtures/rpm-advisory-no-update-date"
 	@echo "        Create an RPM repository with advisory without updated date."
+	@echo "	   fixtures/rpm-custom-repo-metadata"
+	@echo "        Create an RPM repository with repository metadata."
+	@echo "	   fixtures/rpm-custom-repo-metadata-changed"
+	@echo "        Create an RPM repository with changed repository metadata but same revision number."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-with-modules-modified"
@@ -185,6 +189,7 @@ all-fedora: \
 	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
 	fixtures/rpm-custom-repo-metadata \
+	fixtures/rpm-custom-repo-metadata-changed \
 	fixtures/rpm-distribution-tree \
 	fixtures/rpm-distribution-tree-changed-addon \
 	fixtures/rpm-distribution-tree-changed-main \
@@ -313,6 +318,13 @@ fixtures/rpm-advisory-no-update-date: fixtures
 fixtures/rpm-custom-repo-metadata: fixtures
 	rpm/gen-fixtures.sh ./fixtures/rpm-repo-metadata rpm/assets
 	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata/repodata/
+	sed -i 's#<revision>.*#<revision>1234567890</revision>#' ./fixtures/rpm-repo-metadata/repodata/repomd.xml
+
+fixtures/rpm-custom-repo-metadata-changed: fixtures
+	rpm/gen-fixtures.sh ./fixtures/rpm-repo-metadata-changed rpm/assets
+	echo "Change in custom repository metadata." >> ./rpm/custom_metadata
+	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata-changed/repodata/
+	sed -i 's#<revision>.*#<revision>1234567890</revision>#' ./fixtures/rpm-repo-metadata-changed/repodata/repomd.xml
 
 fixtures/rpm-kickstart: fixtures
 	cp -R ./rpm/assets-kickstart ./fixtures/rpm-kickstart
