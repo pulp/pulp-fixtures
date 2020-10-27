@@ -27,9 +27,7 @@ def main():
     )
     args = parser.parse_args()
     try:
-        print(
-            prune_metadata(json.load(args.metadata_path), args.distributions)
-        )
+        print(prune_metadata(json.load(args.metadata_path), args.distributions))
     finally:
         args.metadata_path.close()
 

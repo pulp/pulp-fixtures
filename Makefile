@@ -166,6 +166,7 @@ all-debian: \
 	fixtures/debian \
 	fixtures/debian-invalid \
 	fixtures/debian-complex-dists \
+	fixtures/debian-missing-architecture \
 
 all-fedora: \
 	fixtures/drpm-signed \
@@ -242,6 +243,9 @@ fixtures/debian-invalid: fixtures fixtures/debian
 
 fixtures/debian-complex-dists: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) debian/gen_complex_dists_fixtures.sh $@
+
+fixtures/debian-missing-architecture: fixtures gnupghome
+	GNUPGHOME=$$(realpath -e gnupghome) debian/gen-missing-architecture-fixtures.sh $@
 
 fixtures/docker: fixtures
 	docker/gen-fixtures.sh $@
@@ -423,7 +427,7 @@ fixtures/rpm-unsigned: fixtures
 
 fixtures/rpm-unsigned-modified: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
-	rm $@/whale-0.2-1.noarch.rpm 
+	rm $@/whale-0.2-1.noarch.rpm
 	createrepo --update $@
 
 fixtures/rpm-packages-updateinfo: fixtures
