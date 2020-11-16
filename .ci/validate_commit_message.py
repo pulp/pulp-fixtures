@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 import re
 import requests
 import subprocess
