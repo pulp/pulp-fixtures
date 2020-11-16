@@ -1,0 +1,31 @@
+name: Build and publish pulp-fixture OCI Image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install requirements
+        run: |
+          pip install pylint
+          sudo apt-get install -y shellcheck
+      - name: Build & test the image
+        run: |
+          .ci/build_image.sh
+      - name: Display log on error
+        if: failure()
+        run: docker logs pulp
+      - name: Push image to registries
+        env:
+          DOCKER_BOT_PASSWORD: ${{ secrets.DOCKER_BOT_PASSWORD }}
+          DOCKER_BOT_USERNAME: "pulpbot"
+          QUAY_BOT_PASSWORD: ${{ secrets.QUAY_BOT_PASSWORD }}
+          QUAY_BOT_USERNAME: "pulp+github"
+        run: |
+          .ci/docker-push.sh
+          .ci/quay-push.sh

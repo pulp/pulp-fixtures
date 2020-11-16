@@ -2,10 +2,8 @@
 #!/usr/bin/env bash
 
 # docker-push.sh: Push (Upload) image to docker.
-# Image must be already tagged.
+# Image must be tagged already.
 
-# TODO: These are already hardcoded in .travis.yml for the build task
-#
 # Pulp is an organization (not an individual user account) on Docker:
 # https://docker.io/organization/pulp
 # For test publishes, one can override this to any org or user.

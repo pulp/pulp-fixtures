@@ -1,5 +1,4 @@
-.. image:: https://travis-ci.com/pulp/pulp-fixtures.svg?branch=master
-    :target: https://travis-ci.com/pulp/pulp-fixtures
+.. image:: https://github.com/pulp/pulp-fixtures/workflows/publish_images/badge.svg?branch=master&event=push
 
 Pulp Fixtures
 =============
