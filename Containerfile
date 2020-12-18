@@ -51,9 +51,7 @@ COPY common/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
-ENV BASE_URL=http://localhost:8000
-
 ADD entrypoint.sh /
 RUN chmod +x /entrypoint.sh
-
+RUN NO_NGINX=0 ./entrypoint.sh
 CMD ["./entrypoint.sh"]
