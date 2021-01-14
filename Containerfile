@@ -36,8 +36,9 @@ ADD debian /pulp-fixtures/debian
 RUN make -C pulp-fixtures all-debian
 
 # === Serve content ===========================================================
-FROM nginx AS server
+FROM registry.access.redhat.com/ubi8/ubi AS server
 
+RUN dnf install -y nginx && dnf clean all
 RUN rm /usr/share/nginx/html/index.html
 COPY --from=fedora-build pulp-fixtures/fixtures /usr/share/nginx/html
 COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
@@ -48,8 +49,8 @@ COPY rpm/assets-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm /us
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
+ENV BASE_URL=
+EXPOSE 8080
 
 ADD entrypoint.sh /
 RUN chmod +x /entrypoint.sh

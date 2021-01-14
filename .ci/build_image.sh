@@ -9,7 +9,7 @@ make lint
 docker build -f Containerfile -t pulp/pulp-fixtures .
 
 # Test
-docker run --rm -d -e BASE_URL=http://localhost:8000 -p 8000:80 --name pulp-fixtures pulp/pulp-fixtures
+docker run --rm -d -e BASE_URL=http://localhost:8000 -p 8000:8080 --name pulp-fixtures pulp/pulp-fixtures
 sleep 2 # it can take a couple seconds for sed to run and nginx to boot
 curl --fail localhost:8000/file/PULP_MANIFEST
 curl --fail localhost:8000/debian/dists/ragnarok/Release

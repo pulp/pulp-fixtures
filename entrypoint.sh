@@ -2,9 +2,8 @@
 
 set -e
 
-if [[ ! -f /usr/share/nginx/html/base_url_fixed ]]; then
+if [[ ! -f /usr/share/nginx/html/base_url_fixed ]] && [[ -n "$BASE_URL" ]]; then
 
-    BASE_URL=${BASE_URL:-https://localhost:8080/}
     STRIPPED_URL=${BASE_URL%/}
 
     # inject BASE_URL at runtime
