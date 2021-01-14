@@ -8,6 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image: latest
+            base_url: http://localhost:8080
+          - image: fixtures.pulpproject.org
+            base_url: https://fixtures.pulpproject.org
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -16,17 +23,22 @@ jobs:
           pip install pylint
           sudo apt-get install -y shellcheck
       - name: Build & test the image
-        run: |
-          .ci/build_image.sh
-      - name: Display log on error
-        if: failure()
-        run: docker logs pulp-fixtures
+        env:
+          IMAGE_TAG: ${{ matrix.image }}
+          CONTAINER_FILE: Containerfiles/${{ matrix.image }}
+          BASE_URL: ${{ matrix.base_url }}
+        run: .ci/build_image.sh
       - name: Push image to registries
         env:
           DOCKER_BOT_PASSWORD: ${{ secrets.DOCKER_BOT_PASSWORD }}
           DOCKER_BOT_USERNAME: "pulpbot"
+          DOCKER_IMAGE_TAG: ${{ matrix.image }}
           QUAY_BOT_PASSWORD: ${{ secrets.QUAY_BOT_PASSWORD }}
           QUAY_BOT_USERNAME: "pulp+github"
+          QUAY_IMAGE_TAG: ${{ matrix.image }}
         run: |
           .ci/docker-push.sh
           .ci/quay-push.sh
+      - name: Display log on error
+        if: failure()
+        run: docker logs pulp-fixtures

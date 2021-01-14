@@ -9,9 +9,9 @@
 # For test publishes, one can override this to any org or user.
 QUAY_PROJECT_NAME=${QUAY_USER_OR_ORG_NAME:-pulp}
 # The image name, AKA the Quay repo
-QUAY_REPO_NAME=${QUAY_USER_OR_ORG_NAME:-pulp-fixtures}
+QUAY_REPO_NAME=${QUAY_REPO_NAME:-pulp-fixtures}
 # The image tag
-IMAGE_TAG=${QUAY_USER_OR_ORG_NAME:-latest}
+IMAGE_TAG=${QUAY_IMAGE_TAG:-latest}
 
 # Reference: https://adriankoshka.github.io/blog/posts/travis-and-quay/
 echo "$QUAY_BOT_PASSWORD" | docker login -u "$QUAY_BOT_USERNAME" --password-stdin quay.io

@@ -37,12 +37,12 @@ Or with docker::
 
 You can also build and run the pulp fixtures container locally with podman/buildah::
 
-    buildah bud -f Containerfile -t pulp/pulp-fixtures .
+    buildah bud -f Containerfiles/latest -t pulp/pulp-fixtures .
     podman run -d -p 8000:80 pulp/pulp-fixtures
 
 Or you can use docker::
 
-    docker build -f Containerfile -t pulp/pulp-fixtures .
+    docker build -f Containerfiles/latest -t pulp/pulp-fixtures .
     docker run -d -p 8000:80 pulp/pulp-fixtures
 
 By default the base url is ``http://localhost:8000``. If you want to change this, run::
