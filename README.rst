@@ -1,4 +1,5 @@
-.. image:: https://github.com/pulp/pulp-fixtures/workflows/publish_images/badge.svg?branch=master&event=push
+.. image:: https://github.com/pulp/pulp-fixtures/workflows/Build%20and%20publish%20pulp-fixture%20OCI%20Image/badge.svg
+
 
 Pulp Fixtures
 =============
@@ -27,27 +28,27 @@ Container
 You can run these fixtures locally using a container. We host the container images at both quay and
 docker hub::
 
-    podman run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
-    podman run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
+    podman run -d --rm -p 8000:8080 docker.io/pulp/pulp-fixtures:latest
+    podman run -d --rm -p 8000:8080 quay.io/pulp/pulp-fixtures:latest
 
 Or with docker::
 
-    docker run -d --rm -p 8000:80 docker.io/pulp/pulp-fixtures:latest
-    docker run -d --rm -p 8000:80 quay.io/pulp/pulp-fixtures:latest
+    docker run -d --rm -p 8000:8080 docker.io/pulp/pulp-fixtures:latest
+    docker run -d --rm -p 8000:8080 quay.io/pulp/pulp-fixtures:latest
 
 You can also build and run the pulp fixtures container locally with podman/buildah::
 
     buildah bud -f Containerfile -t pulp/pulp-fixtures .
-    podman run -d -p 8000:80 pulp/pulp-fixtures
+    podman run -d -p 8000:8080 pulp/pulp-fixtures
 
 Or you can use docker::
 
     docker build -f Containerfile -t pulp/pulp-fixtures .
-    docker run -d -p 8000:80 pulp/pulp-fixtures
+    docker run -d -p 8000:8080 pulp/pulp-fixtures
 
 By default the base url is ``http://localhost:8000``. If you want to change this, run::
 
-    podman run -d -e BASE_URL=http://pulp-fixtures pulp/pulp-fixtures
+    podman run -d -e BASE_URL=http://pulp-fixtures:8080 pulp/pulp-fixtures
 
 Dependencies
 ------------
