@@ -49,7 +49,6 @@ COPY rpm/assets-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm /us
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf
-ENV BASE_URL=
 EXPOSE 8080
 
 ADD entrypoint.sh /
