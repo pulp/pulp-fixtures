@@ -85,8 +85,9 @@ for project in "${projects[@]}"; do
 
     # Get project JSON metadata from PyPI
     distributions="$(jq ".[\"projects\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
+    latest_version="$(jq ".[\"latest_versions\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
     curl --silent "https://pypi.org/pypi/${project}/json" \
-        | "${assets_dir}/pruner.py" - "${distributions}" \
+        | "${assets_dir}/pruner.py" - "${distributions}" "${latest_version}"\
         > "${working_dir}/pypi/${project}/json/index.json.tmp"
 
     # Get all referenced eggs and wheels
