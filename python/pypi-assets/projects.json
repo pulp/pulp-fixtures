@@ -87,5 +87,12 @@
       "shelf_reader-0.1-py2-none-any.whl",
       "shelf-reader-0.1.tar.gz"
     ]
+  },
+  "latest_versions": {
+    "aiohttp": "3.3.2",
+    "celery": "4.2.0",
+    "Django": "2.0.6",
+    "scipy": "1.1.0",
+    "shelf-reader": "0.1"
   }
 }

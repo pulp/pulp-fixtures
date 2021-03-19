@@ -7,6 +7,7 @@ import sys
 
 from functools import reduce
 from urllib.parse import urljoin
+from itertools import chain
 
 
 def main():
@@ -39,7 +40,7 @@ def main():
 def format_url(metadata, base_url):
     """Format the distribution urls in metadata to point to the distributions
     hosted on base_url"""
-    for distributions in metadata["releases"].values():
+    for distributions in chain(metadata["releases"].values(), [metadata["urls"]]):
         for distribution in distributions:
             distribution["url"] = reduce(
                 urljoin,
