@@ -1,0 +1,30 @@
+--- modules.yaml	2021-05-10 10:28:46.822338342 -0400
++++ static_context-modules.yaml	2021-05-10 10:50:50.110402154 -0400
+@@ -5,7 +5,8 @@
+   name: kangaroo
+   stream: 0
+   version: 20180730223407
+-  context: deadbeef
++  static_context: true
++  context: 0123456789
+   arch: noarch
+   summary: Kangaroo 0.3 module
+   description: >-
+@@ -28,7 +29,8 @@
+   name: kangaroo
+   stream: 0
+   version: 20180704111719
+-  context: deadbeef
++  static_context: true
++  context: 0123456788
+   arch: noarch
+   summary: Kangaroo 0.2 module
+   description: >-
+@@ -51,6 +53,7 @@
+   name: duck
+   stream: 0
+   version: 201809302113907
++  static_context: false
+   context: deadbeef
+   arch: noarch
+   summary: Duck 0.8 module

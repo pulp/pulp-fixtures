@@ -73,6 +73,8 @@ help:
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-with-modules-modified"
 	@echo "        Create an RPM repository with modules but without some dependencies."
+	@echo "    fixtures/rpm-modules-static-context"
+	@echo "        Create RPM Modules fixture data with static_context entries."
 	@echo "    fixtures/rpm-incomplete-filelists"
 	@echo "        Create an RPM repository with an incomplete filelists.xml."
 	@echo "    fixtures/rpm-incomplete-other"
@@ -206,6 +208,7 @@ all-fedora: \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
 	fixtures/rpm-with-modules-modified \
+	fixtures/rpm-modules-static-context \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -314,16 +317,16 @@ fixtures/python-pypi: fixtures
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
 
 fixtures/rpm-advisory-incomplete-package-list: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/advisory-incomplete-package-list.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-incomplete-package-list.patch
 
 fixtures/rpm-advisory-diffpkgs: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/advisory-diffpkgs.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-diffpkgs.patch
 
 fixtures/rpm-advisory-diff-repo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/advisory-diff-repo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-diff-repo.patch
 
 fixtures/rpm-advisory-no-update-date: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/advisory-no-update-date.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-no-update-date.patch
 
 fixtures/rpm-custom-repo-metadata: fixtures
 	rpm/gen-fixtures.sh ./fixtures/rpm-repo-metadata rpm/assets
@@ -404,10 +407,10 @@ fixtures/rpm-invalid-rpm: fixtures
 	rpm/gen-invalid-rpm.sh $@
 
 fixtures/rpm-invalid-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/invalid-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/invalid-updateinfo.patch
 
 fixtures/rpm-string-version-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/rpm-string-version-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/rpm-string-version-updateinfo.patch
 
 fixtures/rpm-long-updateinfo: fixtures
 	rpm/gen-long-updateinfo.sh $@
@@ -438,7 +441,7 @@ fixtures/rpm-missing-primary: fixtures
 	rm $@/repodata/*-primary.*
 
 fixtures/rpm-pkglists-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/pkglists-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/pkglists-updateinfo.patch
 
 fixtures/rpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
@@ -453,34 +456,37 @@ fixtures/rpm-unsigned-modified: fixtures
 	createrepo --update $@
 
 fixtures/rpm-packages-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/updateinfo-packages.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updateinfo-packages.patch
 
 fixtures/rpm-references-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/references-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/references-updateinfo.patch
 
 fixtures/rpm-richnweak-deps: fixtures/srpm-richnweak-deps fixtures
 	rpm-richnweak-deps/gen-rpms.sh $@ $</*.src.rpm
 
 fixtures/rpm-updated-updateinfo: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updated-updateinfo.patch
 
 fixtures/rpm-updated-updateversion: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/updated-updateversion.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updated-updateversion.patch
 
 fixtures/rpm-with-md5: fixtures
 	rpm/gen-fixtures.sh --checksum-type "md5" $@ rpm/assets
 
 fixtures/rpm-with-modules: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-modules-modified: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
 	rm $@/kangaroo-0.3-1.noarch.rpm
 	rm $@/shark-0.1-1.noarch.rpm
 	rm $@/stork-0.12-2.noarch.rpm
 	createrepo --update $@
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+
+fixtures/rpm-modules-static-context: fixtures
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-static-context.patch -t module
 
 fixtures/rpm-with-non-ascii: fixtures
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"
@@ -494,7 +500,7 @@ fixtures/rpm-with-sha-512: fixtures
 	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
 
 fixtures/rpm-with-sha-1-modular: fixtures
-	rpm/gen-patched-fixtures.sh $@ rpm/modules-updateinfo.patch sha1
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch -s sha1
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-vendor: fixtures
