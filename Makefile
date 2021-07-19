@@ -197,6 +197,7 @@ all-fedora: \
 	fixtures/rpm-advisory-incomplete-package-list \
 	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
+	fixtures/rpm-complex-pkg \
 	fixtures/rpm-custom-repo-metadata \
 	fixtures/rpm-custom-repo-metadata-changed \
 	fixtures/rpm-distribution-tree \
@@ -326,6 +327,9 @@ fixtures/rpm-advisory-diff-repo: fixtures
 
 fixtures/rpm-advisory-no-update-date: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-no-update-date.patch
+
+fixtures/rpm-complex-pkg: fixtures
+	sh rpm-new/build_repos.sh $@
 
 fixtures/rpm-custom-repo-metadata: fixtures
 	rpm/gen-fixtures.sh ./fixtures/rpm-repo-metadata rpm/assets
