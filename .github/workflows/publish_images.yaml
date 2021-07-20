@@ -1,4 +1,4 @@
-name: Build and publish pulp-fixture OCI Image
+name: Publish pulp-fixture OCI Image
 
 on:
   push:
