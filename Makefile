@@ -242,6 +242,7 @@ all-fedora: \
 	fixtures/srpm-signed \
 	fixtures/srpm-unsigned \
 	fixtures/ostree \
+	fixtures/diff-name-same-content
 
 gnupghome:
 	install -dm700 $@
@@ -538,5 +539,8 @@ fixtures/srpm-signed: fixtures gnupghome
 
 fixtures/srpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm
+
+fixtures/diff-name-same-content: fixtures
+	rpm/gen-fixtures.sh $@ rpm/assets-diff-name-same-content
 
 .PHONY: help lint lint-pylint lint-shellcheck clean all all-skipped all-debian all-fedora

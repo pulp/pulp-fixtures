@@ -90,12 +90,20 @@ if [ -n "${signing_key:-}" ]; then
         --signfiles
 fi
 checksum_type_default=sha256
-createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
-    --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
-    "${working_dir}"
-modifyrepo --mdtype updateinfo \
-    "${assets_dir}/updateinfo.xml" \
-    "${working_dir}/repodata/"
+if test -f "${assets_dir}/comps.xml"; then
+    createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+        --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
+        "${working_dir}"
+else
+    createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+        "${working_dir}"
+fi
+
+if test -f "${assets_dir}/updateinfo.xml"; then
+    modifyrepo --mdtype updateinfo \
+        "${assets_dir}/updateinfo.xml" \
+        "${working_dir}/repodata/"
+fi
 
 # Copy fixtures to $output_dir.
 #
