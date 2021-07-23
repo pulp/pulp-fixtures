@@ -2,18 +2,15 @@
 
 set -euo pipefail
 
-assets_dir=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/assets
+script_dir=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+assets_dir=$script_dir/assets
+packages_dir=$assets_dir/packages
 output_dir="$(realpath "$1")"
 
-# Complex repository - use all metadata features
-
+# create the output directory
 mkdir -p "$output_dir"
 
-while IFS= read -r filename
-do
-  cp --no-preserve=mode --reflink=auto "$assets_dir/packages/$filename" "$output_dir/$filename" ;
-done < "$assets_dir/complex_repo_pkglist.txt"
-
+# Complex repository - use all metadata features
 createrepo_c \
   --outputdir="$output_dir" \
   --revision=1615686706 \
@@ -26,5 +23,10 @@ createrepo_c \
   --retain-old-md=0 \
   --simple-md-filenames \
   --no-database \
-  --pkglist="$assets_dir/complex_repo_pkglist.txt" \
-  "$output_dir"
+  "$packages_dir"
+  # --pkglist="$assets_dir/complex_repo_pkglist.txt" \
+
+while IFS= read -r filename
+do
+  cp --no-preserve=mode --reflink=auto "$assets_dir/packages/$filename" "$output_dir/$filename" ;
+done < "$assets_dir/complex_repo_pkglist.txt"
