@@ -194,6 +194,7 @@ all-fedora: \
 	fixtures/file-many \
 	fixtures/file-perf \
 	fixtures/file-mixed \
+	fixtures/file-manifest \
 	fixtures/python-pypi \
 	fixtures/rpm-advisory-diffpkgs \
 	fixtures/rpm-advisory-incomplete-package-list \
