@@ -115,6 +115,15 @@ See ``make help``.
 ``fixtures/file-many``
     No exotic dependencies are needed.
 
+``fixtures/file-perf``
+    No exotic dependencies are needed.
+
+``fixtures/file-dl-forward``
+    No exotic dependencies are needed.
+
+``fixtures/file-dl-reverse``
+    No exotic dependencies are needed.
+
 ``fixtures/file-mixed``
     See ``fixtures/file``.
 

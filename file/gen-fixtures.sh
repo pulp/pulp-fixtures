@@ -25,6 +25,8 @@ Options:
         The number of ISO files to generate. Default: 3.
     --file-size <size>
         The size of ISO files to generate. Default: 1K.
+    --reverse
+        The PULP_MANIFEST file lists files in reverse-order
 EOF
 }
 
@@ -32,7 +34,7 @@ EOF
 check_getopt
 temp=$(getopt \
     --options '' \
-    --longoptions number:,file-size: \
+    --longoptions number:,file-size:,reverse \
     --name "$script_name" \
     -- "$@")
 eval set -- "$temp"
@@ -48,12 +50,14 @@ while true; do
     case "$1" in
         --number) number="$2"; shift 2;;
         --file-size) file_size="$2"; shift 2;;
+        --reverse) reverse=1; shift 1;;
         --) shift; break;;
         *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
     esac
 done
 output_dir="$(realpath "$1")"
 number="${number:-3}"
+reverse="${reverse:-0}"
 shift
 
 # Create a workspace, and schedule it for deletion.
@@ -66,12 +70,21 @@ working_dir="$(mktemp --directory)"
 # Create the pseudo ISO files and update the PULP_MANIFEST with the generated
 # file information
 file_size="${file_size:-1K}"
-for ((i=0; i<number; i++)); do
-    of="${working_dir}/$((i + 1)).iso"
-    dd if=/dev/urandom of="${of}" bs="${file_size}" count=1 >/dev/null 2>&1
-    echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
-    >> "${working_dir}/PULP_MANIFEST"
-done
+if [ "${reverse}" -eq 1 ]; then
+    for ((i=(number-1); i>=0; i--)); do
+        of="${working_dir}/$((i + 1)).iso"
+        dd if=/dev/urandom of="${of}" bs="${file_size}" count=1 >/dev/null 2>&1
+        echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
+        >> "${working_dir}/PULP_MANIFEST"
+    done
+else
+    for ((i=0; i<number; i++)); do
+        of="${working_dir}/$((i + 1)).iso"
+        dd if=/dev/urandom of="${of}" bs="${file_size}" count=1 >/dev/null 2>&1
+        echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
+        >> "${working_dir}/PULP_MANIFEST"
+    done
+fi
 
 # Copy fixtures to $output_dir.
 #
