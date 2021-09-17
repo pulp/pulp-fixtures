@@ -16,6 +16,12 @@ help:
 	@echo "        Remove fixture data and 'gnupghome'."
 	@echo "    fixtures"
 	@echo "        Create all fixture data."
+	@echo "    all-file"
+	@echo "        Create all file-related fixture data."
+	@echo "    all-fedora"
+	@echo "        Create all fedora-related fixture data."
+	@echo "    all-debian"
+	@echo "        Create all debian-related fixture data."
 	@echo "    fixtures/debian"
 	@echo "        Create Debian repository fixtures."
 	@echo "    fixtures/debian-invalid"
@@ -47,6 +53,12 @@ help:
 	@echo "    fixtures/file-perf"
 	@echo "        Create smal file fixtures, with 100000 file fixtures for"
 	@echo "        the performance tests."
+	@echo "    fixtures/file-dl-forward"
+	@echo "        Create batch-and-a-half small files."
+	@echo "        Useful for deadlock-testing."
+	@echo "    fixtures/file-dl-reverse"
+	@echo "        Create batch-and-a-half small files, PULP_MANIFEST in reverse order."
+	@echo "        Useful for deadlock-testing."
 	@echo "    fixtures/file-mixed"
 	@echo "        Create File fixtures with some not available files on the"
 	@echo "        PULP_MANIFEST."
@@ -193,6 +205,8 @@ all-fedora: \
 	fixtures/file-large \
 	fixtures/file-many \
 	fixtures/file-perf \
+	fixtures/file-dl-forward \
+	fixtures/file-dl-reverse \
 	fixtures/file-mixed \
 	fixtures/file-manifest \
 	fixtures/python-pypi \
@@ -246,6 +260,18 @@ all-fedora: \
 	fixtures/srpm-unsigned \
 	fixtures/ostree \
 	fixtures/diff-name-same-content
+
+all-file: \
+	fixtures/file \
+	fixtures/file2 \
+	fixtures/file-invalid \
+	fixtures/file-large \
+	fixtures/file-many \
+	fixtures/file-perf \
+	fixtures/file-dl-forward \
+	fixtures/file-dl-reverse \
+	fixtures/file-mixed \
+	fixtures/file-manifest
 
 gnupghome:
 	install -dm700 $@
@@ -304,6 +330,12 @@ fixtures/file-perf: fixtures
 	# https://pulp.plan.io/issues/6104
 	# file/gen-fixtures.sh $@ --number 100000 --file-size 50
 	file/gen-fixtures.sh $@ --number 20000 --file-size 50
+
+fixtures/file-dl-forward: fixtures
+	file/gen-fixtures.sh $@ --number 750 --file-size 50
+
+fixtures/file-dl-reverse: fixtures
+	file/gen-fixtures.sh $@ --number 750 --file-size 50 --reverse
 
 fixtures/file-mixed: fixtures
 	file/gen-fixtures.sh $@
