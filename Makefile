@@ -125,6 +125,8 @@ help:
 	@echo "        Create RPM fixture data with signed packages."
 	@echo "    fixtures/rpm-unsigned"
 	@echo "        Create RPM fixture data with unsigned packages."
+	@echo "    fixtures/rpm-unsigned-meta-only"
+	@echo "         Creates RPM fixture with metadata only."
 	@echo "    fixtures/rpm-unsigned-modified"
 	@echo "        Create RPM fixture without the whale package."
 	@echo "    fixtures/rpm-updated-updateinfo"
@@ -243,6 +245,7 @@ all-fedora: \
 	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
 	fixtures/rpm-unsigned \
+	fixtures/rpm-unsigned-meta-only \
 	fixtures/rpm-unsigned-modified \
 	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
@@ -489,6 +492,10 @@ fixtures/rpm-signed: fixtures gnupghome
 
 fixtures/rpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-unsigned-meta-only: fixtures fixtures/rpm-unsigned
+	mkdir -p $@
+	cp -R fixtures/rpm-unsigned/repodata $@/
 
 fixtures/rpm-unsigned-modified: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
