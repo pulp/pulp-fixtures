@@ -83,6 +83,10 @@ help:
 	@echo "        Create an RPM repository with repository metadata."
 	@echo "	   fixtures/rpm-custom-repo-metadata-changed"
 	@echo "        Create an RPM repository with changed repository metadata but same revision number."
+	@echo "    fixtures/rpm-distribution-tree"
+	@echo "        Create an RPM repository with distribution tree."
+	@echo "    fixtures/rpm-distribution-tree-metadata-only"
+	@echo "        Create an RPM repository with distribution tree metadata only."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-with-modules-modified"
@@ -220,6 +224,7 @@ all-fedora: \
 	fixtures/rpm-custom-repo-metadata \
 	fixtures/rpm-custom-repo-metadata-changed \
 	fixtures/rpm-distribution-tree \
+	fixtures/rpm-distribution-tree-metadata-only \
 	fixtures/rpm-distribution-tree-changed-addon \
 	fixtures/rpm-distribution-tree-changed-main \
 	fixtures/rpm-distribution-tree-changed-variant \
@@ -384,6 +389,16 @@ fixtures/rpm-custom-repo-metadata-changed: fixtures
 	echo "Change in custom repository metadata." >> ./rpm/custom_metadata
 	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata-changed/repodata/
 	sed -i 's#<revision>.*#<revision>1234567890</revision>#' ./fixtures/rpm-repo-metadata-changed/repodata/repomd.xml
+
+fixtures/rpm-distribution-tree-metadata-only: fixtures/rpm-distribution-tree
+	mkdir -p $@/addons/dolphin
+	mkdir -p $@/addons/whale
+	mkdir -p $@/variants/land
+	cp -R fixtures/rpm-distribution-tree/.treeinfo $@/
+	cp -R fixtures/rpm-distribution-tree/repodata $@/
+	cp -R fixtures/rpm-distribution-tree/addons/dolphin/repodata $@/addons/dolphin/
+	cp -R fixtures/rpm-distribution-tree/addons/whale/repodata $@/addons/whale/
+	cp -R fixtures/rpm-distribution-tree/variants/land/repodata $@/variants/land/
 
 fixtures/rpm-distribution-tree: fixtures gnupghome fixtures/rpm-signed
 	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree
