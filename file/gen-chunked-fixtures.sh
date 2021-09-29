@@ -61,13 +61,13 @@ working_dir="$(mktemp --directory)"
 
 # Create the pseudo ISO files and update the PULP_MANIFEST with the generated
 # file information. Split the ISO generate file in 2 chunks.
-file_size="${file_size:-1M}"
+file_size="${file_size:-10M}"
 of="${working_dir}/1.iso"
 dd if=/dev/urandom of="${of}" bs="${file_size}" count=1
 echo "$(basename "${of}"),$(sha256sum "${of}" | awk '{print $1}'),$(stat -c '%s' "${of}")" \
 >> "${working_dir}/PULP_MANIFEST"
 cd "${working_dir}"
-split --bytes=600K "${of}" chunk
+split --bytes=6M "${of}" chunk
 
 # Copy fixtures to $output_dir.
 #
