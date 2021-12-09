@@ -35,6 +35,8 @@ Options:
         $(createrepo) command. Default checksum type is sha256.
     --zchunk
         Whether or not to run createrepo with --zck option.
+    --productid
+        Whether to include a productid file or not. Default is 'not'
 
 EOF
 }
@@ -43,12 +45,13 @@ EOF
 check_getopt
 temp=$(getopt \
     --options '' \
-    --longoptions signing-key:,packages-dir:,checksum-type:,zchunk \
+    --longoptions signing-key:,packages-dir:,checksum-type:,zchunk,productid \
     --name "$script_name" \
     -- "$@")
 eval set -- "$temp"
 unset temp
 
+productid=''
 # Read arguments. (getopt inserts -- even when no arguments are passed.)
 if [ "${#@}" -eq 1 ]; then
     show_help
@@ -60,6 +63,7 @@ while true; do
         --packages-dir) packages_dir="$2"; shift 2;;
         --checksum-type) checksum_type="$2"; shift 2;;
         --zchunk) zchunk="--zck"; shift 1;;
+        --productid) productid=1; shift 1;;
         --) shift; break;;
         *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
     esac
@@ -101,7 +105,15 @@ fi
 
 if test -f "${assets_dir}/updateinfo.xml"; then
     modifyrepo --mdtype updateinfo \
+        --checksum "${checksum_type:-${checksum_type_default}}" \
         "${assets_dir}/updateinfo.xml" \
+        "${working_dir}/repodata/"
+fi
+
+if [[ "${productid}" && -f "${assets_dir}/productid" ]]; then
+    modifyrepo --mdtype productid --simple-md-filenames \
+        --checksum "${checksum_type:-${checksum_type_default}}" \
+        "${assets_dir}/productid" \
         "${working_dir}/repodata/"
 fi
 
