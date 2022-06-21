@@ -295,3 +295,16 @@ data:
   profiles:
     0: [default]
 ...
+---
+document: modulemd-obsoletes
+version: 1
+data:
+  modified: 2018-05-23T14:25Z
+  module: duck
+  stream: "5"
+  context: deadbeef
+  message: "Module stream duck:5 is no longer supported. It is recommended to switch to duck:6"
+  obsoleted_by:
+    module: duck
+    stream: "6"
+...
