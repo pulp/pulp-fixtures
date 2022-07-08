@@ -182,6 +182,13 @@ See ``make help``.
 ``fixtures/rpm-missing-primary``
     See ``fixtures/rpm-unsigned``.
 
+``fixtures/rpm-modular``
+    The ``createrepo`` and ``modifyrepo`` executables must be available.
+
+    .. NOTE:: All packages and modular metadata (modules, defaults and obsoletes)
+        are taken and combined from dnf-ci-fedora-modular, dnf-ci-thirdparty-modular
+        and dnf-ci-obsoletes repositories found `here<https://github.com/rpm-software-management/ci-dnf-stack>`_.
+
 ``fixtures/rpm-pkglists-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
