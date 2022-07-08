@@ -91,6 +91,8 @@ help:
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-with-modules-modified"
 	@echo "        Create an RPM repository with modules but without some dependencies."
+	@echo "    fixtures/rpm-modular"
+	@echo "        Create an RPM repository with modules, module defaults and module obsoletes."
 	@echo "    fixtures/rpm-modules-static-context"
 	@echo "        Create RPM Modules fixture data with static_context entries."
 	@echo "    fixtures/rpm-incomplete-filelists"
@@ -233,6 +235,7 @@ all-fedora: \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-alt-layout \
 	fixtures/rpm-with-modules \
+	fixtures/rpm-modular \
 	fixtures/rpm-with-modules-modified \
 	fixtures/rpm-modules-static-context \
 	fixtures/rpm-incomplete-filelists \
@@ -541,6 +544,10 @@ fixtures/rpm-with-md5: fixtures
 fixtures/rpm-with-sha: fixtures
 	rpm/gen-fixtures.sh --checksum-type "sha" --productid $@ rpm/assets
 
+fixtures/rpm-modular: fixtures
+	rpm/gen-fixtures.sh $@ rpm/assets-modularity
+	modifyrepo --mdtype=modules rpm/assets-modularity/modules.yaml "$@/repodata/"
+
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
@@ -554,7 +561,7 @@ fixtures/rpm-with-modules-modified: fixtures
 	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-modules-static-context: fixtures
-	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-static-context.patch -t module
+	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-static-context.patch -t module -a rpm/assets-modularity
 
 fixtures/rpm-with-non-ascii: fixtures
 	rpm/gen-rpm.sh $@ "rpm/assets-specs/$$(basename $@).spec"

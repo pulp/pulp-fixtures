@@ -8,7 +8,7 @@
 #
 # Usage:
 #
-#     gen-patched-assets.sh -d <output_dir> -t <patch-type> -f <updateinfo_patch> -s <csum-type>
+#     gen-patched-assets.sh -d <output_dir> -t <patch-type> -f <updateinfo_patch> -s <csum-type> -a <source-assets-dir>
 #
 # Behaviour:
 #
@@ -27,14 +27,16 @@ set -euo pipefail
 checksum_info="sha256"
 patchtype="update"
 destfile="updateinfo.xml"
+src_assets_dir="rpm/assets"
 # Read arguments.
-while getopts d:t:f:s: flag
+while getopts d:t:f:s:a: flag
 do
   case "${flag}" in
     d) output_dir="${OPTARG}";;
     t) patchtype="${OPTARG}";;
     f) patchfile=$(realpath "${OPTARG}");;
     s) checksum_info="${OPTARG}";;
+    a) src_assets_dir="${OPTARG}";;
     *) echo "Internal error! Encountered unexpected argument: $1"; exit 1;;
   esac
 done
@@ -67,7 +69,7 @@ trap 'cleanup ; trap - SIGTERM ; kill -s SIGTERM $$' SIGTERM
 
 # Generate patched assets.
 assets_dir="$(mktemp --directory)"
-cp -rt "${assets_dir}" rpm/assets/*
+cp -rt "${assets_dir}" "${src_assets_dir}"/*
 patch "${assets_dir}/${destfile}" "${patchfile}"
 ./rpm/gen-fixtures.sh --checksum-type "${checksum_info}" "${output_dir}" "${assets_dir}"
 if [[ $patchtype == "module" ]]
