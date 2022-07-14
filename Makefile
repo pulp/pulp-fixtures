@@ -206,43 +206,39 @@ all-debian: \
 	fixtures/debian-flat \
 
 all-fedora: \
+	fixtures/diff-name-same-content \
 	fixtures/drpm-signed \
 	fixtures/drpm-unsigned \
 	fixtures/file \
 	fixtures/file-chunked \
-	fixtures/file2 \
-	fixtures/file-invalid \
-	fixtures/file-large \
-	fixtures/file-many \
-	fixtures/file-perf \
 	fixtures/file-dl-forward \
 	fixtures/file-dl-reverse \
-	fixtures/file-mixed \
+	fixtures/file-invalid \
+	fixtures/file-large \
 	fixtures/file-manifest \
+	fixtures/file-many \
+	fixtures/file-mixed \
+	fixtures/file-perf \
+	fixtures/file2 \
+	fixtures/ostree \
 	fixtures/python-pypi \
+	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-diffpkgs \
 	fixtures/rpm-advisory-incomplete-package-list \
-	fixtures/rpm-advisory-diff-repo \
 	fixtures/rpm-advisory-no-update-date \
+	fixtures/rpm-alt-layout \
 	fixtures/rpm-complex-pkg \
 	fixtures/rpm-custom-repo-metadata \
 	fixtures/rpm-custom-repo-metadata-changed \
 	fixtures/rpm-distribution-tree \
-	fixtures/rpm-distribution-tree-metadata-only \
 	fixtures/rpm-distribution-tree-changed-addon \
 	fixtures/rpm-distribution-tree-changed-main \
 	fixtures/rpm-distribution-tree-changed-variant \
-	fixtures/rpm-with-non-utf-8 \
-	fixtures/rpm-alt-layout \
-	fixtures/rpm-with-modules \
-	fixtures/rpm-modular \
-	fixtures/rpm-with-modules-modified \
-	fixtures/rpm-modules-static-context \
+	fixtures/rpm-distribution-tree-metadata-only \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
 	fixtures/rpm-invalid-updateinfo \
-	fixtures/rpm-string-version-updateinfo \
 	fixtures/rpm-long-updateinfo \
 	fixtures/rpm-mirrorlist-bad \
 	fixtures/rpm-mirrorlist-good \
@@ -250,30 +246,34 @@ all-fedora: \
 	fixtures/rpm-missing-filelists \
 	fixtures/rpm-missing-other \
 	fixtures/rpm-missing-primary \
+	fixtures/rpm-modular \
+	fixtures/rpm-modules-static-context \
+	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-pkglists-updateinfo \
 	fixtures/rpm-references-updateinfo \
 	fixtures/rpm-richnweak-deps \
 	fixtures/rpm-signed \
+	fixtures/rpm-string-version-updateinfo \
 	fixtures/rpm-unsigned \
 	fixtures/rpm-unsigned-meta-only \
 	fixtures/rpm-unsigned-modified \
-	fixtures/rpm-packages-updateinfo \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-updated-updateversion \
 	fixtures/rpm-with-md5 \
-	fixtures/rpm-with-sha \
+	fixtures/rpm-with-modules \
+	fixtures/rpm-with-modules-modified \
 	fixtures/rpm-with-non-ascii \
-	fixtures/rpm-with-sha-512 \
-	fixtures/rpm-with-sha-1-modular \
-	fixtures/rpm-with-vendor \
+	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-with-pulp-distribution \
+	fixtures/rpm-with-sha \
+	fixtures/rpm-with-sha-1-modular \
+	fixtures/rpm-with-sha-512 \
+	fixtures/rpm-with-vendor \
 	fixtures/rpm-zchunk \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
-	fixtures/srpm-unsigned \
-	fixtures/ostree \
-	fixtures/diff-name-same-content
+	fixtures/srpm-unsigned
 
 all-file: \
 	fixtures/file \
