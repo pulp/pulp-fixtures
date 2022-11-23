@@ -18,3 +18,8 @@ Description: This repository is valid, but contains no packages!
 Architectures: armeb ppc64
 Components: asgard jotunheimr
 SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+
+codename: muspelheim
+Architectures: amd64 armeb ppc64
+Components: asgard nidavellir
+SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
