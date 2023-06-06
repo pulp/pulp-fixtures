@@ -207,6 +207,7 @@ all-debian: \
 	fixtures/debian-missing-architecture \
 	fixtures/debian-flat \
 	fixtures/debian-mixed \
+	fixtures/gem \
 
 all-fedora: \
 	fixtures/diff-name-same-content \
@@ -365,6 +366,9 @@ fixtures/file-mixed: fixtures
 fixtures/file-manifest: fixtures/file
 	mkdir -p $@
 	cp fixtures/file/PULP_MANIFEST $@/PULP_MANIFEST
+
+fixtures/gem: fixtures
+	gem/gen-fixtures.sh $@
 
 fixtures/ostree: fixtures
 	ostree/gen-fixtures.sh $@/small
