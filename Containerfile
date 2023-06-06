@@ -19,19 +19,21 @@ ADD . /pulp-fixtures
 RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
 
 # === Build fixtures (Debian) =================================================
-FROM debian:stretch AS debian-build
+FROM debian:bullseye AS debian-build
 
 RUN apt-get update
 RUN apt-get -y install \
               equivs \
               reprepro \
               dpkg-dev \
-              apt-utils
+              apt-utils \
+              ruby
 
 RUN mkdir -p /pulp-fixtures/fixtures
 ADD Makefile /pulp-fixtures
 ADD common /pulp-fixtures/common
 ADD debian /pulp-fixtures/debian
+ADD gem /pulp-fixtures/gem
 
 RUN make -C pulp-fixtures all-debian
 
