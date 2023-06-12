@@ -3,7 +3,7 @@
 # See https://github.com/rubygems/compact_index for the compact index format.
 # See https://github.com/rubygems/new-index and https://andre.arko.net/2014/03/28/the-new-rubygems-index-format/ for the new index format. [NOT USED]
 
-set -eux
+set -eu
 
 SRCDIR=$(readlink -f "$(dirname "$0")")
 TMPDIR=$(mktemp -d)
