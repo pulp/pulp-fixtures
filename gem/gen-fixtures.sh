@@ -22,20 +22,32 @@ do
   sed -e 's/NAME/'"${name}"'/;s/VERSION/'"${version}"'/' "${SRCDIR}/generic.gemspec" > generic.gemspec
   gem build generic.gemspec
 
-  md5="$(md5sum "${name}-${version}.gem" | cut -f 1 -d " ")"
   sha256="$(sha256sum "${name}-${version}.gem" | cut -f 1 -d " ")"
 
   echo "${name}" >> names.list
-  echo "${name} ${version} ${md5}" >> versions.list
-  echo "${version} |checksum:${sha256}, ruby:>= 1.9" >> "info/${name}"
+  echo "${version} |checksum:${sha256},ruby:>= 1.9" >> "info/${name}"
 done
 
-mkdir -p "${OUTPUTDIR}/gems"
+sort -u names.list > unique_names
+
+mkdir -p "${OUTPUTDIR}/gems" "${OUTPUTDIR}/info"
 mv -- *.gem "${OUTPUTDIR}/gems"
 gem generate_index --directory "${OUTPUTDIR}"
-sort -u names.list > "${OUTPUTDIR}/names.list"
-mv -- versions.list "${OUTPUTDIR}/"
-cp -a info "${OUTPUTDIR}/"
+
+echo "---" > "${OUTPUTDIR}/names.list"
+cat unique_names >> "${OUTPUTDIR}/names.list"
+
+echo "created_at: $(date -Iseconds -u)Z" > "${OUTPUTDIR}/versions.list"
+echo "---" >> "${OUTPUTDIR}/versions.list"
+
+while read -r name rest
+do
+  versions="$(cut -d " " -f1 "info/${name}" | tr "\n" ,)"
+  echo "---" >> "${OUTPUTDIR}/info/${name}"
+  cat "info/${name}" >> "${OUTPUTDIR}/info/${name}"
+  md5="$(md5sum "info/${name}" | cut -f 1 -d " ")"
+  echo "${name} ${versions%,} ${md5}" >> "${OUTPUTDIR}/versions.list"
+done < "unique_names"
 
 
 cd "${OUTPUTDIR}"
