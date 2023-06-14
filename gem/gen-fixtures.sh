@@ -45,7 +45,7 @@ do
   versions="$(cut -d " " -f1 "info/${name}" | tr "\n" ,)"
   echo "---" >> "${OUTPUTDIR}/info/${name}"
   cat "info/${name}" >> "${OUTPUTDIR}/info/${name}"
-  md5="$(md5sum "info/${name}" | cut -f 1 -d " ")"
+  md5="$(md5sum "${OUTPUTDIR}/info/${name}" | cut -f 1 -d " ")"
   echo "${name} ${versions%,} ${md5}" >> "${OUTPUTDIR}/versions.list"
 done < "unique_names"
 
