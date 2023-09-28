@@ -44,6 +44,16 @@ mkdir asgard_udebs
   done
 )
 
+mkdir asgard_source
+(
+  cd asgard_source
+
+  for CTL in "${SRCDIR}"/asgard_source/*.ctl
+  do
+    equivs-build --source "${CTL}"
+  done
+)
+
 mkdir jotunheimr
 (
   cd jotunheimr
@@ -54,11 +64,23 @@ mkdir jotunheimr
   done
 )
 
+mkdir jotunheimr_source
+(
+  cd jotunheimr_source
+
+  for CTL in "${SRCDIR}"/jotunheimr_source/*.ctl
+  do
+    equivs-build --source "${CTL}"
+  done
+)
+
 cp -a "${SRCDIR}/conf" .
 reprepro -C asgard includeudeb ragnarok asgard_udebs/*.udeb
+reprepro -C asgard includedsc ragnarok asgard_source/*.dsc
 reprepro -C asgard includedeb ragnarok asgard/*.deb
 reprepro -C asgard includedeb nosuite asgard/*.deb
 reprepro -C jotunheimr includedeb ragnarok jotunheimr/*.deb
+reprepro -C jotunheimr includedsc ragnarok jotunheimr_source/*.dsc
 reprepro export ginnungagap
 
 # Help to test that this artifact gets decompressed on the fly

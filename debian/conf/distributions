@@ -1,6 +1,6 @@
 codename: ragnarok
 suite: mythology
-Architectures: armeb ppc64
+Architectures: source armeb ppc64
 Components: asgard jotunheimr
 UdebComponents: asgard
 DebOverride: override.ragnarok
