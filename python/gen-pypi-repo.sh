@@ -76,18 +76,27 @@ for project in "${projects[@]}"; do
     # This should be laid out like:
     #   pypi
     #   ├── Django
-    #   │   └── json
-    #   │       └── index.json
+    #   │   │── json
+    #   │   │   └── index.json
+    #   │      └──{version}
+    #   │          └──json
+    #   │             └── index.json
     #   └── scipy
-    #       └── json
-    #           └── index.json
+    #       │── json
+    #       │   └── index.json
+    #       └──{version}
+    #           └──json
+    #              └── index.json
     mkdir -p "${working_dir}/pypi/${project}/json/"
 
     # Get project JSON metadata from PyPI
     distributions="$(jq ".[\"projects\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
-    latest_version="$(jq ".[\"latest_versions\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
+    latest_version="$(jq --raw-output ".[\"latest_versions\"]|.[\"${project}\"]" < "${assets_dir}/projects.json")"
+    curl --silent "https://pypi.org/pypi/${project}/${latest_version}/json" \
+        > "${working_dir}/pypi/${project}/json/latest-json.tmp"
     curl --silent "https://pypi.org/pypi/${project}/json" \
-        | "${assets_dir}/pruner.py" - "${distributions}" "${latest_version}"\
+        | "${assets_dir}/pruner.py" - "${distributions}" \
+        "${working_dir}/pypi/${project}/json/latest-json.tmp" \
         > "${working_dir}/pypi/${project}/json/index.json.tmp"
 
     # Get all referenced eggs and wheels
@@ -106,6 +115,7 @@ for project in "${projects[@]}"; do
         > "${working_dir}/pypi/${project}/json/index.json"
 
     rm "${working_dir}/pypi/${project}/json/index.json.tmp"
+    rm "${working_dir}/pypi/${project}/json/latest-json.tmp"
 
     #Check if normalized name is different, add normalized name files
     if [ "${project}" != "${project_norm}" ]; then
@@ -114,6 +124,20 @@ for project in "${projects[@]}"; do
         mkdir -p "${working_dir}/pypi/${project_norm}/json/"
         cp "${working_dir}/pypi/${project}/json/index.json" "${working_dir}/pypi/${project_norm}/json/index.json"
     fi
+
+    # Download the version(releases) jsons & fix their urls
+    mapfile -t versions < <(jq --raw-output '.["releases"]|keys|.[]' \
+        < "${working_dir}/pypi/${project}/json/index.json")
+    for version in "${versions[@]}"; do
+      mkdir -p "${working_dir}/pypi/${project}/${version}/json/"
+      curl --silent "https://pypi.org/pypi/${project}/${version}/json" \
+          | "${assets_dir}/urlformatter.py" - "${base_url}" \
+          > "${working_dir}/pypi/${project}/${version}/json/index.json"
+      if [ "${project}" != "${project_norm}" ]; then
+          mkdir -p "${working_dir}/pypi/${project_norm}/${version}/json/"
+          cp "${working_dir}/pypi/${project}/${version}/json/index.json" "${working_dir}/pypi/${project_norm}/${version}/json/index.json"
+      fi
+    done
 done
 
 cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"

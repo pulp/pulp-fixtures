@@ -40,7 +40,9 @@ def main():
 def format_url(metadata, base_url):
     """Format the distribution urls in metadata to point to the distributions
     hosted on base_url"""
-    for distributions in chain(metadata["releases"].values(), [metadata["urls"]]):
+    release_urls = metadata.get("releases", {}).values()
+    url_urls = [metadata.get("urls", [])]
+    for distributions in chain(release_urls, url_urls):
         for distribution in distributions:
             distribution["url"] = reduce(
                 urljoin,
