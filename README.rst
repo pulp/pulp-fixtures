@@ -264,7 +264,7 @@ man page, and it is mentioned only briefly in the ``rpm`` man page. However,
 this solution is more targeted than an alternative solution like temporarily
 overriding the ``HOME`` environment variable.
 
-To see which packages have been signed with the Pulp QE key, execute a command
+To see which packages have been signed with the pulp-fixture-signing-key key, execute a command
 like the following:
 
 .. code-block:: sh
@@ -279,15 +279,9 @@ If a line like the following is shown, then the named package is signed::
 
     fixtures/rpm/lion-0.4-1.noarch.rpm: (RSA) sha1 ((MD5) PGP) md5 NOT OK (MISSING KEYS: RSA#269d9d98 (MD5) PGP#269d9d98)
 
-The ``MISSING KEYS`` message is present because the Pulp QE public key has not
-been imported to your keystore. You should not import it, as **the Pulp QE
+The ``MISSING KEYS`` message is present because the pulp-fixture-signing-key public key has not
+been imported to your keystore. You should not import it, as **the pulp-fixture-signing-key
 private key is public.** It exists for testing purposes, and provides no
 assurances of identity.
 
 .. _hosted fixtures: https://fixtures.pulpproject.org/
-.. _Pulp #2020: https://pulp.plan.io/issues/2020
-.. _Pulp RPM Errata:
-    https://docs.pulpproject.org/plugins/pulp_rpm/tech-reference/yum-plugins.html#errata
-.. _Pulp Smash: http://pulp-smash.readthedocs.io
-.. _pulp_smash.constants:
-    https://pulp-smash.readthedocs.io/en/latest/api/pulp_smash.constants.html

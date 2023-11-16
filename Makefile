@@ -164,7 +164,7 @@ help:
 	@echo "    fixtures/srpm-unsigned"
 	@echo "        Create SRPM fixture data with unsigned packages."
 	@echo "    gnupghome"
-	@echo "        Create a GnuPG home directory and import the Pulp QE public"
+	@echo "        Create a GnuPG home directory and import the pulp-fixture-signing-key public"
 	@echo "        key."
 	@echo ""
 	@echo "base_url should be set to where the fixtures will be hosted. It"
@@ -287,7 +287,7 @@ all-file: \
 
 gnupghome:
 	install -dm700 $@
-	GNUPGHOME=$$(realpath -e gnupghome) gpg --import common/GPG-PRIVATE-KEY-pulp-qe
+	GNUPGHOME=$$(realpath -e gnupghome) gpg --import common/GPG-PRIVATE-KEY-fixture-signing
 
 fixtures:
 	mkdir -p $@
@@ -506,7 +506,7 @@ fixtures/rpm-pkglists-updateinfo: fixtures
 
 fixtures/rpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
-		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets
+		--signing-key ./common/GPG-PRIVATE-KEY-fixture-signing $@ rpm/assets
 
 fixtures/rpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
@@ -606,7 +606,7 @@ fixtures/srpm-richnweak-deps: fixtures
 
 fixtures/srpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures.sh \
-		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-srpm
+		--signing-key ./common/GPG-PRIVATE-KEY-fixture-signing $@ rpm/assets-srpm
 
 fixtures/srpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-srpm

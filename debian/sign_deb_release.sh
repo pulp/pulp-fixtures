@@ -7,7 +7,7 @@ OUTPUT_DIR="$(dirname "${1}")"
 DETACHED_SIGNATURE_PATH="${OUTPUT_DIR}/Release.gpg"
 INLINE_SIGNATURE_PATH="${OUTPUT_DIR}/InRelease"
 
-GPG_KEY_ID="Pulp QE"
+GPG_KEY_ID="pulp-fixture-signing-key"
 
 COMMON_GPG_OPTS=(
   --batch

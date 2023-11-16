@@ -4,22 +4,22 @@ Architectures: source armeb ppc64
 Components: asgard jotunheimr
 UdebComponents: asgard
 DebOverride: override.ragnarok
-SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+SignWith: 0C1A894EBB86AFAE218424CADDEF3019C2D4A8CF
 
 codename: nosuite
 Description: This is a valid Debian repository.
 Architectures: ppc64
 Components: asgard
 DebOverride: override.ragnarok
-SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+SignWith: 0C1A894EBB86AFAE218424CADDEF3019C2D4A8CF
 
 codename: ginnungagap
 Description: This repository is valid, but contains no packages!
 Architectures: armeb ppc64
 Components: asgard jotunheimr
-SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+SignWith: 0C1A894EBB86AFAE218424CADDEF3019C2D4A8CF
 
 codename: muspelheim
 Architectures: amd64 armeb ppc64
 Components: asgard nidavellir
-SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+SignWith: 0C1A894EBB86AFAE218424CADDEF3019C2D4A8CF

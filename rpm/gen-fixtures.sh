@@ -23,7 +23,7 @@ directories must exist.
 Options:
     --signing-key <path>
         A private key with which to sign RPMs in the generated repository. The
-        corresponding public key must have a uid (name) of "Pulp QE". (You can
+        corresponding public key must have a uid (name) of "pulp-fixture-signing-key". (You can
         check this by executing 'gpg public-key' and examining the "uid" field.)
     --packages-dir <relative-path>
         The path in which to place packages, relative to the root of the
@@ -90,7 +90,7 @@ fi
 cp --reflink=auto -t "${packages_dir}" "${assets_dir}/"*.rpm
 if [ -n "${signing_key:-}" ]; then
     find "${working_dir}" -name '*.rpm' -print0 | xargs -0 rpmsign \
-        --define '_gpg_name Pulp QE' --addsign --fskpath "${signing_key}" \
+        --define '_gpg_name pulp-fixture-signing-key' --addsign --fskpath "${signing_key}" \
         --signfiles
 fi
 checksum_type_default=sha256
