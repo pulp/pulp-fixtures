@@ -269,7 +269,6 @@ all-fedora: \
 	fixtures/rpm-with-sha-1-modular \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-vendor \
-	fixtures/rpm-zchunk \
 	fixtures/rpm-zstd-metadata \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
