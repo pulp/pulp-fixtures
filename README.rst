@@ -121,9 +121,6 @@ See ``make help``.
 ``fixtures/file-mixed``
     See ``fixtures/file``.
 
-``fixtures/puppet``
-    The ``puppet`` executable must be available.
-
 ``fixtures/ostree``
     The ``ostree`` executable must be available.
 

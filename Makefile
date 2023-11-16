@@ -64,8 +64,6 @@ help:
 	@echo "        Create File fixtures with only a PULP_MANIFEST"
 	@echo "    fixtures/ostree"
 	@echo "        Create a OSTree ostree repositories."
-	@echo "    fixtures/puppet"
-	@echo "        Create a dummy Puppet module."
 	@echo "    fixtures/python-pypi [base_url=...]"
 	@echo "        Create a PyPI Python repository."
 	@echo "    fixtures/rpm-advisory-incomplete-package-list"
@@ -361,10 +359,6 @@ fixtures/gem: fixtures
 
 fixtures/ostree: fixtures
 	ostree/gen-fixtures.sh $@/small
-
-# Commented out AND removved from the generation: See SATQE-3469
-# fixtures/puppet:
-# 	puppet/gen-module.sh $@
 
 fixtures/python-pypi: fixtures
 	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
