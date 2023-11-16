@@ -154,6 +154,8 @@ help:
 	@echo "        Create an RPM repository with an RPM that has a vendor."
 	@echo "    fixtures/rpm-zchunk"
 	@echo "        Create an RPM repository with zchunk metadata."
+	@echo "    fixtures/rpm-zstd-metadata"
+	@echo "        Create an RPM repository with zstd-compressed metadata."
 	@echo "    fixtures/srpm-duplicate"
 	@echo "        Create SRPM fixture data with duplicate entries in repodata."
 	@echo "    fixtures/srpm-richnweak-deps"
@@ -268,6 +270,7 @@ all-fedora: \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-zchunk \
+	fixtures/rpm-zstd-metadata \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
@@ -510,6 +513,10 @@ fixtures/rpm-signed: fixtures gnupghome
 
 fixtures/rpm-unsigned: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
+
+fixtures/rpm-zstd-metadata: fixtures
+	rpm/gen-fixtures.sh $@ rpm/assets
+	createrepo_c --general-compress-type=zstd --update $@
 
 fixtures/rpm-unsigned-meta-only: fixtures fixtures/rpm-unsigned
 	mkdir -p $@
