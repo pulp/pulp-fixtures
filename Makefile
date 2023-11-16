@@ -36,10 +36,6 @@ help:
 	@echo "        Create Debian 11 compatible repository fixtures."
 	@echo "    fixtures/docker"
 	@echo "        Create Docker fixture data."
-	@echo "    fixtures/drpm-signed"
-	@echo "        Create DRPM fixtures with signed packages."
-	@echo "    fixtures/drpm-unsigned"
-	@echo "        Create DRPM fixtures with unsigned packages."
 	@echo "    fixtures/file"
 	@echo "        Create file fixtures."
 	@echo "    fixtures/file2"
@@ -211,8 +207,6 @@ all-debian: \
 
 all-fedora: \
 	fixtures/diff-name-same-content \
-	fixtures/drpm-signed \
-	fixtures/drpm-unsigned \
 	fixtures/file \
 	fixtures/file-chunked \
 	fixtures/file-dl-forward \
@@ -318,13 +312,6 @@ fixtures/debian-mixed: fixtures gnupghome
 
 fixtures/docker: fixtures
 	docker/gen-fixtures.sh $@
-
-fixtures/drpm-signed: fixtures gnupghome
-	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
-		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
-
-fixtures/drpm-unsigned: fixtures
-	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
 
 fixtures/file: fixtures
 	file/gen-fixtures.sh $@

@@ -94,12 +94,6 @@ See ``make help``.
     permissions, with a command such as ``gpasswd --add $(id -u) docker &&
     newgrp``.
 
-``fixtures/drpm-signed``
-    The ``createrepo``, ``makedeltarpm`` and ``rpmsign`` utilities must be available.
-
-``fixtures/drpm-unsigned``
-    The ``createrepo`` and ``makedeltarpm`` executables must be available.
-
 ``fixtures/file``
     No exotic dependencies are needed.
 
@@ -252,9 +246,7 @@ Package Signatures
 The RPM, SRPM and DRPM assets are unsigned, and signatures are added as needed
 when generating fixtures. The opposite approach of using signed assets and
 stripping signatures as needed is less safe, as the keypair can more easily go
-out of sync with the assets. In addition, the ``makedeltarpm`` utility generates
-unsigned DRPMs, meaning the ``fixtures/drpm`` target must perform package
-signing.
+out of sync with the assets.
 
 By default, GnuPG works with files in the ``~/.gnupg`` directory, and the
 ``rpmsign`` executable works with the ``~/.rpmmacros`` file. (Other RPM
