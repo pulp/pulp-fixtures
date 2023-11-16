@@ -518,7 +518,7 @@ fixtures/rpm-unsigned-meta-only: fixtures fixtures/rpm-unsigned
 fixtures/rpm-unsigned-modified: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rm $@/whale-0.2-1.noarch.rpm
-	createrepo --update $@
+	createrepo_c --update $@
 
 fixtures/rpm-packages-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updateinfo-packages.patch
@@ -543,19 +543,19 @@ fixtures/rpm-with-sha: fixtures
 
 fixtures/rpm-modular: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-modularity
-	modifyrepo --mdtype=modules rpm/assets-modularity/modules.yaml "$@/repodata/"
+	modifyrepo_c --mdtype=modules rpm/assets-modularity/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
-	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-modules-modified: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
 	rm $@/kangaroo-0.3-1.noarch.rpm
 	rm $@/shark-0.1-1.noarch.rpm
 	rm $@/stork-0.12-2.noarch.rpm
-	createrepo --update $@
-	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	createrepo_c --update $@
+	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-modules-static-context: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-static-context.patch -t module -a rpm/assets-modularity
@@ -573,7 +573,7 @@ fixtures/rpm-with-sha-512: fixtures
 
 fixtures/rpm-with-sha-1-modular: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch -s sha1
-	modifyrepo --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-vendor: fixtures
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"
@@ -599,7 +599,7 @@ fixtures/rpm-zchunk: fixtures
 fixtures/srpm-duplicate: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@/src srpm-duplicate/assets-specs/*.spec
 	rpm-richnweak-deps/gen-srpms.sh $@/dst srpm-duplicate/assets-specs/*.spec
-	createrepo --checksum sha256 $@
+	createrepo_c --checksum sha256 $@
 
 fixtures/srpm-richnweak-deps: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec

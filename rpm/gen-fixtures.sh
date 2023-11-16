@@ -32,9 +32,9 @@ Options:
         action.
     --checksum-type <type>
         The type of checksum that has to be included in repomd while using the
-        $(createrepo) command. Default checksum type is sha256.
+        $(createrepo_c) command. Default checksum type is sha256.
     --zchunk
-        Whether or not to run createrepo with --zck option.
+        Whether or not to run createrepo_c with --zck option.
     --productid
         Whether to include a productid file or not. Default is 'not'
 
@@ -85,7 +85,7 @@ fi
 
 # Sign RPMs and genereate repository metadata.
 #
-# NOTE: --groupfile should not be in $output_dir, but createrepo requires that
+# NOTE: --groupfile should not be in $output_dir, but createrepo_c requires that
 # --groupfile be relative to $output_dir. Thus, the relative path calculation.
 cp --reflink=auto -t "${packages_dir}" "${assets_dir}/"*.rpm
 if [ -n "${signing_key:-}" ]; then
@@ -95,23 +95,23 @@ if [ -n "${signing_key:-}" ]; then
 fi
 checksum_type_default=sha256
 if test -f "${assets_dir}/comps.xml"; then
-    createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
         --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
         "${working_dir}"
 else
-    createrepo ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
         "${working_dir}"
 fi
 
 if test -f "${assets_dir}/updateinfo.xml"; then
-    modifyrepo --mdtype updateinfo \
+    modifyrepo_c --mdtype updateinfo \
         --checksum "${checksum_type:-${checksum_type_default}}" \
         "${assets_dir}/updateinfo.xml" \
         "${working_dir}/repodata/"
 fi
 
 if [[ "${productid}" && -f "${assets_dir}/productid" ]]; then
-    modifyrepo --mdtype productid --simple-md-filenames \
+    modifyrepo_c --mdtype productid --simple-md-filenames \
         --checksum "${checksum_type:-${checksum_type_default}}" \
         "${assets_dir}/productid" \
         "${working_dir}/repodata/"

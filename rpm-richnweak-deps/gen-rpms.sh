@@ -55,7 +55,7 @@ for srpm in "${@}"; do
     filename="${filename%.src.rpm}.noarch.rpm"
     cp "/root/rpmbuild/RPMS/noarch/${filename}" "${working_dir}/"
 done
-createrepo --checksum sha256 "${working_dir}"
+createrepo_c --checksum sha256 "${working_dir}"
 # Create or populate $output_dir.
 #
 # A $working_dir is used to make fixture generation more atomic. If fixture

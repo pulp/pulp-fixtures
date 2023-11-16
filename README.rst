@@ -177,7 +177,7 @@ See ``make help``.
     See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-modular``
-    The ``createrepo`` and ``modifyrepo`` executables must be available.
+    The ``createrepo_c`` and ``modifyrepo_c`` executables must be available.
 
     .. NOTE:: All packages and metadata (modules, defaults, obsoletes and advisories)
         are taken and combined from dnf-ci-fedora-modular, dnf-ci-thirdparty-modular,
@@ -193,20 +193,20 @@ See ``make help``.
     See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-richnweak-deps``
-    The ``createrepo`` executable must be available.
+    The ``createrepo_c`` executable must be available.
 
 ``fixtures/rpm-signed``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
+    The ``createrepo_c``, ``modifyrepo_c`` and ``rpmsign`` executables must be
     available.
 
 ``fixtures/rpm-unsigned``
-    The ``createrepo`` and ``modifyrepo`` executables must be available.
+    The ``createrepo_c`` and ``modifyrepo_c`` executables must be available.
 
 ``fixtures/rpm-updated-updateinfo``
     See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-with-modules``
-    The ``createrepo`` and ``modifyrepo`` executables must be available.
+    The ``createrepo_c`` and ``modifyrepo_c`` executables must be available.
 
 ``fixtures/rpm-with-non-ascii``
     The ``fedpkg`` executable must be available.
@@ -218,7 +218,7 @@ See ``make help``.
     See ``fixtures/rpm-unsigned``.
 
 ``fixtures/rpm-with-vendor``
-    The ``fedpkg`` and ``createrepo`` executables must be available.
+    The ``fedpkg`` and ``createrepo_c`` executables must be available.
 
 ``fixtures/rpm-with-pulp-distribution``
     See ``fixtures/rpm-unsigned``.
@@ -227,14 +227,14 @@ See ``make help``.
     See ``fixtures/srpm-richnweak-deps``.
 
 ``fixtures/srpm-richnweak-deps``
-    The ``rpmdev-setuptree``, ``rpmbuild`` and ``createrepo`` executable must be
+    The ``rpmdev-setuptree``, ``rpmbuild`` and ``createrepo_c`` executable must be
     available.
 
 ``fixtures/srpm-signed``
-    The ``createrepo`` and ``modifyrepo`` executables must be available.
+    The ``createrepo_c`` and ``modifyrepo_c`` executables must be available.
 
 ``fixtures/srpm-unsigned``
-    The ``createrepo``, ``modifyrepo`` and ``rpmsign`` executables must be
+    The ``createrepo_c``, ``modifyrepo_c`` and ``rpmsign`` executables must be
     available.
 
 ``gnupghome``
