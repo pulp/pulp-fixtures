@@ -95,11 +95,11 @@ if [ -n "${signing_key:-}" ]; then
 fi
 checksum_type_default=sha256
 if test -f "${assets_dir}/comps.xml"; then
-    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+    createrepo_c ${zchunk:-} --general-compress-type gz --checksum "${checksum_type:-${checksum_type_default}}" \
         --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
         "${working_dir}"
 else
-    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" \
+    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" --general-compress-type gz \
         "${working_dir}"
 fi
 

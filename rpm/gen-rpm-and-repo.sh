@@ -51,7 +51,7 @@ working_dir="$(mktemp --directory)"
 
 # Generate an RPM, and generate repository metadata for it.
 ./rpm/gen-rpm.sh "${working_dir}" "${spec_file}"
-createrepo --checksum sha256 "${working_dir}"
+createrepo_c --general-compress-type gz --checksum sha256 "${working_dir}"
 
 # Copy repository to destination.
 #
