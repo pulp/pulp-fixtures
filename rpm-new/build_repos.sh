@@ -20,6 +20,7 @@ createrepo_c \
   --repo=Fedora-Updates \
   --checksum=sha256 \
   --repomd-checksum=sha256 \
+  --general-compress-type=gz \
   --retain-old-md=0 \
   --simple-md-filenames \
   --no-database \

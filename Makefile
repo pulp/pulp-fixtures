@@ -525,7 +525,7 @@ fixtures/rpm-unsigned-meta-only: fixtures fixtures/rpm-unsigned
 fixtures/rpm-unsigned-modified: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	rm $@/whale-0.2-1.noarch.rpm
-	createrepo_c --update $@
+	createrepo_c --general-compress-type gz --update $@
 
 fixtures/rpm-packages-updateinfo: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updateinfo-packages.patch
@@ -561,7 +561,7 @@ fixtures/rpm-with-modules-modified: fixtures
 	rm $@/kangaroo-0.3-1.noarch.rpm
 	rm $@/shark-0.1-1.noarch.rpm
 	rm $@/stork-0.12-2.noarch.rpm
-	createrepo_c --update $@
+	createrepo_c --general-compress-type gz --update $@
 	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-modules-static-context: fixtures
@@ -606,7 +606,7 @@ fixtures/rpm-zchunk: fixtures
 fixtures/srpm-duplicate: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@/src srpm-duplicate/assets-specs/*.spec
 	rpm-richnweak-deps/gen-srpms.sh $@/dst srpm-duplicate/assets-specs/*.spec
-	createrepo_c --checksum sha256 $@
+	createrepo_c --general-compress-type gz $@
 
 fixtures/srpm-richnweak-deps: fixtures
 	rpm-richnweak-deps/gen-srpms.sh $@ rpm-richnweak-deps/assets-specs/*.spec
