@@ -1,5 +1,5 @@
 # === Build fixtures (Fedora) =================================================
-FROM registry.fedoraproject.org/fedora:30 AS fedora-build
+FROM registry.fedoraproject.org/fedora:latest AS fedora-build
 
 RUN dnf -yq install \
               createrepo \
