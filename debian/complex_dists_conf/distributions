@@ -7,7 +7,7 @@ Architectures: armeb ppc64
 Components: asgard jotunheimr
 FakeComponentPrefix: updates
 Description: A fixtures repo with a structure modeled on debian-security.
-SignWith: 6EDF301256480B9B801EBA3D05A5E6DA269D9D98
+SignWith: 0C1A894EBB86AFAE218424CADDEF3019C2D4A8CF
 
 Origin: pulp-fixtures
 Label: Ubuntu-backports-like-fixture
