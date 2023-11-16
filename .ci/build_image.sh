@@ -22,5 +22,5 @@ test "$(curl localhost:8000/rpm-mirrorlist-good)" = "http://localhost:8000/rpm-u
 curl --fail -o /dev/null localhost:8000/docker/busybox:latest.tar
 curl --fail -o /dev/null localhost:8000/puppet/pulpqe-dummypuppet.tar.gz
 curl --fail localhost:8000/ostree/small/summary
-curl localhost:8000/rpm-zchunk/repodata/ | grep filelists.xml.zck
+curl localhost:8000/rpm-unsigned/repodata/ | grep filelists.xml.gz
 docker stop pulp-fixtures
