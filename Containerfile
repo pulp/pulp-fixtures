@@ -2,18 +2,21 @@
 FROM registry.fedoraproject.org/fedora:latest AS fedora-build
 
 RUN dnf -yq install \
-              createrepo_c \
               fedpkg \
               gpg \
               jq \
               make \
               ostree \
               patch \
+              python3-pip \
               python3-jinja2-cli \
               rpm-build \
               rpm-sign \
               rsync
 
+# the default createrepo_c provided by Fedora has legacy hashes disabled, the one
+# on PyPI does not (because we need it)
+RUN pip install createrepo_c
 ADD . /pulp-fixtures
 
 RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
