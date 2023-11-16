@@ -90,8 +90,7 @@ fi
 cp --reflink=auto -t "${packages_dir}" "${assets_dir}/"*.rpm
 if [ -n "${signing_key:-}" ]; then
     find "${working_dir}" -name '*.rpm' -print0 | xargs -0 rpmsign \
-        --define '_gpg_name pulp-fixture-signing-key' --addsign --fskpath "${signing_key}" \
-        --signfiles
+        --define '_gpg_name pulp-fixture-signing-key' --addsign
 fi
 checksum_type_default=sha256
 if test -f "${assets_dir}/comps.xml"; then
