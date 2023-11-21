@@ -29,7 +29,7 @@ firefox to gimp.)
 Options:
     --signing-key <signing-key>
         A private key with which to sign DRPMs in the generated repository. The
-        corresponding public key must have a uid (name) of "Pulp QE". (You can
+        corresponding public key must have a uid (name) of "pulp-fixture-signing-key". (You can
         check this by executing 'gpg public-key' and examining the "uid" field.)
 EOF
 }
@@ -115,10 +115,9 @@ done
 # Sign DRPMs and generate repository metadata.
 if [ -n "${signing_key:-}" ]; then
     find "${working_dir}" -name '*.drpm' -print0 | xargs -0 rpmsign \
-        --define '_gpg_name Pulp QE' --addsign --fskpath "${signing_key}" \
-        --signfiles
+        --define '_gpg_name pulp-fixture-signing-key' --addsign
 fi
-createrepo --checksum sha256 --deltas "${working_dir}"
+createrepo_c --checksum sha256 --deltas "${working_dir}"
 
 # Copy fixtures to $output_dir. For an explanation, see gen-fixtures.sh.
 cp -r --no-preserve=mode --reflink=auto "${working_dir}" "${output_dir}"

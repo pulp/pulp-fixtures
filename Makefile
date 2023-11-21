@@ -321,7 +321,7 @@ fixtures/docker: fixtures
 
 fixtures/drpm-signed: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) rpm/gen-fixtures-delta.sh \
-		--signing-key ./common/GPG-PRIVATE-KEY-pulp-qe $@ rpm/assets-drpm
+		--signing-key ./common/GPG-PRIVATE-KEY-fixture-signing $@ rpm/assets-drpm
 
 fixtures/drpm-unsigned: fixtures
 	rpm/gen-fixtures-delta.sh $@ rpm/assets-drpm
