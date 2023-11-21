@@ -543,11 +543,11 @@ fixtures/rpm-with-sha: fixtures
 
 fixtures/rpm-modular: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-modularity
-	modifyrepo_c --mdtype=modules rpm/assets-modularity/modules.yaml "$@/repodata/"
+	modifyrepo_c --no-compress --mdtype=modules rpm/assets-modularity/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-modules: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
-	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	modifyrepo_c --no-compress --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-modules-modified: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch
@@ -555,7 +555,7 @@ fixtures/rpm-with-modules-modified: fixtures
 	rm $@/shark-0.1-1.noarch.rpm
 	rm $@/stork-0.12-2.noarch.rpm
 	createrepo_c --general-compress-type gz --update $@
-	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	modifyrepo_c --no-compress --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-modules-static-context: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-static-context.patch -t module -a rpm/assets-modularity
@@ -573,7 +573,7 @@ fixtures/rpm-with-sha-512: fixtures
 
 fixtures/rpm-with-sha-1-modular: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch -s sha1
-	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
+	modifyrepo_c --no-compress --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-vendor: fixtures
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"

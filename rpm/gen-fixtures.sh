@@ -103,14 +103,14 @@ else
 fi
 
 if test -f "${assets_dir}/updateinfo.xml"; then
-    modifyrepo_c --mdtype updateinfo \
+    modifyrepo_c --no-compress --mdtype updateinfo \
         --checksum "${checksum_type:-${checksum_type_default}}" \
         "${assets_dir}/updateinfo.xml" \
         "${working_dir}/repodata/"
 fi
 
 if [[ "${productid}" && -f "${assets_dir}/productid" ]]; then
-    modifyrepo_c --mdtype productid --simple-md-filenames \
+    modifyrepo_c --no-compress --mdtype productid --simple-md-filenames \
         --checksum "${checksum_type:-${checksum_type_default}}" \
         "${assets_dir}/productid" \
         "${working_dir}/repodata/"

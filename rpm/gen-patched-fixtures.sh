@@ -74,5 +74,5 @@ patch "${assets_dir}/${destfile}" "${patchfile}"
 ./rpm/gen-fixtures.sh --checksum-type "${checksum_info}" "${output_dir}" "${assets_dir}"
 if [[ $patchtype == "module" ]]
 then
-  modifyrepo_c --mdtype modules "${assets_dir}/${destfile}" "${output_dir}/repodata"
+  modifyrepo_c --no-compress --mdtype modules "${assets_dir}/${destfile}" "${output_dir}/repodata"
 fi
