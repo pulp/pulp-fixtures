@@ -83,6 +83,8 @@ help:
 	@echo "        Create an RPM repository with distribution tree."
 	@echo "    fixtures/rpm-distribution-tree-metadata-only"
 	@echo "        Create an RPM repository with distribution tree metadata only."
+	@echo "    fixtures/rpm-distribution-tree-empty-root"
+	@echo "        Create an RPM repository with distribution tree metadata only - and no root repodata at all."
 	@echo "    fixtures/rpm-with-modules"
 	@echo "        Create an RPM repository with modules"
 	@echo "    fixtures/rpm-with-modules-modified"
@@ -233,6 +235,7 @@ all-fedora: \
 	fixtures/rpm-distribution-tree-changed-main \
 	fixtures/rpm-distribution-tree-changed-variant \
 	fixtures/rpm-distribution-tree-metadata-only \
+	fixtures/rpm-distribution-tree-empty-root \
 	fixtures/rpm-incomplete-filelists \
 	fixtures/rpm-incomplete-other \
 	fixtures/rpm-invalid-rpm \
@@ -389,16 +392,6 @@ fixtures/rpm-custom-repo-metadata-changed: fixtures
 	modifyrepo_c --no-compress --mdtype=productid ./rpm/custom_metadata ./fixtures/rpm-repo-metadata-changed/repodata/
 	sed -i 's#<revision>.*#<revision>1234567890</revision>#' ./fixtures/rpm-repo-metadata-changed/repodata/repomd.xml
 
-fixtures/rpm-distribution-tree-metadata-only: fixtures/rpm-distribution-tree
-	mkdir -p $@/addons/dolphin
-	mkdir -p $@/addons/whale
-	mkdir -p $@/variants/land
-	cp -R fixtures/rpm-distribution-tree/.treeinfo $@/
-	cp -R fixtures/rpm-distribution-tree/repodata $@/
-	cp -R fixtures/rpm-distribution-tree/addons/dolphin/repodata $@/addons/dolphin/
-	cp -R fixtures/rpm-distribution-tree/addons/whale/repodata $@/addons/whale/
-	cp -R fixtures/rpm-distribution-tree/variants/land/repodata $@/variants/land/
-
 fixtures/rpm-distribution-tree: fixtures gnupghome fixtures/rpm-signed
 	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree
 	mkdir -p ./fixtures/rpm-distribution-tree/addons/dolphin
@@ -444,6 +437,25 @@ fixtures/rpm-distribution-tree-changed-variant: fixtures gnupghome fixtures/rpm-
 	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree-changed-variant/variants/land rpm/assets-pkg-lion
 	rpm/gen-fixtures.sh --packages-dir Packages $@ rpm/assets-pkg-shark
 	rm -f ./rpm/assets-pkg-lion/test-srpm03-1.0-1.src.rpm
+
+fixtures/rpm-distribution-tree-metadata-only: fixtures/rpm-distribution-tree
+	mkdir -p $@/addons/dolphin
+	mkdir -p $@/addons/whale
+	mkdir -p $@/variants/land
+	cp -R fixtures/rpm-distribution-tree/.treeinfo $@/
+	cp -R fixtures/rpm-distribution-tree/repodata $@/
+	cp -R fixtures/rpm-distribution-tree/addons/dolphin/repodata $@/addons/dolphin/
+	cp -R fixtures/rpm-distribution-tree/addons/whale/repodata $@/addons/whale/
+	cp -R fixtures/rpm-distribution-tree/variants/land/repodata $@/variants/land/
+
+fixtures/rpm-distribution-tree-empty-root: fixtures gnupghome fixtures/rpm-signed
+	cp -R ./rpm/assets-distributiontree ./fixtures/rpm-distribution-tree-empty-root
+	mkdir -p ./fixtures/rpm-distribution-tree-empty-root/addons/dolphin
+	mkdir ./fixtures/rpm-distribution-tree-empty-root/addons/whale
+	mkdir -p ./fixtures/rpm-distribution-tree-empty-root/variants/land
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/addons/dolphin rpm/assets-pkg-dolphin
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/addons/whale rpm/assets-pkg-whale
+	rpm/gen-fixtures.sh ./fixtures/rpm-distribution-tree/variants/land rpm/assets-pkg-lion
 
 fixtures/rpm-alt-layout: fixtures
 	rpm/gen-fixtures.sh --packages-dir packages/keep-going $@ rpm/assets
