@@ -156,6 +156,8 @@ help:
 	@echo "        Create an RPM repository with zchunk metadata."
 	@echo "    fixtures/rpm-zstd-metadata"
 	@echo "        Create an RPM repository with zstd-compressed metadata."
+	@echo "    fixtures/rpm-no-comps"
+	@echo "        Create an RPM repository without comps.xml package groups."
 	@echo "    fixtures/srpm-duplicate"
 	@echo "        Create SRPM fixture data with duplicate entries in repodata."
 	@echo "    fixtures/srpm-richnweak-deps"
@@ -271,6 +273,7 @@ all-fedora: \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-zstd-metadata \
+	fixtures/rpm-no-comps \
 	fixtures/srpm-duplicate \
 	fixtures/srpm-richnweak-deps \
 	fixtures/srpm-signed \
@@ -522,6 +525,13 @@ fixtures/rpm-unsigned: fixtures
 fixtures/rpm-zstd-metadata: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets
 	createrepo_c --general-compress-type=zstd --update $@
+
+fixtures/rpm-no-comps: fixtures
+	mkdir -p $@
+	cp rpm/assets/* $@/
+	rm $@/comps.xml
+	rm $@/modules.yaml
+	rpm/gen-fixtures.sh $@ fixtures/rpm-no-comps
 
 fixtures/rpm-unsigned-meta-only: fixtures fixtures/rpm-unsigned
 	mkdir -p $@
