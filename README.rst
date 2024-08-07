@@ -86,6 +86,9 @@ See ``make help``.
 ``fixtures/debian-invalid``
     Depends on the ``fixtures/debian`` target.
 
+``fixtures/debian-empty``
+    No exotic dependencies are needed.
+
 ``fixtures/docker``
     The ``docker`` executable must be available.
 
