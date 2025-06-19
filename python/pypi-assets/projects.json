@@ -99,7 +99,10 @@
       "scipy-1.1.0-cp27-cp27m-manylinux1_x86_64.whl",
       "scipy-1.1.0-cp27-cp27m-manylinux1_i686.whl",
       "scipy-1.1.0-cp27-cp27m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl"
-
+    ],
+    "setuptools": [
+      "setuptools-80.9.0-py3-none-any.whl",
+      "setuptools-80.9.0.tar.gz"
     ],
     "shelf-reader": [
       "shelf_reader-0.1-py2-none-any.whl",
@@ -113,6 +116,7 @@
     "Django": "2.0.6",
     "pytz": "2023.3.post1",
     "scipy": "1.1.0",
+    "setuptools": "80.9.0",
     "shelf-reader": "0.1"
   }
 }
