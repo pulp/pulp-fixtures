@@ -93,14 +93,16 @@ if [ -n "${signing_key:-}" ]; then
         --define '_gpg_name pulp-fixture-signing-key' --addsign
 fi
 checksum_type_default=sha256
+
+args=()
+[ -n "${zchunk:-}" ] && args+=("$zchunk")
+args+=(--general-compress-type gz)
+args+=(--checksum "${checksum_type:-${checksum_type_default}}")
 if test -f "${assets_dir}/comps.xml"; then
-    createrepo_c ${zchunk:-} --general-compress-type gz --checksum "${checksum_type:-${checksum_type_default}}" \
-        --groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")" \
-        "${working_dir}"
-else
-    createrepo_c ${zchunk:-} --checksum "${checksum_type:-${checksum_type_default}}" --general-compress-type gz \
-        "${working_dir}"
+    args+=(--groupfile "$(realpath --relative-to "${working_dir}" "${assets_dir}/comps.xml")")
 fi
+args+=("$working_dir")
+createrepo_c "${args[@]}"
 
 if test -f "${assets_dir}/updateinfo.xml"; then
     modifyrepo_c --mdtype updateinfo \
