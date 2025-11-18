@@ -34,6 +34,7 @@
       "celery-4.2.0rc3-py2.py3-none-any.whl",
       "celery-4.2.0rc4-py2.py3-none-any.whl"
     ],
+    "crane": [],
     "Django": [
       "Django-1.8.5-py2.py3-none-any.whl",
       "Django-1.8.5.tar.gz",
@@ -66,6 +67,10 @@
       "Django-2.0.6.tar.gz",
       "Django-2.1a1-py3-none-any.whl",
       "Django-2.1b1-py3-none-any.whl"
+    ],
+    "pulp-2to3-migration": [
+      "pulp-2to3-migration-0.17.0.tar.gz",
+      "pulp_2to3_migration-0.17.0-py3-none-any.whl"
     ],
     "pytz": [
       "pytz-2023.2-py2.py3-none-any.whl",
@@ -107,6 +112,22 @@
     "shelf-reader": [
       "shelf_reader-0.1-py2-none-any.whl",
       "shelf-reader-0.1.tar.gz"
+    ],
+    "twine": [
+      "twine-5.0.0-py3-none-any.whl",
+      "twine-5.0.0.tar.gz",
+      "twine-5.1.0-py3-none-any.whl",
+      "twine-5.1.0.tar.gz",
+      "twine-5.1.1-py3-none-any.whl",
+      "twine-5.1.1.tar.gz",
+      "twine-6.0.0-py3-none-any.whl",
+      "twine-6.0.0.tar.gz",
+      "twine-6.0.1-py3-none-any.whl",
+      "twine-6.0.1.tar.gz",
+      "twine-6.1.0-py3-none-any.whl",
+      "twine-6.1.0.tar.gz",
+      "twine-6.2.0-py3-none-any.whl",
+      "twine-6.2.0.tar.gz"
     ]
   },
   "latest_versions": {
@@ -114,9 +135,30 @@
     "bcrypt": "4.0.1",
     "celery": "4.2.0",
     "Django": "2.0.6",
+    "pulp-2to3-migration": "0.17.0",
     "pytz": "2023.3.post1",
     "scipy": "1.1.0",
     "setuptools": "80.9.0",
-    "shelf-reader": "0.1"
+    "shelf-reader": "0.1",
+    "twine": "6.2.0"
+  },
+  "project_metadata": {
+    "shelf-reader": {
+      "alternate-locations": ["https://pypi.org/simple/shelf-reader/"],
+      "project-status": {
+        "status": "deprecated",
+        "reason": "No longer maintained"
+      }
+    },
+    "pulp-2to3-migration": {
+      "project-status": {
+        "status": "archived"
+      }
+    },
+    "crane": {
+      "project-status": {
+        "status": "quarantined"
+      }
+    }
   }
 }

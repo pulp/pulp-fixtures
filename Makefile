@@ -367,7 +367,7 @@ fixtures/ostree: fixtures
 	ostree/gen-fixtures.sh $@/small
 
 fixtures/python-pypi: fixtures
-	python/gen-pypi-repo.sh $@ python/pypi-assets $(base_url)
+	python/gen-pypi-repo.sh $@ $(base_url)/python-pypi
 
 fixtures/rpm-advisory-incomplete-package-list: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/advisory-incomplete-package-list.patch

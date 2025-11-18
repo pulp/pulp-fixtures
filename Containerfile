@@ -16,7 +16,7 @@ RUN dnf -yq install \
 
 # the default createrepo_c provided by Fedora has legacy hashes disabled, the one
 # on PyPI does not (because we need it)
-RUN pip install createrepo_c==1.2.0
+RUN pip install createrepo_c==1.2.0 jinja2 pypi-simple
 ADD . /pulp-fixtures
 
 RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
