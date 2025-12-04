@@ -42,9 +42,9 @@ simple_detail_template = """<!DOCTYPE html>
       {%- endfor -%}
     {%- endif %}
     {% if project['project-status'] -%}
-    <meta name="pypi:status" content="{{ project['project-status'].status }}">
+    <meta name="pypi:project-status" content="{{ project['project-status'].status }}">
     {% if project['project-status'].reason is defined -%}
-    <meta name="pypi:status-reason" content="{{ project['project-status'].reason }}">
+    <meta name="pypi:project-status-reason" content="{{ project['project-status'].reason }}">
     {% endif -%}
     {%- endif %}
   </head>
