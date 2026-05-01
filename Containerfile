@@ -1,5 +1,5 @@
 # === Build fixtures (Fedora) =================================================
-FROM registry.fedoraproject.org/fedora:40 AS fedora-build
+FROM registry.fedoraproject.org/fedora:latest AS fedora-build
 
 RUN dnf -yq install \
               fedpkg \
@@ -12,11 +12,12 @@ RUN dnf -yq install \
               python3-jinja2-cli \
               rpm-build \
               rpm-sign \
-              rsync
+              rsync \
+              sequoia-sq
 
 # the default createrepo_c provided by Fedora has legacy hashes disabled, the one
 # on PyPI does not (because we need it)
-RUN pip install createrepo_c==1.2.0 jinja2 pypi-simple
+RUN pip install createrepo_c jinja2 pypi-simple
 ADD . /pulp-fixtures
 
 RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
