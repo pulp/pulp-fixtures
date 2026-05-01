@@ -6,7 +6,7 @@
 set -euo pipefail
 
 # Assume this script has been called from the Pulp Fixtures makefile.
-source ./rpm/common.sh
+# source ./rpm/common.sh
 
 # See: http://mywiki.wooledge.org/BashFAQ/028
 readonly script_name='gen-fixtures.sh'
@@ -31,7 +31,7 @@ EOF
 }
 
 # Transform $@. $temp is needed. If omitted, non-zero exit codes are ignored.
-check_getopt
+# check_getopt
 temp=$(getopt \
     --options '' \
     --longoptions number:,file-size:,reverse \
