@@ -135,18 +135,12 @@ help:
 	@echo "        Create RPM fixture without the whale package."
 	@echo "    fixtures/rpm-updated-updateinfo"
 	@echo "        Create RPM fixtures with updated updateinfo.xml."
-	@echo "    fixtures/rpm-with-md5"
-	@echo "        Create RPM fixture data with checksum as 'md5'."
-	@echo "    fixtures/rpm-with-sha"
-	@echo "        Create RPM fixture data with checksum as 'sha'."
 	@echo "    fixtures/rpm-with-non-ascii"
 	@echo "        Create an RPM file with non-ascii characters."
 	@echo "    fixtures/rpm-with-non-utf-8"
 	@echo "        Create an RPM file with non-utf-8 characters."
 	@echo "    fixtures/rpm-with-sha-512"
 	@echo "        Create RPM fixture data with checksum as 'sha512'."
-	@echo "    fixtures/rpm-with-sha-1-modular"
-	@echo "        Create RPM Modules fixture data with checksum as 'sha1'."
 	@echo "    fixtures/rpm-with-pulp-distribution"
 	@echo "        Create an RPM repository with extra files and a"
 	@echo "        PULP_DISTRIBUTION.xml file."
@@ -262,14 +256,11 @@ all-fedora: \
 	fixtures/rpm-unsigned-modified \
 	fixtures/rpm-updated-updateinfo \
 	fixtures/rpm-updated-updateversion \
-	fixtures/rpm-with-md5 \
 	fixtures/rpm-with-modules \
 	fixtures/rpm-with-modules-modified \
 	fixtures/rpm-with-non-ascii \
 	fixtures/rpm-with-non-utf-8 \
 	fixtures/rpm-with-pulp-distribution \
-	fixtures/rpm-with-sha \
-	fixtures/rpm-with-sha-1-modular \
 	fixtures/rpm-with-sha-512 \
 	fixtures/rpm-with-vendor \
 	fixtures/rpm-zstd-metadata \
@@ -557,11 +548,6 @@ fixtures/rpm-updated-updateinfo: fixtures
 fixtures/rpm-updated-updateversion: fixtures
 	rpm/gen-patched-fixtures.sh -d $@ -f rpm/updated-updateversion.patch
 
-fixtures/rpm-with-md5: fixtures
-	rpm/gen-fixtures.sh --checksum-type "md5" $@ rpm/assets
-
-fixtures/rpm-with-sha: fixtures
-	rpm/gen-fixtures.sh --checksum-type "sha" --productid $@ rpm/assets
 
 fixtures/rpm-modular: fixtures
 	rpm/gen-fixtures.sh $@ rpm/assets-modularity
@@ -593,9 +579,6 @@ fixtures/rpm-with-non-utf-8: fixtures
 fixtures/rpm-with-sha-512: fixtures
 	rpm/gen-fixtures.sh --checksum-type "sha512" $@ rpm/assets
 
-fixtures/rpm-with-sha-1-modular: fixtures
-	rpm/gen-patched-fixtures.sh -d $@ -f rpm/modules-updateinfo.patch -s sha1
-	modifyrepo_c --mdtype=modules rpm/assets/modules.yaml "$@/repodata/"
 
 fixtures/rpm-with-vendor: fixtures
 	rpm/gen-rpm-and-repo.sh $@ "rpm/assets-specs/$$(basename $@).spec"

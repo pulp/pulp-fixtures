@@ -1,3 +1,5 @@
 /fixtures/
+!/fixtures/rpm-with-md5
+!/fixtures/rpm-with-sha
 /gnupghome/
 /.git
