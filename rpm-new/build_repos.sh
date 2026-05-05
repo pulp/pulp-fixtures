@@ -24,8 +24,8 @@ createrepo_c \
   --retain-old-md=0 \
   --simple-md-filenames \
   --no-database \
+  --pkglist="$assets_dir/complex_repo_pkglist.txt" \
   "$packages_dir"
-  # --pkglist="$assets_dir/complex_repo_pkglist.txt" \
 
 while IFS= read -r filename
 do
