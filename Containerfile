@@ -13,11 +13,10 @@ RUN dnf -yq install \
               rpm-build \
               rpm-sign \
               rsync \
-              sequoia-sq
+              sequoia-sq \
+              createrepo_c
 
-# the default createrepo_c provided by Fedora has legacy hashes disabled, the one
-# on PyPI does not (because we need it)
-RUN pip install createrepo_c jinja2 pypi-simple
+RUN pip install jinja2 pypi-simple
 ADD . /pulp-fixtures
 
 RUN make -C pulp-fixtures all-fedora base_url=http://BASE_URL
@@ -51,6 +50,7 @@ COPY --from=debian-build pulp-fixtures/fixtures /usr/share/nginx/html
 
 COPY docker/assets/busybox:latest.tar /usr/share/nginx/html/docker/busybox:latest.tar
 COPY rpm/assets-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm /usr/share/nginx/html/rpm-with-modular/nodejs-10.15.2-1.module_f30+3181+3be24b3a.x86_64.rpm
+COPY rpm-new/assets/packages/ /usr/share/nginx/html/rpm/packages/
 
 # use custom nginx.conf
 COPY common/nginx.conf /etc/nginx/nginx.conf
