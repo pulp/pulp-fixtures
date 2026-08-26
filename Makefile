@@ -26,6 +26,8 @@ help:
 	@echo "        Create Debian repository fixtures."
 	@echo "    fixtures/debian-invalid"
 	@echo "        Create invalid Debian repository fixtures."
+	@echo "    fixtures/debian-empty"
+	@echo "        Create empty Debian repository fixtures."
 	@echo "    fixtures/debian-complex-dists"
 	@echo "        Create Debian repository fixtures with complex distribution."
 	@echo "    fixtures/debian-missing-architecture"
@@ -197,6 +199,7 @@ all-skipped: \
 all-debian: \
 	fixtures/debian \
 	fixtures/debian-invalid \
+	fixtures/debian-empty \
 	fixtures/debian-complex-dists \
 	fixtures/debian-missing-architecture \
 	fixtures/debian-flat \
@@ -291,6 +294,9 @@ fixtures:
 
 fixtures/debian: fixtures gnupghome
 	GNUPGHOME=$$(realpath -e gnupghome) debian/gen-fixtures.sh $@
+
+fixtures/debian-empty: fixtures
+	debian/gen-empty-fixtures.sh $@
 
 fixtures/debian-invalid: fixtures fixtures/debian
 	debian/gen-invalid-fixtures.sh $@
